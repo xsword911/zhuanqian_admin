@@ -56,7 +56,7 @@
 import { getList } from "@/api/table";
 
 export default {
-  // name: "InlineEditTable",
+  name: "InlineEditTable",
   data() {
     return {
       list: null,

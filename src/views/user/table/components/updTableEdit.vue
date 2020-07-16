@@ -15,6 +15,25 @@
       <el-form-item label="昵称" prop="nick">
         <el-input v-model.trim="form.nick" autocomplete="off" clearable></el-input>
       </el-form-item>
+      <el-form-item label="头像" prop="imgUrl">
+          <div style="display: flex;">
+            <div class="block" style="width: 80px; height: 80px;">
+                 <el-image
+                   :preview-src-list="[form.headUrl]"
+                   :src="form.headUrl"
+                 ></el-image>
+             </div>
+             <el-upload
+               class="avatar-uploader"
+               action="https://jsonplaceholder.typicode.com/posts/"
+               :show-file-list="false"
+               :on-success="handleAvatarSuccess"
+               :before-upload="beforeAvatarUpload">
+               <img v-if="imageUrl" :src="imageUrl" class="avatar">
+               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+             </el-upload>
+          </div>
+      </el-form-item>
       <el-form-item label="直属上级" prop="upper">
         <el-input v-model.trim="form.upper" autocomplete="off" clearable></el-input>
       </el-form-item>
@@ -70,12 +89,32 @@ export default {
       },
       title: "",
       dialogFormVisible: false,
+      imageUrl: ''  //选择图片
     };
   },
   mounted() {
 
   },
   methods: {
+          //文件上传成功
+          handleAvatarSuccess(res, file) {
+            this.imageUrl = URL.createObjectURL(file.raw);
+          },
+          //上传文件之前的钩子，参数为上传的文件
+          beforeAvatarUpload(file) {
+            const isJPG = file.type === 'image/jpeg';
+            const isLt2M = file.size / 1024 / 1024 < 2;
+
+            // if (!isJPG) {
+            //   this.$message.error('上传头像图片只能是 JPG 格式!');
+            // }
+            if (!isLt2M) {
+              this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            console.log(isJPG && isLt2M);
+            return isJPG && isLt2M;
+          },
+
     showEdit(row) {
       if (!row) {
         this.title = "添加";
@@ -132,3 +171,29 @@ export default {
   },
 };
 </script>
+
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+  }
+  .avatar {
+    width: 80px;
+    height: 80px;
+    display: block;
+  }
+</style>

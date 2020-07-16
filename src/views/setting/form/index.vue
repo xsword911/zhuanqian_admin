@@ -9,17 +9,29 @@
           label-width="100px"
           class="demo-ruleForm"
         >
-          <el-form-item label="账号" prop="account">
-            <el-input v-model="ruleForm.account" clearable></el-input>
+          <el-form-item label="配置名" prop="key">
+            <el-input v-model="ruleForm.key" clearable></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="pwd">
-            <el-input v-model="ruleForm.pwd" show-password clearable></el-input>
+          <el-form-item label="配置值" prop="value">
+            <el-input v-model="ruleForm.value" clearable></el-input>
           </el-form-item>
-          <el-form-item label="确认密码" prop="pwd2">
-            <el-input v-model="ruleForm.pwd2" clearable></el-input>
+          <el-form-item label="配置类型" prop="type">
+            <el-select v-model="ruleForm.type" placeholder="配置类型" clearable>
+              <el-option-group
+                v-for="group in type"
+                :key="group.label"
+                :label="group.label">
+                <el-option
+                  v-for="item in group.type"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-option-group>
+            </el-select>
           </el-form-item>
-          <el-form-item label="邀请码" prop="upperCode">
-            <el-input v-model="ruleForm.upperCode" clearable></el-input>
+          <el-form-item label="备注" prop="desc">
+            <el-input v-model="ruleForm.desc" clearable></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm"
@@ -40,25 +52,29 @@ export default {
   // name: "Form",
   data() {
     return {
+      type: [{
+        type: [{
+          value: 0,
+          label: '登录配置'
+        }]
+      }],
+      typeValue: '',      //选中的配置类型
+
       ruleForm: {
-        account: "",  //账号
-        pwd: "",   //密码
-        pwd2: "",  //确认密码
-        upperCode: "",  //邀请码
-        type: 1,  //账户类型 0:普通用户; 1:管理员
+        key: '',
+        value: '',
+        type: null,
+        desc: '',
       },
       rules: {
-        account: [
-          { required: true, message: "请输入账号", trigger: "blur" },
-          { min: 3, max: 12, message: "账号长度在 3 到 12 个字符", trigger: "blur" },
+        key: [
+          { required: true, message: "请输入配置名", trigger: "blur" },
         ],
-        pwd: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 3, max: 12, message: "密码长度在 3 到 12 个字符", trigger: "blur" },
+        value: [
+          { required: true, message: "请输入配置值", trigger: "blur" },
         ],
-        pwd2: [
-          { required: true, message: "请确认密码", trigger: "blur" },
-          { min: 3, max: 12, message: "密码长度在 3 到 12 个字符", trigger: "blur" },
+        type: [
+          { required: true, message: "请输入配置类型", trigger: "blur" },
         ],
       },
     };
@@ -66,15 +82,15 @@ export default {
   methods: {
     //提交注册
     submitForm() {
-      if(this.ruleForm.pwd != this.ruleForm.pwd2){
-        this.$message.error('二次密码输入不一致');
+      if(util.isEmpty(this.ruleForm.key) || util.isEmpty(this.ruleForm.value) || util.isEmpty(this.ruleForm.type)){
+        this.$message.error("填入信息不完整");
         return;
-      }
-      api.register(this.ruleForm, (res)=>{
+      };
+      api.addConfig(this.ruleForm, (res)=>{
           let code = api.getCode(res);
           let msg = api.getMsg(res);
           if(code == 0){
-            this.$message({ message: '注册成功', type: 'success'});
+            this.$message({ message: '添加系统配置成功', type: 'success'});
             this.resetForm('ruleForm');
           }
           else this.$message.error(msg);

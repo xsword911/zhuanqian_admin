@@ -9,25 +9,20 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.account" placeholder="用户名"  clearable/>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="queryForm.tel" placeholder="手机号"  clearable/>
+            <el-input v-model="queryForm.title" placeholder="奖励标题"  clearable/>
           </el-form-item>
 <!--          <el-form-item>
-            <el-input v-model="queryForm.code" placeholder="邀请码" />
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="queryForm.upper" placeholder="直属上级" />
+            <el-input v-model="queryForm.award" placeholder="奖励内容"  clearable/>
           </el-form-item> -->
-          <el-form-item>
-              <el-select v-model="value" placeholder="账号状态" clearable>
+
+         <el-form-item>
+              <el-select v-model="typeValue" placeholder="奖励类型" clearable>
                 <el-option-group
-                  v-for="group in options"
+                  v-for="group in type"
                   :key="group.label"
                   :label="group.label">
                   <el-option
-                    v-for="item in group.options"
+                    v-for="item in group.type"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value">
@@ -35,6 +30,39 @@
                 </el-option-group>
               </el-select>
           </el-form-item>
+
+          <el-form-item>
+               <el-select v-model="stateValue" placeholder="状态" clearable>
+                 <el-option-group
+                   v-for="group in state"
+                   :key="group.label"
+                   :label="group.label">
+                   <el-option
+                     v-for="item in group.state"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value">
+                   </el-option>
+                 </el-option-group>
+               </el-select>
+          </el-form-item>
+
+          <el-form-item>
+               <el-select v-model="limitSumValue" placeholder="剩余奖品数量" clearable filterable allow-create>
+                 <el-option-group
+                   v-for="group in limitSum"
+                   :key="group.label"
+                   :label="group.label">
+                   <el-option
+                     v-for="item in group.limitSum"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value">
+                   </el-option>
+                 </el-option-group>
+               </el-select>
+          </el-form-item>
+
           <el-form-item>
             <el-button
               icon="el-icon-search"
@@ -57,32 +85,30 @@
       @sort-change="tableSortChange"
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
-<!--      <el-table-column label="序号" width="95">
+     <el-table-column label="序号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template>
-      </el-table-column> -->
-      <el-table-column prop="account" label="用户名"></el-table-column>
-      <el-table-column prop="nick" label="昵称"></el-table-column>
-      <el-table-column prop="tel" label="手机号"></el-table-column>
-      <el-table-column prop="code" label="邀请码"></el-table-column>
+      </el-table-column>
+      <el-table-column prop="title" label="奖励标题"></el-table-column>
+      <el-table-column prop="awardTypeTest" label="奖励类型"></el-table-column>
+      <el-table-column prop="award" label="奖励内容"></el-table-column>
+      <el-table-column prop="limitSumTest" label="剩余奖励数量"></el-table-column>
 
      <el-table-column label="状态">
         <template slot-scope="scope">
           <el-tooltip
-            :content="scope.row.status"
+            :content="scope.row.stateTest"
             class="item"
             effect="dark"
             placement="top-start"
           >
-            <el-tag :type="scope.row.status | statusFilter"
+            <el-tag :type="scope.row.state | statusFilter"
               >{{ scope.row.stateTest }}
             </el-tag>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="loginTime" label="最后一次登录时间"></el-table-column>
-      <el-table-column prop="ip" label="最后一次登录ip"></el-table-column>
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
           <el-button type="text" @click="handleEdit(scope.row)"
@@ -125,29 +151,45 @@ export default {
   },
   filters: {
     statusFilter(status) {
-      const statusMap = {
-        normal: "success",
-        frozen: "gray",
-        ban: "danger",
-      };
-      return statusMap[status];
-    },
+      if(status == 1) return "success";
+      if(status == 0) return "danger";
+    }
   },
   data() {
     return {
-      options: [{
-        options: [{
+      type: [{
+        type: [{
           value: 0,
-          label: '正常'
+          label: '金币'
         },{
           value: 1,
-          label: '冻结'
+          label: '现金'
         },{
-          value: 2,
-          label: '管理员封号'
+          value: 10,
+          label: '其他'
         }]
       }],
-      value: '',      //交易类型
+      typeValue: '',      //选中的奖励类型
+
+      state: [{
+        state: [{
+          value: 0,
+          label: '关闭'
+        },{
+          value: 1,
+          label: '开启'
+        }]
+      }],
+      stateValue: '',      //选中的状态类型
+
+      limitSum: [{
+        limitSum: [{
+          value: -1,
+          label: '不限制'
+        }]
+      }],
+      limitSumValue: '',    //剩余奖励数量
+
       imgShow: true,
       list: [],
       imageList: [],
@@ -160,12 +202,12 @@ export default {
       queryForm: {
         page: 1,
         count: 10,
-        type: 0,
-        account: "",
-        tel: "",
-        code: "",
-        upper: "",
-        stateTest: "",
+        title: '',
+        type: null,
+        limitSum: null,
+        state: null,
+        stateTest: '',
+        limitSumTest: '',
       },
     };
   },
@@ -223,41 +265,61 @@ export default {
     //搜索关键字
     handleQuery() {
       this.queryForm.page = 1;
-      //账号类型筛选不为空时添加账号类型属性
-      if(!util.isEmpty(this.value)){
-        this.queryForm.state = this.value;
-      }else{   //账号类型筛选为空时删除账号类型属性
+      //奖励类型筛选不为空时添加奖励类型属性
+      if(!util.isEmpty(this.typeValue)){
+        this.queryForm.type = this.typeValue;
+      }else{   //奖励类型筛选为空时删除奖励类型属性
+        delete this.queryForm.type;
+      };
+      //状态类型筛选不为空时添加状态类型属性
+      if(!util.isEmpty(this.stateValue)){
+        this.queryForm.state = this.stateValue;
+      }else{   //状态类型筛选为空时删除状态类型属性
         delete this.queryForm.state;
+      };
+      //状态类型筛选不为空时添加状态类型属性
+      if(!util.isEmpty(this.limitSumValue)){
+        this.limitSumValue = parseInt(this.limitSumValue);
+        this.queryForm.limitSum = this.limitSumValue;
+      }else{   //状态类型筛选为空时删除状态类型属性
+        delete this.queryForm.limitSum;
       };
       this.fetchData();
     },
-    fetchData() {
+    async fetchData() {
       this.listLoading = true;
-      api.getUser(this.queryForm, (res)=>{
+      api.getLucky(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
            data.forEach((item, index) =>{
+              if(item.limitSum == -1) item.limitSumTest = "不限制";
               switch (item.state){
                 case 0:
-                  item.status = 'normal';
-                  item.stateTest = "正常";
+                  item.stateTest = "关闭";
                   break;
                 case 1:
-                  item.status = 'frozen';
-                  item.stateTest = "冻结";
-                  break;
-                case 2:
-                  item.status = 'ban';
-                  item.stateTest = "管理员封号";
+                  item.stateTest = "开启";
                   break;
                 default:
                   break;
-              }
+              };
+              switch (item.type){
+                case 0:
+                  item.awardTypeTest = "金币";
+                  break;
+                case 1:
+                  item.awardTypeTest = "现金";
+                  break;
+                case 10:
+                  item.awardTypeTest = "其他";
+                  break;
+                default:
+                  break;
+              };
            });
            this.total = api.getTotal(res);
            this.list = data;
-           console.log(this.list);
          }
       });
       setTimeout(() => {
@@ -292,6 +354,14 @@ export default {
     testNotify() {
       this.$baseNotify("测试消息提示", "test", "success", "bottom-right");
     },
+    //获取当前月份一共有几天
+    mGetDate(){
+         var date = new Date();
+         var year = date.getFullYear();
+         var month = date.getMonth()+1;
+         var d = new Date(year, month, 0);
+         return d.getDate();
+    }
   },
 };
 </script>

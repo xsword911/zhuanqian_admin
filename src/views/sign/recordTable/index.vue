@@ -9,25 +9,22 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.account" placeholder="用户名"  clearable/>
-          </el-form-item>
+             <el-input v-model="queryForm.account" placeholder="账号"  clearable/>
+           </el-form-item>
           <el-form-item>
-            <el-input v-model="queryForm.tel" placeholder="手机号"  clearable/>
+            <el-input v-model="queryForm.sn" placeholder="订单号"  clearable
+            onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+            maxlength="24"/>
           </el-form-item>
-<!--          <el-form-item>
-            <el-input v-model="queryForm.code" placeholder="邀请码" />
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="queryForm.upper" placeholder="直属上级" />
-          </el-form-item> -->
-          <el-form-item>
-              <el-select v-model="value" placeholder="账号状态" clearable>
+
+         <el-form-item>
+              <el-select v-model="typeValue" placeholder="奖励类型" clearable>
                 <el-option-group
-                  v-for="group in options"
+                  v-for="group in type"
                   :key="group.label"
                   :label="group.label">
                   <el-option
-                    v-for="item in group.options"
+                    v-for="item in group.type"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value">
@@ -35,6 +32,20 @@
                 </el-option-group>
               </el-select>
           </el-form-item>
+
+          <el-form-item>
+                <div class="block">
+                  <el-date-picker
+                    v-model="searchTime"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    type="datetimerange"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    :default-time="['00:00:00', '23:59:59']">
+                  </el-date-picker>
+                </div>
+          </el-form-item>
+
           <el-form-item>
             <el-button
               icon="el-icon-search"
@@ -62,32 +73,18 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="account" label="用户名"></el-table-column>
-      <el-table-column prop="nick" label="昵称"></el-table-column>
-      <el-table-column prop="tel" label="手机号"></el-table-column>
-      <el-table-column prop="code" label="邀请码"></el-table-column>
+      <el-table-column prop="account" label="账号"></el-table-column>
+      <el-table-column prop="day" label="签到天数"></el-table-column>
+      <el-table-column prop="sn" label="订单号"></el-table-column>
+      <el-table-column prop="finishTime" label="完成时间"></el-table-column>
+      <el-table-column prop="awardTypeTest" label="奖励类型"></el-table-column>
+      <el-table-column prop="award" label="奖励内容"></el-table-column>
 
-     <el-table-column label="状态">
-        <template slot-scope="scope">
-          <el-tooltip
-            :content="scope.row.status"
-            class="item"
-            effect="dark"
-            placement="top-start"
-          >
-            <el-tag :type="scope.row.status | statusFilter"
-              >{{ scope.row.stateTest }}
-            </el-tag>
-          </el-tooltip>
-        </template>
-      </el-table-column>
-      <el-table-column prop="loginTime" label="最后一次登录时间"></el-table-column>
-      <el-table-column prop="ip" label="最后一次登录ip"></el-table-column>
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
+<!--          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
-          </el-button>
+          </el-button> -->
 <!--          <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
@@ -125,29 +122,24 @@ export default {
   },
   filters: {
     statusFilter(status) {
-      const statusMap = {
-        normal: "success",
-        frozen: "gray",
-        ban: "danger",
-      };
-      return statusMap[status];
-    },
+      if(status == 1) return "success";
+      if(status == 0) return "danger";
+    }
   },
   data() {
     return {
-      options: [{
-        options: [{
+      type: [{
+        type: [{
           value: 0,
-          label: '正常'
+          label: '金币'
         },{
           value: 1,
-          label: '冻结'
-        },{
-          value: 2,
-          label: '管理员封号'
+          label: '现金'
         }]
       }],
-      value: '',      //交易类型
+      typeValue: '',      //选中的奖励类型
+
+      searchTime: '', //筛选的时间范围
       imgShow: true,
       list: [],
       imageList: [],
@@ -160,12 +152,15 @@ export default {
       queryForm: {
         page: 1,
         count: 10,
-        type: 0,
-        account: "",
-        tel: "",
-        code: "",
-        upper: "",
-        stateTest: "",
+        sn: '',
+        account: '',
+        begFinishTime: '',
+        endFinishTime: '',
+        awardType: null,
+        // award: '',
+        state: null,
+        stateTest: '',
+        awardTypeTest: '',
       },
     };
   },
@@ -223,41 +218,52 @@ export default {
     //搜索关键字
     handleQuery() {
       this.queryForm.page = 1;
-      //账号类型筛选不为空时添加账号类型属性
-      if(!util.isEmpty(this.value)){
-        this.queryForm.state = this.value;
-      }else{   //账号类型筛选为空时删除账号类型属性
-        delete this.queryForm.state;
+      //时间筛选不为空时添加时间属性
+      if(!util.isEmpty(this.searchTime)){
+        this.queryForm.begFinishTime = this.searchTime[0];
+        this.queryForm.endFinishTime = this.searchTime[1];
+      }else{   //时间筛选为空时删除时间属性
+        delete this.queryForm.begFinishTime;
+        delete this.queryForm.endFinishTime;
+      };
+      //奖励类型筛选不为空时添加奖励类型属性
+      if(!util.isEmpty(this.typeValue)){
+        this.queryForm.awardType = this.typeValue;
+      }else{   //奖励类型筛选为空时删除奖励类型属性
+        delete this.queryForm.awardType;
       };
       this.fetchData();
     },
-    fetchData() {
+    async fetchData() {
       this.listLoading = true;
-      api.getUser(this.queryForm, (res)=>{
+      api.getAdminInfo(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
            data.forEach((item, index) =>{
               switch (item.state){
                 case 0:
-                  item.status = 'normal';
-                  item.stateTest = "正常";
+                  item.stateTest = "关闭";
                   break;
                 case 1:
-                  item.status = 'frozen';
-                  item.stateTest = "冻结";
-                  break;
-                case 2:
-                  item.status = 'ban';
-                  item.stateTest = "管理员封号";
+                  item.stateTest = "开启";
                   break;
                 default:
                   break;
-              }
+              };
+              switch (item.awardType){
+                case 0:
+                  item.awardTypeTest = "金币";
+                  break;
+                case 1:
+                  item.awardTypeTest = "现金";
+                  break;
+                default:
+                  break;
+              };
            });
            this.total = api.getTotal(res);
            this.list = data;
-           console.log(this.list);
          }
       });
       setTimeout(() => {
@@ -292,6 +298,14 @@ export default {
     testNotify() {
       this.$baseNotify("测试消息提示", "test", "success", "bottom-right");
     },
+    //获取当前月份一共有几天
+    mGetDate(){
+         var date = new Date();
+         var year = date.getFullYear();
+         var month = date.getMonth()+1;
+         var d = new Date(year, month, 0);
+         return d.getDate();
+    }
   },
 };
 </script>

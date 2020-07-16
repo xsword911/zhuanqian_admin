@@ -98,15 +98,15 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: "signManagement",
-        name: "SignManagement",
-        component: () => import("@/views/sign/table/index"),
+        path: "signAward",
+        name: "SignAward",
+        component: () => import("@/views/sign/awardTable/index"),
         meta: { title: "签到奖励" },
       },
       {
-        path: "signTable",
-        name: "SignTable",
-        component: () => import("@/views/sign/table/index"),
+        path: "signRecord",
+        name: "SignRecord",
+        component: () => import("@/views/sign/recordTable/index"),
         meta: { title: "签到记录" },
       }
     ],
@@ -127,13 +127,13 @@ export const asyncRoutes = [
       {
         path: "luckDrawManagement",
         name: "LuckDrawManagement",
-        component: () => import("@/views/luckDraw/table/index"),
+        component: () => import("@/views/luckDraw/awardTable/index"),
         meta: { title: "抽奖设置" },
       },
       {
         path: "luckDrawTable",
         name: "LuckDrawTable",
-        component: () => import("@/views/luckDraw/table/index"),
+        component: () => import("@/views/luckDraw/recordTable/index"),
         meta: { title: "抽奖记录" },
       }
     ],
@@ -154,13 +154,13 @@ export const asyncRoutes = [
       {
         path: "workManagement",
         name: "WorkManagement",
-        component: () => import("@/views/work/table/index"),
+        component: () => import("@/views/work/awardTable/index"),
         meta: { title: "任务设置" },
       },
       {
         path: "workTable",
         name: "WorkTable",
-        component: () => import("@/views/work/table/index"),
+        component: () => import("@/views/work/recordTable/index"),
         meta: { title: "任务记录" },
       }
     ],
@@ -181,13 +181,13 @@ export const asyncRoutes = [
       {
         path: "change",
         name: "Change",
-        component: () => import("@/views/finance/table/index"),
+        component: () => import("@/views/finance/changeTable/index"),
         meta: { title: "额度转换" },
       },
       {
         path: "welfare",
         name: "Welfare",
-        component: () => import("@/views/finance/table/index"),
+        component: () => import("@/views/finance/examineTable/index"),
         meta: { title: "福利审核" },
       },
       {
@@ -254,7 +254,7 @@ export const asyncRoutes = [
         path: "settingLogin",
         name: "SettingLogin",
         component: () => import("@/views/setting/table/index"),
-        meta: { title: "登录设置" },
+        meta: { title: "系统配置" },
       },
       {
         path: "settingAdd",

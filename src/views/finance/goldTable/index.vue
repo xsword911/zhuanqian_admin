@@ -24,7 +24,9 @@
             <el-input v-model="queryForm.account" placeholder="账号" clearable />
           </el-form-item>
           <el-form-item>
-            <el-input v-model="queryForm.sn" placeholder="账单号" clearable />
+            <el-input v-model="queryForm.sn" placeholder="账单号" clearable 
+            onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+            maxlength="24"/>
           </el-form-item>
 <!--          <el-form-item>
             <el-input v-model="queryForm.code" placeholder="邀请码" />

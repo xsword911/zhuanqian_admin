@@ -18,6 +18,16 @@
       <el-form-item label="邀请码" prop="code">
         <el-input v-model.trim="form.code" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
+
+      <el-form-item label="头像" prop="imgUrl">
+         <div class="block" style="width: 80px; height: 80px;">
+              <el-image
+                :preview-src-list="[form.headUrl]"
+                :src="form.headUrl"
+              ></el-image>
+          </div>
+      </el-form-item>
+
       <el-form-item label="金币" prop="gold">
         <el-input v-model.trim="form.gold" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
@@ -71,9 +81,10 @@ export default {
       },
       title: "",
       dialogFormVisible: false,
+      imageList: [],  //图片预览
     };
   },
-  mounted() {},
+  created() {},
   methods: {
     showEdit(row) {
         this.title = "查看";

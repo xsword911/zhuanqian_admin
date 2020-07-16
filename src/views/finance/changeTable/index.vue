@@ -9,25 +9,19 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.account" placeholder="用户名"  clearable/>
+            <el-input v-model="queryForm.account" placeholder="账号"  clearable/>
+          </el-form-item>
+       <el-form-item>
+            <el-input v-model="queryForm.sn" placeholder="订单号"  clearable/>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="queryForm.tel" placeholder="手机号"  clearable/>
-          </el-form-item>
-<!--          <el-form-item>
-            <el-input v-model="queryForm.code" placeholder="邀请码" />
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="queryForm.upper" placeholder="直属上级" />
-          </el-form-item> -->
-          <el-form-item>
-              <el-select v-model="value" placeholder="账号状态" clearable>
+              <el-select v-model="stateValue" placeholder="审核状态" clearable>
                 <el-option-group
-                  v-for="group in options"
+                  v-for="group in state"
                   :key="group.label"
                   :label="group.label">
                   <el-option
-                    v-for="item in group.options"
+                    v-for="item in group.state"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value">
@@ -35,6 +29,36 @@
                 </el-option-group>
               </el-select>
           </el-form-item>
+
+          <el-form-item>
+              <el-select v-model="typeValue" placeholder="审核类型" clearable>
+                <el-option-group
+                  v-for="group in type"
+                  :key="group.label"
+                  :label="group.label">
+                  <el-option
+                    v-for="item in group.type"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-option-group>
+              </el-select>
+          </el-form-item>
+
+          <el-form-item>
+                <div class="block">
+                  <el-date-picker
+                    v-model="searchTime"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    type="datetimerange"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    :default-time="['00:00:00', '23:59:59']">
+                  </el-date-picker>
+                </div>
+          </el-form-item>
+
           <el-form-item>
             <el-button
               icon="el-icon-search"
@@ -62,12 +86,13 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="account" label="用户名"></el-table-column>
-      <el-table-column prop="nick" label="昵称"></el-table-column>
-      <el-table-column prop="tel" label="手机号"></el-table-column>
-      <el-table-column prop="code" label="邀请码"></el-table-column>
+      <el-table-column prop="account" label="账号"></el-table-column>
+      <el-table-column prop="sn" label="账单号"></el-table-column>
+      <el-table-column prop="money" label="金额"></el-table-column>
+      <el-table-column prop="gold" label="金币"></el-table-column>
+      <el-table-column prop="addTime" label="转换时间"></el-table-column>
 
-     <el-table-column label="状态">
+     <el-table-column label="申请状态">
         <template slot-scope="scope">
           <el-tooltip
             :content="scope.row.status"
@@ -81,16 +106,17 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="loginTime" label="最后一次登录时间"></el-table-column>
-      <el-table-column prop="ip" label="最后一次登录ip"></el-table-column>
+      <el-table-column prop="admin" label="审核人"></el-table-column>
+      <el-table-column prop="updTime" label="审核时间"></el-table-column>
+      <el-table-column prop="desc" label="备注"></el-table-column>
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
-            >编辑
-          </el-button>
 <!--          <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
+          <el-button type="text" @click="handleEdit(scope.row)"
+            >编辑
+          </el-button>
           <el-button type="text" @click="handleCheckEdit(scope.row)"
             >查看
           </el-button>
@@ -113,8 +139,8 @@
 
 <script>
 import { getList, doDelete } from "@/api/table";
-import updTableEdit from "./components/updTableEdit";
 import checkTableEdit from "./components/checkTableEdit";
+import updTableEdit from "./components/updTableEdit";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
@@ -135,19 +161,31 @@ export default {
   },
   data() {
     return {
-      options: [{
-        options: [{
+      state: [{
+        state: [{
           value: 0,
-          label: '正常'
+          label: '未审核'
         },{
           value: 1,
-          label: '冻结'
+          label: '审核通过'
         },{
           value: 2,
-          label: '管理员封号'
+          label: '审核未通过'
         }]
       }],
-      value: '',      //交易类型
+      stateValue: '',      //审核状态
+
+      type: [{
+        type: [{
+          value: 0,
+          label: '金币转余额'
+        },{
+          value: 1,
+          label: '余额转金币'
+        }]
+      }],
+      typeValue: '', //审核类型
+      searchTime: '', //筛选的时间范围
       imgShow: true,
       list: [],
       imageList: [],
@@ -160,11 +198,9 @@ export default {
       queryForm: {
         page: 1,
         count: 10,
-        type: 0,
         account: "",
-        tel: "",
-        code: "",
-        upper: "",
+        sn: "",
+        admin: "",
         stateTest: "",
       },
     };
@@ -185,11 +221,11 @@ export default {
     setSelectRows(val) {
       this.selectRows = val;
     },
-    handleEdit(row) {
-      this.$refs["updEdit"].showEdit(row);
-    },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
+    },
+    handleEdit(row) {
+      this.$refs["updEdit"].showEdit(row);
     },
     handleDelete(row) {
       if (row.id) {
@@ -223,33 +259,48 @@ export default {
     //搜索关键字
     handleQuery() {
       this.queryForm.page = 1;
-      //账号类型筛选不为空时添加账号类型属性
-      if(!util.isEmpty(this.value)){
-        this.queryForm.state = this.value;
-      }else{   //账号类型筛选为空时删除账号类型属性
+      //时间筛选不为空时添加时间属性
+      if(!util.isEmpty(this.searchTime)){
+        this.queryForm.begAddTime = this.searchTime[0];
+        this.queryForm.endAddTime = this.searchTime[1];
+      }else{   //时间筛选为空时删除时间属性
+        delete this.queryForm.begAddTime;
+        delete this.queryForm.endAddTime;
+      };
+      //状态筛选不为空时添加状态属性
+      if(!util.isEmpty(this.stateValue)){
+        this.queryForm.state = this.stateValue;
+      }else{   //状态筛选为空时删除状态属性
         delete this.queryForm.state;
+      };
+      //类型筛选不为空时添加类型属性
+      if(!util.isEmpty(this.typeValue)){
+        this.queryForm.type = this.typeValue;
+      }else{   //类型筛选为空时删除类型属性
+        delete this.queryForm.type;
       };
       this.fetchData();
     },
-    fetchData() {
+    async fetchData() {
+
       this.listLoading = true;
-      api.getUser(this.queryForm, (res)=>{
+      api.getAdminMoneyTran(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
            data.forEach((item, index) =>{
               switch (item.state){
                 case 0:
-                  item.status = 'normal';
-                  item.stateTest = "正常";
+                  item.status = 'frozen';
+                  item.stateTest = "未审核";
                   break;
                 case 1:
-                  item.status = 'frozen';
-                  item.stateTest = "冻结";
+                  item.status = 'normal';
+                  item.stateTest = "审核通过";
                   break;
                 case 2:
                   item.status = 'ban';
-                  item.stateTest = "管理员封号";
+                  item.stateTest = "审核未通过";
                   break;
                 default:
                   break;
@@ -257,7 +308,6 @@ export default {
            });
            this.total = api.getTotal(res);
            this.list = data;
-           console.log(this.list);
          }
       });
       setTimeout(() => {
