@@ -22,7 +22,12 @@
        </el-form-item>
 
        <el-form-item label="图片url" prop="imgUrl">
-          <el-input v-model.trim="form.imgUrl" autocomplete="off" :disabled="true"></el-input>
+          <div class="block" style="width: 80px; height: 80px;">
+               <el-image
+                 :preview-src-list="[form.imgUrl]"
+                 :src="form.imgUrl"
+               ></el-image>
+           </div>
         </el-form-item>
 
         <el-form-item label="奖励" prop="award">

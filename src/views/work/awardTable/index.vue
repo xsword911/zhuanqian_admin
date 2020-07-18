@@ -1,16 +1,24 @@
 <template>
   <div class="table-container">
     <vab-query-form>
-     <vab-query-form-right-panel>
+     <vab-query-form-right-panel style="position: relative;">
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+        style="position: absolute; left: 0; top:34%;display:block; transform: translateY(-50%);"
+           >添加
+         </el-button>
+         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
+         style="position: absolute; left: 80px; top:34%;display:block; transform: translateY(-50%);"
+           >删除
+         </el-button>
         <el-form
           ref="form"
           :model="queryForm"
           :inline="true"
           @submit.native.prevent
         >
-          <el-form-item>
-            <el-input v-model="queryForm.title" placeholder="任务标题"  clearable/>
-          </el-form-item>
+         <el-form-item>
+           <el-input v-model="queryForm.title" placeholder="任务标题"  clearable/>
+         </el-form-item>
          <el-form-item>
             <el-input v-model="queryForm.admin" placeholder="操作者"  clearable/>
           </el-form-item>
@@ -68,12 +76,12 @@
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
     >
-      <!-- <el-table-column type="selection" width="55"></el-table-column> -->
-     <el-table-column label="序号" width="95">
-        <template slot-scope="scope">
+      <el-table-column type="selection" width="55"></el-table-column>
+     <!-- <el-table-column label="序号" width="95" prop="id"> -->
+<!--        <template slot-scope="scope">
           {{ scope.$index + 1 }}
-        </template>
-      </el-table-column>
+        </template> -->
+      <!-- </el-table-column> -->
       <el-table-column prop="title" label="任务标题"></el-table-column>
       <el-table-column prop="award" label="奖励"></el-table-column>
       <el-table-column prop="sortTest" label="任务分类"></el-table-column>
@@ -105,7 +113,7 @@
           <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
           </el-button>
-<!--          <el-button type="text" @click="handleDelete(scope.row)"
+<!--         <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
           <el-button type="text" @click="handleCheckEdit(scope.row)"
@@ -125,6 +133,7 @@
     ></el-pagination>
     <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
     <check-table-edit ref="checkEdit"></check-table-edit>
+    <add-table-edit ref="edit" @refreshList="fetchData"></add-table-edit>
   </div>
 </template>
 
@@ -132,13 +141,15 @@
 import { getList, doDelete } from "@/api/table";
 import updTableEdit from "./components/updTableEdit";
 import checkTableEdit from "./components/checkTableEdit";
+import addTableEdit from "./components/addTableEdit";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
   // name: "ComprehensiveTable",
   components: {
     checkTableEdit,
-    updTableEdit
+    updTableEdit,
+    addTableEdit
   },
   filters: {
     statusFilter(status) {
@@ -194,7 +205,7 @@ export default {
       layout: "total, sizes, prev, pager, next, jumper",
       total: 0,
       background: true,
-      selectRows: "",
+      selectRows: "",   //删除选中的任务id
       elementLoadingText: "正在加载...",
       queryForm: {
         page: 1,
@@ -225,6 +236,9 @@ export default {
   beforeDestroy() {},
   mounted() {},
   methods: {
+    handleAdd() {
+      this.$refs["edit"].showEdit();
+    },
     tableSortChange() {
       const imageList = [];
       this.$refs.tableSort.tableData.forEach((item, index) => {
@@ -241,25 +255,33 @@ export default {
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
     },
-    handleDelete(row) {
-      if (row.id) {
-        this.$baseConfirm("你确定要删除当前项吗", null, async () => {
-          const { msg } = await doDelete({ ids: row.id });
-          this.$baseMessage(msg, "success");
-          this.fetchData();
+    handleDelete() {
+      if(util.isEmpty(this.selectRows)){
+        this.$baseMessage("未选中任何行", "error");
+        return false;
+      }else {
+        let delById = [];
+        this.selectRows.forEach((item, index) =>{
+          let obj = {};
+          obj.id = item.id;
+          delById.push(obj);
         });
-      } else {
-        if (this.selectRows.length > 0) {
-          const ids = this.selectRows.map((item) => item.id).join();
-          this.$baseConfirm("你确定要删除选中项吗", null, async () => {
-            const { msg } = await doDelete({ ids: ids });
-            this.$baseMessage(msg, "success");
+        let delArr = {
+          arr: delById
+        };
+        api.delTaskArr(delArr, (res)=>{
+          let code = api.getCode(res);
+          if(code == 0){
+            this.$baseMessage("删除成功", "success");
+            this.$refs["form"].resetFields();
+            this.dialogFormVisible = false;
+            this.form = this.$options.data().form;
             this.fetchData();
-          });
-        } else {
-          this.$baseMessage("未选中任何行", "error");
-          return false;
-        }
+          }else{
+            let msg = api.getMsg(res);
+            this.$message.error(msg);
+          }
+        });
       }
     },
     handleSizeChange(val) {
@@ -330,7 +352,7 @@ export default {
                 default:
                   break;
               };
-              
+
               switch (item.sort){
                 case 0:
                   item.sortTest = "热门活动";

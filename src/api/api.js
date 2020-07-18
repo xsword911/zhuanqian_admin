@@ -1,4 +1,5 @@
 import httpUtil from "@/api/httpUtil.js";
+import config from "@/api/config.js";
 //网络操作封装
 module.exports = {
   //取返回数据内,code数据
@@ -21,15 +22,9 @@ module.exports = {
     return res.data.total;
   },
 
-  //获取图片路径
-  getFileUrl(postData) {
-    let url =
-      config.baseUrl +
-      "/File/FetchFile?pc=" +
-      postData.pc +
-      "&openId=" +
-      postData.openId;
-    return url;
+  //返回上传文件Url
+  getPostFileUrl: function (){
+    return config.BASE_URL + "/api/external/uploadFileToCache";
   },
 
   //取返回数据内,page分页的列表数据.只返回分页列表数据,不返回总页数等数据
@@ -77,9 +72,24 @@ module.exports = {
     httpUtil.post("activity/getLuckyDetailsInfo", path, funSuccess);
   },
 
+  //管理员添加任务
+  addTask: function (path, funSuccess) {
+    httpUtil.post("activity/addTask", path, funSuccess);
+  },
+
   //管理员查询任务设置
   getTaskInfo: function (path, funSuccess) {
     httpUtil.post("activity/getTaskInfo", path, funSuccess);
+  },
+
+  //管理员修改任务
+  updTask: function (path, funSuccess) {
+    httpUtil.post("activity/updTask", path, funSuccess);
+  },
+  
+  //管理员批量删除任务
+  delTaskArr: function (path, funSuccess) {
+    httpUtil.post("activity/delTaskArr", path, funSuccess);
   },
 
   //管理员查询玩家任务完成情况
@@ -126,7 +136,7 @@ module.exports = {
   updMoneyDraw: function (path, funSuccess) {
     httpUtil.post("money/updMoneyDraw", path, funSuccess);
   },
-  
+
   //管理员查询玩家额度转换记录
   getAdminMoneyTran: function (path, funSuccess) {
     httpUtil.post("money/getAdminMoneyTran", path, funSuccess);

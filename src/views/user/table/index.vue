@@ -257,7 +257,6 @@ export default {
            });
            this.total = api.getTotal(res);
            this.list = data;
-           console.log(this.list);
          }
       });
       setTimeout(() => {

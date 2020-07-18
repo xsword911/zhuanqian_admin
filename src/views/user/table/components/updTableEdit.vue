@@ -15,21 +15,21 @@
       <el-form-item label="昵称" prop="nick">
         <el-input v-model.trim="form.nick" autocomplete="off" clearable></el-input>
       </el-form-item>
-      <el-form-item label="头像" prop="imgUrl">
+      <el-form-item label="头像">
           <div style="display: flex;">
             <div class="block" style="width: 80px; height: 80px;">
                  <el-image
-                   :preview-src-list="[form.headUrl]"
                    :src="form.headUrl"
                  ></el-image>
              </div>
+
              <el-upload
                class="avatar-uploader"
-               action="https://jsonplaceholder.typicode.com/posts/"
+               :action= "getPostFileUrl()"
                :show-file-list="false"
                :on-success="handleAvatarSuccess"
                :before-upload="beforeAvatarUpload">
-               <img v-if="imageUrl" :src="imageUrl" class="avatar">
+               <img v-if="imgUrlNew" :src="imgUrlNew"  class="avatar">
                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
              </el-upload>
           </div>
@@ -67,6 +67,7 @@ export default {
   // name: "TableEdit",
   data() {
     return {
+      postFileUrl: '',  //文件上传地址
       options: [{
         options: [{
           value: 0,
@@ -85,23 +86,33 @@ export default {
         nick: "",
         account: "",
         state: '',
-        upper: ''
+        upper: '',
+        headUrl: '',
       },
       title: "",
       dialogFormVisible: false,
-      imageUrl: ''  //选择图片
+      imgUrlOld: "",
+      imgUrlNew: ''  ,//选择的图片
+      imgServeUrl: '',  //图片的服务器地址
+
     };
   },
   mounted() {
 
   },
   methods: {
+    //获取文件上传地址
+    getPostFileUrl(){
+      return api.getPostFileUrl();
+    },
           //文件上传成功
           handleAvatarSuccess(res, file) {
-            this.imageUrl = URL.createObjectURL(file.raw);
+            // this.imgUrlNew = URL.createObjectURL(file.raw);
+            this.form.headUrl = res.data.url;
           },
           //上传文件之前的钩子，参数为上传的文件
           beforeAvatarUpload(file) {
+            return;
             const isJPG = file.type === 'image/jpeg';
             const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -111,7 +122,6 @@ export default {
             if (!isLt2M) {
               this.$message.error('上传头像图片大小不能超过 2MB!');
             }
-            console.log(isJPG && isLt2M);
             return isJPG && isLt2M;
           },
 
@@ -131,7 +141,6 @@ export default {
       this.$emit("fetchData");
     },
     save() {
-        if(util.isEmpty(this.form.tel) && util.isEmpty(this.form.nick)) this.$message.error('修改信息不能为空');
         if(!util.isEmpty(this.form.nick)){
         		if(this.form.nick.length > 8){
               this.$message.error('昵称长度不能超过8位');
@@ -151,7 +160,8 @@ export default {
       let data = {
         account: this.form.account,
         nick: this.form.nick,
-        tel: this.form.tel
+        tel: this.form.tel,
+        headUrl: this.form.headUrl
       };
       api.setUser(data, (res)=>{
         let code = api.getCode(res);
@@ -179,6 +189,7 @@ export default {
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    margin-left:30rpx;
   }
   .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
