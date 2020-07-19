@@ -260,27 +260,29 @@ export default {
         this.$baseMessage("未选中任何行", "error");
         return false;
       }else {
-        let delById = [];
-        this.selectRows.forEach((item, index) =>{
-          let obj = {};
-          obj.id = item.id;
-          delById.push(obj);
-        });
-        let delArr = {
-          arr: delById
-        };
-        api.delTaskArr(delArr, (res)=>{
-          let code = api.getCode(res);
-          if(code == 0){
-            this.$baseMessage("删除成功", "success");
-            this.$refs["form"].resetFields();
-            this.dialogFormVisible = false;
-            this.form = this.$options.data().form;
-            this.fetchData();
-          }else{
-            let msg = api.getMsg(res);
-            this.$message.error(msg);
-          }
+        this.$baseConfirm("你确定要删除选中项吗", null, async () => {
+            let delById = [];
+            this.selectRows.forEach((item, index) =>{
+              let obj = {};
+              obj.id = item.id;
+              delById.push(obj);
+            });
+            let delArr = {
+              arr: delById
+            };
+            api.delTaskArr(delArr, (res)=>{
+              let code = api.getCode(res);
+              if(code == 0){
+                this.$baseMessage("删除成功", "success");
+                this.$refs["form"].resetFields();
+                this.dialogFormVisible = false;
+                this.form = this.$options.data().form;
+                this.fetchData();
+              }else{
+                let msg = api.getMsg(res);
+                this.$message.error(msg);
+              }
+            });  
         });
       }
     },

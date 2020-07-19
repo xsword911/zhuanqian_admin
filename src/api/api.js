@@ -91,6 +91,11 @@ module.exports = {
   delTaskArr: function (path, funSuccess) {
     httpUtil.post("activity/delTaskArr", path, funSuccess);
   },
+  
+  //批量删除任务完成情况
+  delTaskDetails: function (path, funSuccess) {
+    httpUtil.post("activity/delTaskDetails", path, funSuccess);
+  },
 
   //管理员查询玩家任务完成情况
   getTaskDetailsInfo: function (path, funSuccess) {
