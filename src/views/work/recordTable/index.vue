@@ -1,11 +1,16 @@
 <template>
   <div class="table-container">
     <vab-query-form>
+      <vab-query-form-top-panel :span="12">
+        <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
+          >删除
+        </el-button>
+      </vab-query-form-top-panel>
      <vab-query-form-right-panel>
-       <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
+<!--       <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
        style="position: absolute; left: 0px; top:34%;display:block; transform: translateY(-50%);"
          >删除
-       </el-button>
+       </el-button> -->
         <el-form
           ref="form"
           :model="queryForm"

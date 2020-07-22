@@ -18,23 +18,16 @@
          <el-input v-model.trim="form.award" autocomplete="off"></el-input>
        </el-form-item>
 
-    <el-form-item label="图片url" prop="imgUrl">
-      <div style="display: flex;">
-        <div class="block" style="width: 80px; height: 80px;">
-             <el-image
-               :src="form.imgUrl"
-             ></el-image>
-         </div>
-
-         <el-upload
-           class="avatar-uploader"
-           :action= "getPostFileUrl()"
-           :show-file-list="false"
-           :on-success="handleAvatarSuccess">
-           <img v-if="imgUrlNew" :src="imgUrlNew"  class="avatar">
-           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-         </el-upload>
-      </div>
+    <el-form-item label="图片url">
+       <el-upload
+         class="avatar-uploader"
+         :action= "getPostFileUrl()"
+         :show-file-list="false"
+         :on-success="handleAvatarSuccess"
+         :before-upload="beforeAvatarUpload">
+         <img v-if="form.imgUrl" :src="form.imgUrl"  class="avatar">
+         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+       </el-upload>
      </el-form-item>
 
       <el-form-item label="奖励类型" prop="type">
@@ -147,7 +140,6 @@ export default {
       stateValue: '',      //选中的任务状态
 
       form: {
-        id: null,
         order: "",
         title: "",
         imgUrl: '',
@@ -170,8 +162,7 @@ export default {
         limitSum: [{ required: true, trigger: "blur", message: "请输入剩余奖品数量" }],
         weight: [{ required: true, trigger: "blur", message: "请输入抽中权重" }],
         state: [{ required: true, trigger: "blur", message: "请输入状态" }],
-      },
-      imgUrlNew: ''  ,//选择的图片
+      }
     };
   },
   created() {},
@@ -185,6 +176,21 @@ export default {
             // this.imgUrlNew = URL.createObjectURL(file.raw);
             this.form.imgUrl = res.data.url;
           },
+          //上传文件之前的钩子，参数为上传的文件
+          beforeAvatarUpload(file) {
+            return;
+            const isJPG = file.type === 'image/jpeg';
+            const isLt2M = file.size / 1024 / 1024 < 2;
+
+            // if (!isJPG) {
+            //   this.$message.error('上传头像图片只能是 JPG 格式!');
+            // }
+            if (!isLt2M) {
+              this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return isJPG && isLt2M;
+          },
+
     showEdit(row) {
       if (!row) {
         this.title = "添加";
@@ -203,7 +209,7 @@ export default {
     save() {
       this.$refs["form"].validate(async (valid) => {
         if (valid) {
-          api.updLucky(this.form, (res)=>{
+          api.addLucky(this.form, (res)=>{
             let code = api.getCode(res);
             if(code == 0){
               this.$baseMessage("修改成功", "success");

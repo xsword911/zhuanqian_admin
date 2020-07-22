@@ -1,15 +1,24 @@
 <template>
   <div class="table-container">
     <vab-query-form>
-     <vab-query-form-right-panel style="position: relative;">
+      <vab-query-form-top-panel :span="12">
         <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+          >添加</el-button
+        >
+        <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
+          >删除
+        </el-button>
+      </vab-query-form-top-panel>
+      
+     <vab-query-form-right-panel style="position: relative;" :span="12">
+<!--        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
         style="position: absolute; left: 0; top:34%;display:block; transform: translateY(-50%);"
            >添加
          </el-button>
          <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
          style="position: absolute; left: 80px; top:34%;display:block; transform: translateY(-50%);"
            >删除
-         </el-button>
+         </el-button> -->
         <el-form
           ref="form"
           :model="queryForm"
@@ -282,7 +291,7 @@ export default {
                 let msg = api.getMsg(res);
                 this.$message.error(msg);
               }
-            });  
+            });
         });
       }
     },
@@ -324,6 +333,7 @@ export default {
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
+           // console.log(data);
            data.forEach((item, index) =>{
               switch (item.state){
                 case 0:
@@ -354,13 +364,15 @@ export default {
                 default:
                   break;
               };
-
               switch (item.sort){
                 case 0:
                   item.sortTest = "热门活动";
                   break;
                 case 1:
                   item.sortTest = "限时推荐";
+                  break;
+                case 2:
+                  item.sortTest = "赚赚";
                   break;
                 default:
                   break;

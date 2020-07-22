@@ -87,6 +87,10 @@ export default {
         state: null,
         desc: '',
       },
+      form2: {
+        id: '',
+        state: null,
+      },
       title: "",
       dialogFormVisible: false,
     };
@@ -111,8 +115,12 @@ export default {
       this.$emit("fetchData");
     },
     submitUpd(){
-      this.form.admin = "admin2";
-      api.updMoneyDraw(this.form, (res)=>{
+      this.form2.admin = "admin2";
+      this.form2.id = this.form.id;
+      this.form2.state = this.form.state;
+      if(!util.isEmpty(this.form.desc)) this.form2.desc = this.form.desc;
+      this.form2.id = this.form.id;
+      api.updMoneyDraw(this.form2, (res)=>{
         let code = api.getCode(res);
         if(code == 0){
           this.$baseMessage("修改成功", "success");

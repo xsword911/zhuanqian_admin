@@ -18,7 +18,8 @@
 
        <el-form-item label="刷新周期" prop="cycle">
          <el-input value="只能完成一次" autocomplete="off" :disabled="true" v-show="form.cycle == 0"></el-input>
-         <el-input :value="form.cycle + '天可做一次'" autocomplete="off" :disabled="true" v-show="form.cycle == 1"></el-input>
+         <el-input value="每天可完成一次" autocomplete="off" :disabled="true" v-show="form.cycle == 1"></el-input>
+         <el-input :value="form.cycle + '天可做一次'" autocomplete="off" :disabled="true" v-show="form.cycle != 0 && form.cycle != 1"></el-input>
        </el-form-item>
 
        <el-form-item label="图片url" prop="imgUrl">
@@ -47,12 +48,6 @@
         <el-input value="签到奖励" autocomplete="off" :disabled="true" v-show="form.type == 4"></el-input>
       </el-form-item>
 
-      <el-form-item label="奖励类型" prop="type">
-        <el-input value="金币" autocomplete="off" :disabled="true" v-show="form.type == 0"></el-input>
-        <el-input value="现金" autocomplete="off" :disabled="true" v-show="form.type == 1"></el-input>
-        <el-input value="其他" autocomplete="off" :disabled="true" v-show="form.type == 10"></el-input>
-      </el-form-item>
-
       <el-form-item label="开始时间" prop="begTime">
          <el-input v-model.trim="form.begTime" autocomplete="off" :disabled="true"></el-input>
        </el-form-item>
@@ -69,6 +64,7 @@
       <el-form-item label="任务分类" prop="sort">
         <el-input value="热门活动" autocomplete="off" :disabled="true" v-show="form.sort == 0"></el-input>
         <el-input value="限时推荐" autocomplete="off" :disabled="true" v-show="form.sort == 1"></el-input>
+        <el-input value="赚赚" autocomplete="off" :disabled="true" v-show="form.sort == 2"></el-input>
       </el-form-item>
 
       <el-form-item label="更新时间" prop="updTime">

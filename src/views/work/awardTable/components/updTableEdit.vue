@@ -228,6 +228,9 @@ export default {
         cycle: [{
           value: 0,
           label: '只能完成一次'
+        },{
+          value: 1,
+          label: '每天可完成一次'
         }]
       }],
       cycleValue: '',      //任务刷新周期

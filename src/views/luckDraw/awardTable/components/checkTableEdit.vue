@@ -6,12 +6,24 @@
     @close="close"
   >
    <el-form ref="form" :model="form" label-width="80px">
+     <el-form-item label="排序" prop="order">
+        <el-input v-model.trim="form.order" autocomplete="off" :disabled="true"></el-input>
+      </el-form-item>
      <el-form-item label="奖励标题" prop="title">
         <el-input v-model.trim="form.title" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="奖励内容" prop="award">
+      <el-form-item label="奖励金额" prop="award">
          <el-input v-model.trim="form.award" autocomplete="off" :disabled="true"></el-input>
        </el-form-item>
+
+       <el-form-item label="图片url" prop="imgUrl">
+          <div class="block" style="width: 80px; height: 80px;">
+               <el-image
+                 :preview-src-list="[form.imgUrl]"
+                 :src="form.imgUrl"
+               ></el-image>
+           </div>
+        </el-form-item>
 
       <el-form-item label="奖励类型" prop="type">
         <el-input value="金币" autocomplete="off" :disabled="true" v-show="form.type == 0"></el-input>
@@ -19,14 +31,18 @@
         <el-input value="其他" autocomplete="off" :disabled="true" v-show="form.type == 10"></el-input>
       </el-form-item>
 
-      <el-form-item label="状态" prop="state">
-        <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
-        <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
-      </el-form-item>
-
       <el-form-item label="奖励类型" prop="limitSum">
         <el-input value="无限制" autocomplete="off" :disabled="true" v-show="form.limitSum == -1"></el-input>
         <el-input v-model.trim="form.limitSum" autocomplete="off" :disabled="true" v-show="form.limitSum != -1"></el-input>
+      </el-form-item>
+      
+      <el-form-item label="抽中权重" prop="weight">
+        <el-input v-model.trim="form.weight" autocomplete="off" :disabled="true"></el-input>
+      </el-form-item>
+
+      <el-form-item label="状态" prop="state">
+        <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
+        <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
       </el-form-item>
 
       <el-form-item label="备注" prop="desc">

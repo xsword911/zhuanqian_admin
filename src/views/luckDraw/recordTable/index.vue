@@ -1,6 +1,11 @@
 <template>
   <div class="table-container">
     <vab-query-form>
+      <vab-query-form-top-panel :span="12">
+        <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
+          >删除
+        </el-button>
+      </vab-query-form-top-panel>
      <vab-query-form-right-panel>
         <el-form
           ref="form"
@@ -83,7 +88,7 @@
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
     >
-      <!-- <el-table-column type="selection" width="55"></el-table-column> -->
+      <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
@@ -219,24 +224,34 @@ export default {
       this.$refs["checkEdit"].showEdit(row);
     },
     handleDelete(row) {
-      if (row.id) {
-        this.$baseConfirm("你确定要删除当前项吗", null, async () => {
-          const { msg } = await doDelete({ ids: row.id });
-          this.$baseMessage(msg, "success");
-          this.fetchData();
+      if(util.isEmpty(this.selectRows)){
+        this.$baseMessage("未选中任何行", "error");
+        return false;
+      }else {
+        this.$baseConfirm("你确定要删除选中项吗", null, async () => {
+            let delById = [];
+            this.selectRows.forEach((item, index) =>{
+              let obj = {};
+              obj.id = item.id;
+              delById.push(obj);
+            });
+            let delArr = {
+              arr: delById
+            };
+            api.delLuckyDetailsArr(delArr, (res)=>{
+              let code = api.getCode(res);
+              if(code == 0){
+                this.$baseMessage("删除成功", "success");
+                this.$refs["form"].resetFields();
+                this.dialogFormVisible = false;
+                this.form = this.$options.data().form;
+                this.fetchData();
+              }else{
+                let msg = api.getMsg(res);
+                this.$message.error(msg);
+              }
+            });
         });
-      } else {
-        if (this.selectRows.length > 0) {
-          const ids = this.selectRows.map((item) => item.id).join();
-          this.$baseConfirm("你确定要删除选中项吗", null, async () => {
-            const { msg } = await doDelete({ ids: ids });
-            this.$baseMessage(msg, "success");
-            this.fetchData();
-          });
-        } else {
-          this.$baseMessage("未选中任何行", "error");
-          return false;
-        }
       }
     },
     handleSizeChange(val) {

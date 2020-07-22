@@ -25,3 +25,4 @@ Vue.component("vab-query-form-left-panel", VabQueryFormTopPanel);
 Vue.component("vab-query-form-right-panel", VabQueryFormBottomPanel);
 Vue.component("vab-query-form-top-panel", VabQueryFormLeftPanel);
 Vue.component("vab-query-form-bottom-panel", VabQueryFormRightPanel);
+

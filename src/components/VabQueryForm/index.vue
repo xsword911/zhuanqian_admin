@@ -22,7 +22,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .vab-query-form {
@@ -36,7 +36,7 @@ export default {
     .bottom-panel {
       @include panel;
 
-      // padding-top: 14px;
+      padding-top: 14px;
       // border-top: 1px solid #dcdfe6;
     }
 

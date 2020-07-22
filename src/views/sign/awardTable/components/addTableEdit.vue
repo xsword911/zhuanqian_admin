@@ -6,39 +6,19 @@
     @close="close"
   >
   <el-form ref="form" :model="form" label-width="80px" :rules="rules">
-    <el-form-item label="排序" prop="order">
-        <el-input v-model="form.order" placeholder="排序"/>
-     </el-form-item>
+     <el-form-item label="第几天" prop="day">
+            <el-input v-model="form.day" placeholder="每个月第几天"  clearable
+            onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+            maxlength="2"/>
 
-     <el-form-item label="奖励标题" prop="title">
-         <el-input v-model="form.title" placeholder="奖励标题"/>
       </el-form-item>
 
-      <el-form-item label="奖励金额" prop="award">
+      <el-form-item label="奖励内容" prop="award">
          <el-input v-model.trim="form.award" autocomplete="off"></el-input>
        </el-form-item>
 
-    <el-form-item label="图片url" prop="imgUrl">
-      <div style="display: flex;">
-        <div class="block" style="width: 80px; height: 80px;">
-             <el-image
-               :src="form.imgUrl"
-             ></el-image>
-         </div>
-
-         <el-upload
-           class="avatar-uploader"
-           :action= "getPostFileUrl()"
-           :show-file-list="false"
-           :on-success="handleAvatarSuccess">
-           <img v-if="imgUrlNew" :src="imgUrlNew"  class="avatar">
-           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-         </el-upload>
-      </div>
-     </el-form-item>
-
-      <el-form-item label="奖励类型" prop="type">
-        <el-select v-model="form.type" placeholder="奖励类型" clearable filterable allow-create>
+      <el-form-item label="奖励类型" prop="awardType">
+        <el-select v-model="form.awardType" placeholder="奖励类型" clearable filterable allow-create>
           <el-option-group
             v-for="group in awardType"
             :key="group.label"
@@ -52,28 +32,6 @@
           </el-option-group>
         </el-select>
       </el-form-item>
-
-      <el-form-item label="剩余奖品数量" prop="limitSum">
-        <el-select v-model="form.limitSum" placeholder="剩余奖品数量" clearable filterable allow-create>
-          <el-option-group
-            v-for="group in limitSum"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.limitSum"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="抽中权重" prop="weight">
-         <el-input v-model.trim="form.weight" autocomplete="off"
-         onkeyup="this.value=this.value.replace(/[^\d.]/g,'');">
-         </el-input>
-       </el-form-item>
 
       <el-form-item label="状态" prop="state">
         <el-select v-model="form.state" placeholder="状态">
@@ -90,10 +48,6 @@
           </el-option-group>
         </el-select>
       </el-form-item>
-
-      <el-form-item label="备注" prop="desc">
-         <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
-       </el-form-item>
 
     </el-form>
 
@@ -120,20 +74,9 @@ export default {
         },{
           value: 1,
           label: '现金'
-        },{
-          value: 10,
-          label: '其他'
         }]
       }],
       awardTypeValue: '',      //选中的任务类型
-
-      limitSum: [{
-          limitSum: [{
-            value: -1,
-            label: '不限制'
-          }]
-        }],
-        limitSumValue: '',      //选中的任务类型
 
       state: [{
         state: [{
@@ -147,44 +90,24 @@ export default {
       stateValue: '',      //选中的任务状态
 
       form: {
-        id: null,
-        order: "",
-        title: "",
-        imgUrl: '',
-        type: null,
-        award: '',
-        limitSum: null,
-        weight: null,
+        awardType: null,
         state: null,
-        desc: "",
+        day: null,
+        award: '',
       },
       title: "",
       dialogFormVisible: false,
 
       rules: {
-        order: [{ required: true, trigger: "blur", message: "请输入排序" }],
-        title: [{ required: true, trigger: "blur", message: "请输入奖励标题" }],
-        imgUrl: [{ required: true, trigger: "blur", message: "请输入奖励图片" }],
-        type: [{ required: true, trigger: "blur", message: "请输入奖励类型" }],
-        award: [{ required: true, trigger: "blur", message: "请输入奖励金额" }],
-        limitSum: [{ required: true, trigger: "blur", message: "请输入剩余奖品数量" }],
-        weight: [{ required: true, trigger: "blur", message: "请输入抽中权重" }],
-        state: [{ required: true, trigger: "blur", message: "请输入状态" }],
-      },
-      imgUrlNew: ''  ,//选择的图片
+        day: [{ required: true, trigger: "blur", message: "请输入每月第几天" }],
+        award: [{ required: true, trigger: "blur", message: "请输入签到奖励内容" }],
+        awardType: [{ required: true, trigger: "blur", message: "请输入签到奖励类型" }],
+        state: [{ required: true, trigger: "blur", message: "请输入签到奖励状态" }],
+      }
     };
   },
   created() {},
   methods: {
-    //获取文件上传地址
-    getPostFileUrl(){
-      return api.getPostFileUrl();
-    },
-          //文件上传成功
-          handleAvatarSuccess(res, file) {
-            // this.imgUrlNew = URL.createObjectURL(file.raw);
-            this.form.imgUrl = res.data.url;
-          },
     showEdit(row) {
       if (!row) {
         this.title = "添加";
@@ -201,9 +124,19 @@ export default {
       this.$emit("fetchData");
     },
     save() {
+      //输入日期不能大于当月最大日期
+      if(!util.isEmpty(this.form.day)){
+          let date = this.mGetDate();  //获取当前月份总共有多少天
+          this.form.day = parseInt(this.form.day);
+          if(this.form.day > date){
+            this.$message.error("输入日期错误");
+            return;
+          }
+      }else this.form.day = null;  //为空时强制改为null（数字）
+
       this.$refs["form"].validate(async (valid) => {
         if (valid) {
-          api.updLucky(this.form, (res)=>{
+          api.addSign(this.form, (res)=>{
             let code = api.getCode(res);
             if(code == 0){
               this.$baseMessage("修改成功", "success");

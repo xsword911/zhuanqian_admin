@@ -53,8 +53,8 @@ module.exports = {
   },
 
   //管理员查询签到奖励
-  getSign: function (path, funSuccess) {
-    httpUtil.post("activity/getSign", path, funSuccess);
+  getInfo: function (path, funSuccess) {
+    httpUtil.post("activity/getInfo", path, funSuccess);
   },
 
   //管理员查询玩家签到情况
@@ -62,14 +62,54 @@ module.exports = {
     httpUtil.post("activity/getAdminInfo", path, funSuccess);
   },
 
+  //批量删除签到领取情况
+  delSignDetailsArr: function (path, funSuccess) {
+    httpUtil.post("activity/delSignDetailsArr", path, funSuccess);
+  },
+
+  //添加签到奖励
+  addSign: function (path, funSuccess) {
+    httpUtil.post("activity/addSign", path, funSuccess);
+  },
+
+  //修改签到奖励
+  updSign: function (path, funSuccess) {
+    httpUtil.post("activity/updSign", path, funSuccess);
+  },
+
+  //批量删除签到奖励
+  delSignArr: function (path, funSuccess) {
+    httpUtil.post("activity/delSignArr", path, funSuccess);
+  },
+
   //管理员查询抽奖列表
   getLucky: function (path, funSuccess) {
     httpUtil.post("activity/getLucky", path, funSuccess);
   },
 
+  //添加抽奖配置
+  addLucky: function (path, funSuccess) {
+    httpUtil.post("activity/addLucky", path, funSuccess);
+  },
+
+  //修改抽奖配置
+  updLucky: function (path, funSuccess) {
+    httpUtil.post("activity/updLucky", path, funSuccess);
+  },
+
+  //批量删除抽奖配置
+  delLuckyArr: function (path, funSuccess) {
+    httpUtil.post("activity/delLuckyArr", path, funSuccess);
+  },
+
   //管理员查询玩家抽奖记录
   getLuckyDetailsInfo: function (path, funSuccess) {
     httpUtil.post("activity/getLuckyDetailsInfo", path, funSuccess);
+  },
+
+  //管理员删除玩家抽奖记录
+  delLuckyDetailsArr: function (path, funSuccess) {
+    httpUtil.post("activity/delLuckyDetailsArr", path, funSuccess);
   },
 
   //管理员添加任务
@@ -86,12 +126,12 @@ module.exports = {
   updTask: function (path, funSuccess) {
     httpUtil.post("activity/updTask", path, funSuccess);
   },
-  
+
   //管理员批量删除任务
   delTaskArr: function (path, funSuccess) {
     httpUtil.post("activity/delTaskArr", path, funSuccess);
   },
-  
+
   //批量删除任务完成情况
   delTaskDetails: function (path, funSuccess) {
     httpUtil.post("activity/delTaskDetails", path, funSuccess);

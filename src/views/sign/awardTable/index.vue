@@ -1,7 +1,24 @@
 <template>
-  <div class="table-container">
+  <div class="userManagement-container">
     <vab-query-form>
-     <vab-query-form-right-panel>
+      <vab-query-form-top-panel :span="12">
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+          >添加</el-button
+        >
+        <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
+          >删除
+        </el-button>
+      </vab-query-form-top-panel>
+
+     <vab-query-form-right-panel  :span="12">
+<!--       <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+       style="position: absolute; left: 0; top:34%;display:block; transform: translateY(-50%);"
+          >添加
+        </el-button>
+        <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
+        style="position: absolute; left: 80px; top:34%;display:block; transform: translateY(-50%);"
+          >删除
+        </el-button> -->
         <el-form
           ref="form"
           :model="queryForm"
@@ -69,7 +86,7 @@
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
     >
-      <!-- <el-table-column type="selection" width="55"></el-table-column> -->
+      <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
@@ -118,6 +135,7 @@
     ></el-pagination>
     <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
     <check-table-edit ref="checkEdit"></check-table-edit>
+    <add-table-edit ref="edit" @refreshList="fetchData"></add-table-edit>
   </div>
 </template>
 
@@ -125,13 +143,15 @@
 import { getList, doDelete } from "@/api/table";
 import updTableEdit from "./components/updTableEdit";
 import checkTableEdit from "./components/checkTableEdit";
+import addTableEdit from "./components/addTableEdit";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
   // name: "ComprehensiveTable",
   components: {
     checkTableEdit,
-    updTableEdit
+    updTableEdit,
+    addTableEdit
   },
   filters: {
     statusFilter(status) {
@@ -190,6 +210,9 @@ export default {
   beforeDestroy() {},
   mounted() {},
   methods: {
+    handleAdd() {
+      this.$refs["edit"].showEdit();
+    },
     tableSortChange() {
       const imageList = [];
       this.$refs.tableSort.tableData.forEach((item, index) => {
@@ -207,24 +230,34 @@ export default {
       this.$refs["checkEdit"].showEdit(row);
     },
     handleDelete(row) {
-      if (row.id) {
-        this.$baseConfirm("你确定要删除当前项吗", null, async () => {
-          const { msg } = await doDelete({ ids: row.id });
-          this.$baseMessage(msg, "success");
-          this.fetchData();
+      if(util.isEmpty(this.selectRows)){
+        this.$baseMessage("未选中任何行", "error");
+        return false;
+      }else {
+        this.$baseConfirm("你确定要删除选中项吗", null, async () => {
+            let delById = [];
+            this.selectRows.forEach((item, index) =>{
+              let obj = {};
+              obj.id = item.id;
+              delById.push(obj);
+            });
+            let delArr = {
+              arr: delById
+            };
+            api.delSignArr(delArr, (res)=>{
+              let code = api.getCode(res);
+              if(code == 0){
+                this.$baseMessage("删除成功", "success");
+                this.$refs["form"].resetFields();
+                this.dialogFormVisible = false;
+                this.form = this.$options.data().form;
+                this.fetchData();
+              }else{
+                let msg = api.getMsg(res);
+                this.$message.error(msg);
+              }
+            });
         });
-      } else {
-        if (this.selectRows.length > 0) {
-          const ids = this.selectRows.map((item) => item.id).join();
-          this.$baseConfirm("你确定要删除选中项吗", null, async () => {
-            const { msg } = await doDelete({ ids: ids });
-            this.$baseMessage(msg, "success");
-            this.fetchData();
-          });
-        } else {
-          this.$baseMessage("未选中任何行", "error");
-          return false;
-        }
       }
     },
     handleSizeChange(val) {
@@ -239,14 +272,14 @@ export default {
     handleQuery() {
       this.queryForm.page = 1;
       //输入日期不能大于当月最大日期
-     if(!util.isEmpty(this.day)){
+     if(!util.isEmpty(this.queryForm.day)){
         let date = this.mGetDate();  //获取当前月份总共有多少天
         this.queryForm.day = parseInt(this.queryForm.day);
         if(this.queryForm.day > date){
           this.$message.error("输入日期错误");
           return;
         }
-      };
+      }else this.queryForm.day = null;  //为空时强制改为null（数字）
       //奖励类型筛选不为空时添加奖励类型属性
       if(!util.isEmpty(this.typeValue)){
         this.queryForm.awardType = this.typeValue;
@@ -263,7 +296,7 @@ export default {
     },
     async fetchData() {
       this.listLoading = true;
-      api.getSign(this.queryForm, (res)=>{
+      api.getInfo(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
