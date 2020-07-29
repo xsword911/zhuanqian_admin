@@ -62,7 +62,6 @@ export const asyncRoutes = [
     ],
   },
 
-
   {
     path: "/user",
     component: Layout,
@@ -84,7 +83,6 @@ export const asyncRoutes = [
       },
     ],
   },
-
 
   {
     path: "/sign",
@@ -220,19 +218,19 @@ export const asyncRoutes = [
       {
         path: "roleManagement",
         name: "RoleManagement",
-        component: () => import("@/views/statistics/table/index"),
-        meta: { title: "个人报表" },
+        component: () => import("@/views/statistics/userTable/index"),
+        meta: { title: "个人概览" },
       },
       {
         path: "dayStatisticsTable",
         name: "DayStatisticsTable",
-        component: () => import("@/views/statistics/table/index"),
+        component: () => import("@/views/statistics/todayTable/index"),
         meta: { title: "日报表" },
       },
       {
         path: "monthStatisticsTable",
         name: "MonthStatisticsTable",
-        component: () => import("@/views/statistics/table/index"),
+        component: () => import("@/views/statistics/monthTable/index"),
         meta: { title: "月报表" },
       }
     ],

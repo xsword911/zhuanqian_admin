@@ -1,12 +1,12 @@
 <template>
   <div class="table-container">
-    <vab-query-form>
-      <vab-query-form-top-panel :span="12">
+    <vab-query-form style="display: flex;">
+      <vab-query-form-left-panel style="max-width:84px;">
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
           >删除
         </el-button>
-      </vab-query-form-top-panel>
-     <vab-query-form-right-panel>
+      </vab-query-form-left-panel>
+     <vab-query-form-right-panel style="flex: 1;">
 <!--       <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
        style="position: absolute; left: 0px; top:34%;display:block; transform: translateY(-50%);"
          >删除
@@ -18,7 +18,7 @@
           @submit.native.prevent
         >
           <el-form-item>
-             <el-input v-model="queryForm.account" placeholder="账号"  clearable/>
+             <el-input v-model="queryForm.uid" placeholder="uid"  clearable/>
            </el-form-item>
           <el-form-item>
             <el-input v-model="queryForm.title" placeholder="任务名称"  clearable/>
@@ -83,7 +83,7 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="account" label="账号"></el-table-column>
+      <el-table-column prop="uid" label="uid"></el-table-column>
       <el-table-column prop="sn" label="订单号"></el-table-column>
       <el-table-column prop="title" label="任务名称"></el-table-column>
       <el-table-column prop="award" label="奖励金额"></el-table-column>
@@ -170,7 +170,7 @@ export default {
         page: 1,
         count: 10,
         title: '',
-        account: '',
+        uid: '',
         begAddTime: '',
         endAddTime: '',
         admin: '',
@@ -264,7 +264,7 @@ export default {
     },
     async fetchData() {
       this.listLoading = true;
-      api.getTaskDetailsInfo(this.queryForm, (res)=>{
+      api.getTaskDetails(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);

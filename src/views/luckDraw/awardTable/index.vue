@@ -1,15 +1,15 @@
 <template>
   <div class="table-container">
-    <vab-query-form>
-      <vab-query-form-top-panel :span="12">
+    <vab-query-form style="display: flex;">
+      <vab-query-form-left-panel style="max-width:168px;">
         <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
           >添加</el-button
         >
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
           >删除
         </el-button>
-      </vab-query-form-top-panel>
-     <vab-query-form-right-panel>
+      </vab-query-form-left-panel>
+     <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
           :model="queryForm"
@@ -98,6 +98,7 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
+      <el-table-column prop="order" label="排序"></el-table-column>
       <el-table-column prop="title" label="奖励标题"></el-table-column>
       <el-table-column prop="awardTypeTest" label="奖励类型"></el-table-column>
       <el-table-column prop="award" label="奖励内容"></el-table-column>

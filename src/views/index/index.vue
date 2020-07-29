@@ -1,6 +1,6 @@
 <template>
   <div class="index-container">
-         <vab-query-form-right-panel>
+<!--         <vab-query-form-right-panel>
            <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
               >添加
             </el-button>
@@ -11,7 +11,7 @@
             <el-button type="primary" @click="testALert">baseAlert</el-button>
             <el-button type="primary" @click="testConfirm">baseConfirm</el-button>
             <el-button type="primary" @click="testNotify">baseNotify</el-button>
-          </vab-query-form-right-panel>
+          </vab-query-form-right-panel> -->
     <el-row v-if="nodeEnv == '!development'" :gutter="15">
       <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
         <el-card>
@@ -96,6 +96,8 @@
 </template>
 
 <script>
+import api from "@/api/api.js";
+import storage from "@/api/storage.js";
 export default {
   name: "Index",
   components: {},
@@ -105,8 +107,22 @@ export default {
     };
   },
   created() {},
-  mounted() {},
+  mounted() {
+     // this.login();
+  },
   methods: {
+    // login(){
+    //   api.login({"account": "admin1", "pwd": "111111", "type": 1}, (res) => {
+    //     let code = api.getCode(res);
+    //     let msg = api.getMsg(res);
+    //     if (code == 0) {
+    //       let uid = api.getUid(res);
+    //       let token = api.getToken(res);
+    //       storage.setToken(token);
+    //       storage.setUid(uid);
+    //     }
+    //   })
+    // },
     testMessage() {
       this.$baseMessage("test1", "success");
     },

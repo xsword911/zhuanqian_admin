@@ -7,8 +7,8 @@
   >
     <el-form ref="form" :model="form" label-width="80px">
           <!-- <el-input v-model.trim="form.id" autocomplete="off" :disabled="true" v-if="false"></el-input> -->
-    <el-form-item label="账号" prop="account">
-        <el-input v-model.trim="form.account" autocomplete="off" :disabled="true"></el-input>
+    <el-form-item label="uid" prop="uid">
+        <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="账单号" prop="sn">
         <el-input v-model.trim="form.sn" autocomplete="off" :disabled="true"></el-input>

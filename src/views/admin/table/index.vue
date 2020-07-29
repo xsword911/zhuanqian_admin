@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
-    <vab-query-form>
-     <vab-query-form-right-panel>
+    <vab-query-form style="display: flex;">
+     <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
           :model="queryForm"
@@ -42,12 +42,14 @@
       @sort-change="tableSortChange"
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
-      <el-table-column label="序号" width="95">
+<!--      <el-table-column label="序号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column prop="account" label="用户名"></el-table-column>
+      <el-table-column prop="uid" label="uid"></el-table-column>
+      <el-table-column prop="deviceId" label="登录设备"></el-table-column>
       <el-table-column prop="nick" label="昵称"></el-table-column>
       <el-table-column prop="tel" label="手机号"></el-table-column>
       <el-table-column prop="code" label="邀请码"></el-table-column>

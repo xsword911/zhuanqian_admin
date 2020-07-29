@@ -22,6 +22,16 @@ module.exports = {
     return res.data.total;
   },
 
+  //取返回数据内,uid数据
+  getUid: function (res) {
+    return res.data;
+  },
+
+  //取返回数据内,token数据
+  getToken: function (res) {
+    return res.token;
+  },
+
   //返回上传文件Url
   getPostFileUrl: function (){
     return config.BASE_URL + "/api/external/uploadFileToCache";
@@ -53,13 +63,13 @@ module.exports = {
   },
 
   //管理员查询签到奖励
-  getInfo: function (path, funSuccess) {
-    httpUtil.post("activity/getInfo", path, funSuccess);
+  getSign: function (path, funSuccess) {
+    httpUtil.post("activity/getSign", path, funSuccess);
   },
 
   //管理员查询玩家签到情况
-  getAdminInfo: function (path, funSuccess) {
-    httpUtil.post("activity/getAdminInfo", path, funSuccess);
+  getSignDetails: function (path, funSuccess) {
+    httpUtil.post("activity/getSignDetails", path, funSuccess);
   },
 
   //批量删除签到领取情况
@@ -103,8 +113,8 @@ module.exports = {
   },
 
   //管理员查询玩家抽奖记录
-  getLuckyDetailsInfo: function (path, funSuccess) {
-    httpUtil.post("activity/getLuckyDetailsInfo", path, funSuccess);
+  getLuckyDetails: function (path, funSuccess) {
+    httpUtil.post("activity/getLuckyDetails", path, funSuccess);
   },
 
   //管理员删除玩家抽奖记录
@@ -138,8 +148,8 @@ module.exports = {
   },
 
   //管理员查询玩家任务完成情况
-  getTaskDetailsInfo: function (path, funSuccess) {
-    httpUtil.post("activity/getTaskDetailsInfo", path, funSuccess);
+  getTaskDetails: function (path, funSuccess) {
+    httpUtil.post("activity/getTaskDetails", path, funSuccess);
   },
 
   //查询账变记录
@@ -173,8 +183,8 @@ module.exports = {
   },
 
   //管理员查询玩家提现申请表
-  getAdminMoneyDraw: function (path, funSuccess) {
-    httpUtil.post("money/getAdminMoneyDraw", path, funSuccess);
+  getMoneyDraw: function (path, funSuccess) {
+    httpUtil.post("money/getMoneyDraw", path, funSuccess);
   },
 
   //审核提现记录
@@ -183,7 +193,17 @@ module.exports = {
   },
 
   //管理员查询玩家额度转换记录
-  getAdminMoneyTran: function (path, funSuccess) {
-    httpUtil.post("money/getAdminMoneyTran", path, funSuccess);
+  getMoneyTran: function (path, funSuccess) {
+    httpUtil.post("money/getMoneyTran", path, funSuccess);
+  },
+
+  //管理员查询玩家日报表
+  getStatisticsDay: function (path, funSuccess) {
+    httpUtil.post("money/getStatisticsDay", path, funSuccess);
+  },
+  
+  //管理员查询玩家月报表
+  getStatisticsMonth: function (path, funSuccess) {
+    httpUtil.post("money/getStatisticsMonth", path, funSuccess);
   },
 };

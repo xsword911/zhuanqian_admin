@@ -21,8 +21,8 @@ Vue.use(permission);
 Vue.use(vab);
 
 Vue.component("vab-query-form", VabQueryForm);
-Vue.component("vab-query-form-left-panel", VabQueryFormTopPanel);
-Vue.component("vab-query-form-right-panel", VabQueryFormBottomPanel);
-Vue.component("vab-query-form-top-panel", VabQueryFormLeftPanel);
-Vue.component("vab-query-form-bottom-panel", VabQueryFormRightPanel);
+Vue.component("vab-query-form-left-panel", VabQueryFormLeftPanel);
+Vue.component("vab-query-form-right-panel", VabQueryFormRightPanel);
+Vue.component("vab-query-form-top-panel", VabQueryFormTopPanel);
+Vue.component("vab-query-form-bottom-panel", VabQueryFormBottomPanel);
 

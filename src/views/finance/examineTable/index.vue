@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
-    <vab-query-form>
-     <vab-query-form-right-panel>
+    <vab-query-form style="display: flex;">
+     <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
           :model="queryForm"
@@ -9,7 +9,7 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.account" placeholder="账号"  clearable/>
+            <el-input v-model="queryForm.uid" placeholder="uid"  clearable/>
           </el-form-item>
 <!--         <el-form-item>
             <el-input v-model="queryForm.sn" placeholder="订单号"  clearable/>
@@ -73,7 +73,7 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="account" label="账号"></el-table-column>
+      <el-table-column prop="uid" label="uid"></el-table-column>
       <el-table-column prop="sn" label="账单号"></el-table-column>
       <el-table-column prop="money" label="金额"></el-table-column>
       <el-table-column prop="addTime" label="申请时间"></el-table-column>
@@ -101,7 +101,7 @@
             >删除
           </el-button> -->
           <el-button type="text" @click="handleEdit(scope.row)"
-            >编辑
+            >审核
           </el-button>
           <el-button type="text" @click="handleCheckEdit(scope.row)"
             >查看
@@ -257,7 +257,7 @@ export default {
     async fetchData() {
 
       this.listLoading = true;
-      api.getAdminMoneyDraw(this.queryForm, (res)=>{
+      api.getMoneyDraw(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);

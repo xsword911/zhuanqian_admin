@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
-    <vab-query-form>
-     <vab-query-form-right-panel>
+    <vab-query-form style="display: flex;">
+     <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
           :model="queryForm"

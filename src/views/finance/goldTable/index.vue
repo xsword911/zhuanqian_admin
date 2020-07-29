@@ -1,6 +1,6 @@
 <template>
   <div class="table-container">
-    <vab-query-form>
+    <vab-query-form style="display: flex;">
 <!--    <vab-query-form-left-panel>
         <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
           >添加
@@ -13,7 +13,7 @@
         <el-button type="primary" @click="testConfirm">baseConfirm</el-button>
         <el-button type="primary" @click="testNotify">baseNotify</el-button>
       </vab-query-form-left-panel> -->
-     <vab-query-form-right-panel>
+     <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
           :model="queryForm"
@@ -21,7 +21,7 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.account" placeholder="账号" clearable />
+            <el-input v-model="queryForm.uid" placeholder="uid" clearable />
           </el-form-item>
           <el-form-item>
             <el-input v-model="queryForm.sn" placeholder="账单号" clearable 
@@ -88,7 +88,7 @@
           {{ scope.$index + 1 }}
         </template> -->
       <!-- </el-table-column> -->
-      <el-table-column prop="account" label="账号"></el-table-column>
+      <el-table-column prop="uid" label="uid"></el-table-column>
       <el-table-column label="交易订单号" prop="sn"></el-table-column>
       <el-table-column label="关联订单号" prop="snExt"></el-table-column>
       <el-table-column label="交易金币" prop="gold"></el-table-column>

@@ -1,12 +1,12 @@
 <template>
   <div class="table-container">
-    <vab-query-form>
-      <vab-query-form-top-panel :span="12">
+    <vab-query-form style="display: flex;">
+      <vab-query-form-left-panel style="max-width:84px;">
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
           >删除
         </el-button>
-      </vab-query-form-top-panel>
-     <vab-query-form-right-panel>
+      </vab-query-form-left-panel>
+     <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
           :model="queryForm"
@@ -94,7 +94,7 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="account" label="账号"></el-table-column>
+      <el-table-column prop="uid" label="uid"></el-table-column>
       <el-table-column prop="sn" label="序列号"></el-table-column>
       <el-table-column prop="award" label="奖励金额"></el-table-column>
       <el-table-column prop="awardTypeTest" label="奖励类型"></el-table-column>
@@ -292,7 +292,7 @@ export default {
     },
     async fetchData() {
       this.listLoading = true;
-      api.getLuckyDetailsInfo(this.queryForm, (res)=>{
+      api.getLuckyDetails(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);

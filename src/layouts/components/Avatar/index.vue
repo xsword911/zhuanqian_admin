@@ -32,6 +32,14 @@ export default {
       userName: "user/userName",
     }),
   },
+  data() {
+    return {
+      // userName: "",
+    }
+  },
+  created() {
+    // this.userName = store.userName;
+  },
   methods: {
     handleCommand(command) {
       switch (command) {

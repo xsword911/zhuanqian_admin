@@ -163,7 +163,10 @@ export default {
 
       rules: {
         order: [{ required: true, trigger: "blur", message: "请输入排序" }],
-        title: [{ required: true, trigger: "blur", message: "请输入奖励标题" }],
+        title: [
+          { required: true, trigger: "blur", message: "请输入奖励标题" },
+          { max: 6, message: "奖励标题最多6个字符", trigger: "blur" },
+        ],
         imgUrl: [{ required: true, trigger: "blur", message: "请输入奖励图片" }],
         type: [{ required: true, trigger: "blur", message: "请输入奖励类型" }],
         award: [{ required: true, trigger: "blur", message: "请输入奖励金额" }],
@@ -182,6 +185,7 @@ export default {
     },
           //文件上传成功
           handleAvatarSuccess(res, file) {
+            console.log(res);
             // this.imgUrlNew = URL.createObjectURL(file.raw);
             this.form.imgUrl = res.data.url;
           },

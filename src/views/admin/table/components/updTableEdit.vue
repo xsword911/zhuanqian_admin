@@ -6,6 +6,9 @@
     @close="close"
   >
     <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="uid" prop="uid">
+        <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true" clearable></el-input>
+      </el-form-item>
       <el-form-item label="用户名" prop="account">
         <el-input v-model.trim="form.account" autocomplete="off" :disabled="true" clearable></el-input>
       </el-form-item>
@@ -44,6 +47,7 @@
 <script>
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
+import storage from "@/api/storage.js";
 export default {
   // name: "TableEdit",
   data() {
@@ -65,14 +69,15 @@ export default {
         tel: "",
         nick: "",
         account: "",
-        upper: ""
+        upper: "",
+        uid: "",
       },
       title: "",
       dialogFormVisible: false,
     };
   },
-  mounted() {
-
+  created() {
+    this.form.uid = storage.getUid();
   },
   methods: {
     showEdit(row) {
@@ -109,7 +114,7 @@ export default {
     },
     submitUpd(){
       let data = {
-        account: this.form.account,
+        uid: this.form.uid,
         nick: this.form.nick,
         tel: this.form.tel
       };

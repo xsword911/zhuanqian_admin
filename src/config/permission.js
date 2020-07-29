@@ -14,6 +14,12 @@ import {
   progressBar,
 } from "@/config/settings";
 
+import {
+  getAccessToken,
+  removeAccessToken,
+  setAccessToken,
+} from "@/utils/accessToken";
+
 VabProgress.configure({
   easing: "ease",
   speed: 500,
@@ -22,8 +28,9 @@ VabProgress.configure({
 });
 router.beforeResolve(async (to, from, next) => {
   if (progressBar) VabProgress.start();
-  let hasToken = store.getters["user/accessToken"];
-  hasToken = true; //暂时不验证token
+  // let hasToken = store.getters["user/accessToken"];
+  let hasToken = getAccessToken();
+  //hasToken = true; //暂时不验证token
   if (!loginInterception) hasToken = true;
   if (hasToken) {
     if (to.path === "/login") {

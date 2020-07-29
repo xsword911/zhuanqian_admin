@@ -1,16 +1,17 @@
 <template>
-  <div class="userManagement-container">
-    <vab-query-form>
-      <vab-query-form-top-panel :span="12">
+  <div class="table-container">
+    <vab-query-form style="display: flex;">
+
+      <vab-query-form-left-panel style="max-width:168px;">
         <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
           >添加</el-button
         >
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
           >删除
         </el-button>
-      </vab-query-form-top-panel>
+      </vab-query-form-left-panel>
 
-     <vab-query-form-right-panel  :span="12">
+     <vab-query-form-right-panel style="flex: 1;">
 <!--       <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
        style="position: absolute; left: 0; top:34%;display:block; transform: translateY(-50%);"
           >添加
@@ -296,7 +297,7 @@ export default {
     },
     async fetchData() {
       this.listLoading = true;
-      api.getInfo(this.queryForm, (res)=>{
+      api.getSign(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);

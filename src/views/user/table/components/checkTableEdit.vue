@@ -6,6 +6,12 @@
     @close="close"
   >
    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+     <el-form-item label="uid" prop="uid">
+        <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
+      </el-form-item>
+      <el-form-item label="设备id" prop="deviceId">
+         <el-input v-model.trim="form.deviceId" autocomplete="off" :disabled="true"></el-input>
+       </el-form-item>
      <el-form-item label="用户名" prop="account">
         <el-input v-model.trim="form.account" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>

@@ -35,7 +35,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm"
-              >立即注册
+              >立即添加
             </el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>

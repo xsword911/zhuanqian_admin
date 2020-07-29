@@ -26,7 +26,7 @@
               <vab-icon :icon="['fas', 'user']" />
             </span>
             <el-input
-              v-model.trim="loginForm.userName"
+              v-model.trim="loginForm.account"
               v-focus
               auto-complete="off"
               placeholder="请输入用户名"
@@ -41,7 +41,7 @@
             <el-input
               :key="passwordType"
               ref="password"
-              v-model.trim="loginForm.password"
+              v-model.trim="loginForm.pwd"
               :type="passwordType"
               auto-complete="off"
               placeholder="请输入密码"
@@ -65,9 +65,9 @@
             @click="handleLogin"
             >登录
           </el-button>
-          <router-link to="/register">
+<!--          <router-link to="/register">
             <div style="margin-top: 20px;">注册</div>
-          </router-link>
+          </router-link> -->
         </el-form>
       </el-col>
     </el-row>
@@ -77,6 +77,12 @@
 <script>
 import { isPassword } from "@/utils/validate";
 import api from "@/api/api.js";
+import storage from "@/api/storage.js";
+import store from "@/store";
+import {
+  getAccessToken,
+  setAccessToken,
+} from "@/utils/accessToken";
 export default {
   name: "Login",
   directives: {
@@ -105,18 +111,19 @@ export default {
       nodeEnv: process.env.NODE_ENV,
       title: this.$baseTitle,
       loginForm: {
-        userName: "",
-        password: "",
+        account: "",
+        pwd: "",
+        type: 1
       },
       loginRules: {
-        userName: [
+        account: [
           {
             required: true,
             trigger: "blur",
             validator: validateUserName,
           },
         ],
-        password: [
+        pwd: [
           {
             required: true,
             trigger: "blur",
@@ -151,42 +158,43 @@ export default {
     },
     //点击登录
     handleLogin() {
-      if (this.loginForm.userName == "") {
-        this.$message.error("用户名不能为空！");
-        return;
-      }
-      if (this.loginForm.password == "") {
-        this.$message.error("密码不能为空！");
-        return;
-      }
-      this.loading = true;
-      let data = {
-        account: this.loginForm.userName,
-        pwd: this.loginForm.password,
-        type: 1,
-      };
-      api.login(data, (res) => {
-        let code = api.getCode(res);
-        let msg = api.getMsg(res);
-        if (code != 0) {
-          this.$message.error(msg);
-        } else {
-          this.$message({
-            message: "登录" + msg,
-            type: "success",
-          });
-          this.$store.dispatch("user/login", data);
-          const routerPath =
-            // this.redirect == "/"
-            this.redirect === "/404" || this.redirect === "/401"
-              ? "/"
-              : this.redirect;
-          // routerPath == "/"
-          this.$router.push({ path: routerPath }).catch((error) => {
-            console.log(error);
-          });
+      // if (this.loginForm.account == "") {
+      //   this.$message.error("用户名不能为空！");
+      //   return;
+      // }
+      // if (this.loginForm.pwd == "") {
+      //   this.$message.error("密码不能为空！");
+      //   return;
+      // }
+
+      this.$refs.loginForm.validate((valid) => {
+        if(valid){
+          this.loading = true;
+
+          api.login(this.loginForm, (res)=>{
+            let code = api.getCode(res);
+            if(code == 0){
+              let token = api.getToken(res);
+              let data = {
+                account: this.loginForm.account,
+                token: token
+              };
+                this.$store.dispatch("user/login", data);
+                const routerPath =
+                    this.redirect === "/404" || this.redirect === "/401"
+                      ? "/"
+                      : this.redirect;
+
+                  this.$router.push({ path: routerPath }).catch((error) => {});
+            }else {
+              let msg = api.getMsg(res);
+              this.$message.error(msg);
+            }
+            this.loading = false;
+        });
+        } else{
+          return false;
         }
-        this.loading = false;
       });
     },
   },

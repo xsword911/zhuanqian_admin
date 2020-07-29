@@ -6,6 +6,9 @@
     @close="close"
   >
     <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="uid" prop="uid">
+        <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true" clearable></el-input>
+      </el-form-item>
       <el-form-item label="用户名" prop="account">
         <el-input v-model.trim="form.account" autocomplete="off" :disabled="true" clearable></el-input>
       </el-form-item>
@@ -63,6 +66,7 @@
 <script>
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
+import storage from "@/api/storage.js";
 export default {
   // name: "TableEdit",
   data() {
@@ -88,17 +92,17 @@ export default {
         state: '',
         upper: '',
         headUrl: '',
+        uid: "",
       },
       title: "",
       dialogFormVisible: false,
       imgUrlOld: "",
       imgUrlNew: ''  ,//选择的图片
       imgServeUrl: '',  //图片的服务器地址
-
     };
   },
-  mounted() {
-
+  created() {
+    this.form.uid = storage.getUid();
   },
   methods: {
     //获取文件上传地址
@@ -158,7 +162,7 @@ export default {
     },
     submitUpd(){
       let data = {
-        account: this.form.account,
+        uid: this.form.uid,
         nick: this.form.nick,
         tel: this.form.tel,
         headUrl: this.form.headUrl

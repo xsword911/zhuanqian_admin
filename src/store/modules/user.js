@@ -42,29 +42,30 @@ const mutations = {
   },
 };
 const actions = {
-  async login({ commit }, userInfo) {
-    await api.login(userInfo, (res) => {
-      let code = api.getCode(res);
-      if (code == 0) {
-        const hour = new Date().getHours();
-        const thisTime =
-          hour < 8
-            ? "早上好"
-            : hour <= 11
-            ? "上午好"
-            : hour <= 13
-            ? "中午好"
-            : hour < 18
-            ? "下午好"
-            : "晚上好";
-        Vue.prototype.$baseNotify(`欢迎登录${title}`, `${thisTime}！`);
-      } else {
-        Vue.prototype.$baseMessage(
-          `登录接口异常，未正确返回${tokenName}...`,
-          "error"
-        );
-      }
-    });
+  async login({ commit }, data) {
+      // await api.login(userInfo, (res) => {
+          commit("setAccessToken", data.token);
+          commit("setUserName", data.account);
+          const hour = new Date().getHours();
+          const thisTime =
+            hour < 8
+              ? "早上好"
+              : hour <= 11
+              ? "上午好"
+              : hour <= 13
+              ? "中午好"
+              : hour < 18
+              ? "下午好"
+              : "晚上好";
+          Vue.prototype.$baseNotify(`欢迎登录${title}`, `${thisTime}！`);
+        // } else {
+        //   let msg = api.getMsg(res);
+        //   Vue.prototype.$baseMessage(
+        //     msg,
+        //     "error"
+        //   );
+        // }
+      // });
   },
   async getInfo({ commit, state }) {
     const { data } = await getInfo(state.accessToken);

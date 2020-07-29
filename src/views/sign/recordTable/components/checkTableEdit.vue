@@ -6,8 +6,8 @@
     @close="close"
   >
    <el-form ref="form" :model="form" label-width="80px">
-     <el-form-item label="账号" prop="account">
-        <el-input v-model.trim="form.account" autocomplete="off" :disabled="true"></el-input>
+     <el-form-item label="uid" prop="uid">
+        <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="签到天数" prop="day">
          <el-input v-model.trim="form.day" autocomplete="off" :disabled="true"></el-input>

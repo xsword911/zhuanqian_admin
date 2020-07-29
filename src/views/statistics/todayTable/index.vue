@@ -21,12 +21,7 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.uid" placeholder="uid" clearable />
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="queryForm.sn" placeholder="账单号" clearable  
-            onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
-            maxlength="24"/>
+            <el-input v-model="queryForm.uid" placeholder="用户id" clearable />
           </el-form-item>
 <!--          <el-form-item>
             <el-input v-model="queryForm.code" placeholder="邀请码" />
@@ -34,21 +29,6 @@
           <el-form-item>
             <el-input v-model="queryForm.upper" placeholder="直属上级" />
           </el-form-item> -->
-          <el-form-item>
-              <el-select v-model="value" placeholder="交易类型" clearable>
-                <el-option-group
-                  v-for="group in options"
-                  :key="group.label"
-                  :label="group.label">
-                  <el-option
-                    v-for="item in group.options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-option-group>
-              </el-select>
-          </el-form-item>
           <el-form-item>
                 <div class="block">
                   <el-date-picker
@@ -88,27 +68,19 @@
           {{ scope.$index + 1 }}
         </template> -->
       <!-- </el-table-column> -->
-      <el-table-column prop="uid" label="uid"></el-table-column>
-      <el-table-column label="交易订单号" prop="sn"></el-table-column>
-      <el-table-column label="关联订单号" prop="snExt"></el-table-column>
-      <el-table-column label="交易金额" prop="money"></el-table-column>
-<!--      <el-table-column label="头像">
-        <template slot-scope="scope">
-          <el-image
-            v-if="imgShow"
-            :preview-src-list="imageList"
-            :src="scope.row.img"
-          ></el-image>
-        </template>
-      </el-table-column> -->
-      <el-table-column label="交易类型" prop="type"></el-table-column>
+      <el-table-column prop="uid" label="用户id"></el-table-column>
+      <el-table-column label="时间" prop="addTime"></el-table-column>
+      <el-table-column label="前一天余额" prop="moneyOld"></el-table-column>
+      <el-table-column label="增加金额" prop="moneyAdd"></el-table-column>
+      <el-table-column label="减少金额" prop="moneyLose"></el-table-column>
+      <el-table-column label="提现次数" prop="drawSum"></el-table-column>
 
+      <el-table-column label="前一天金币" prop="goldOld"></el-table-column>
+      <el-table-column label="得到金币" prop="goldAdd"></el-table-column>
+      <el-table-column label="消耗金币" prop="goldLose"></el-table-column>
+      <el-table-column label="任务次数" prop="taskSum"></el-table-column>
 
-      <el-table-column
-        label="交易时间"
-        prop="addTime"
-        width="200"
-      ></el-table-column>
+      <el-table-column label="备注"prop="desc"></el-table-column>
     <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
           <el-button type="text" @click="handleEdit(scope.row)"
@@ -197,8 +169,6 @@ export default {
       queryForm: {
         page: 1,
         count: 20,
-        account: '',
-        sn: '',  //账单号
       },
     };
   },
@@ -260,62 +230,24 @@ export default {
       this.queryForm.page = 1;
       //时间筛选不为空时添加时间属性
       if(!util.isEmpty(this.searchTime)){
-        this.queryForm.begAddTime = this.searchTime[0];
-        this.queryForm.endAddTime = this.searchTime[1];
+        this.queryForm.begFinishTime = this.searchTime[0];
+        this.queryForm.endFinishTime = this.searchTime[1];
       }else{   //时间筛选为空时删除时间属性
-        delete this.queryForm.begAddTime;
-        delete this.queryForm.endAddTime;
-      };
-      //交易类型筛选不为空时添加交易类型属性
-      if(!util.isEmpty(this.value)){
-        this.queryForm.type = this.value;
-      }else{   //交易类型筛选为空时删除交易类型属性
-        delete this.queryForm.type;
+        delete this.queryForm.begFinishTime;
+        delete this.queryForm.endFinishTime;
       };
       this.fetchData();
     },
     async fetchData() {
       this.listLoading = true;
-      api.getMoney(this.queryForm, (res)=>{
+      api.getStatisticsDay(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
-           data.forEach((item,index) =>{
-             switch (item.type){
-              case 0:
-                 item.type = "金币转余额";
-                 break;
-              case 1:
-                item.type = "提现审核失败";
-                break;
-              case 2:
-                item.type = "签到奖励";
-                break;
-              case 3:
-                item.type = "幸运抽奖获奖";
-                break;
-              case 100:
-                item.type = "提现";
-                break;
-              case 101:
-                item.type = "余额转金币";
-                break;
-               default:
-                 break;
-             }
-           });
            this.total = api.getTotal(res);
            this.list = data;
          }
       });
-      // const { data, totalCount } = await getList(this.queryForm);
-      // this.list = data;
-      // const imageList = [];
-      // data.forEach((item, index) => {
-      //   imageList.push(item.img);
-      // });
-      // this.imageList = imageList;
-      // this.total = totalCount;
       setTimeout(() => {
         this.listLoading = false;
       }, 500);
