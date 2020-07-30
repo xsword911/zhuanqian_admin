@@ -99,7 +99,7 @@ export const asyncRoutes = [
         path: "signAward",
         name: "SignAward",
         component: () => import("@/views/sign/awardTable/index"),
-        meta: { title: "签到奖励" },
+        meta: { title: "签到设置" },
       },
       {
         path: "signRecord",
@@ -279,7 +279,7 @@ export const asyncRoutes = [
         path: "adminManagement",
         name: "AdminManagement",
         component: () => import("@/views/admin/table/index"),
-        meta: { title: "管理员管理" },
+        meta: { title: "管理员" },
       },
       {
         path: "adminRegister",
