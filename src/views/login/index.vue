@@ -1,14 +1,13 @@
 <template>
   <div class="login-container">
-    <el-alert
-      v-if="nodeEnv !== 'development'"
-      title="beautiful boys and girls欢迎加入vue-admin-beautifulQQ群：972435319"
-      type="success"
-      :closable="false"
-    >
-    </el-alert>
     <el-row>
-      <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
+      <el-col
+        :xs="24"
+        :sm="24"
+        :md="12"
+        :lg="8"
+        :xl="8"
+      >
         <el-form
           ref="loginForm"
           :model="loginForm"
@@ -20,8 +19,13 @@
           <div class="title">
             hello !
           </div>
-          <div class="title-tips">欢迎来到{{ title }}！</div>
-          <el-form-item style="margin-top: 40px;" prop="userName">
+          <div class="title-tips">
+            欢迎来到{{ title }}！
+          </div>
+          <el-form-item
+            style="margin-top: 40px;"
+            prop="userName"
+          >
             <span class="svg-container svg-container-admin">
               <vab-icon :icon="['fas', 'user']" />
             </span>
@@ -35,8 +39,10 @@
             />
           </el-form-item>
           <el-form-item prop="password">
-            <span class="svg-container svg-container-pass"
-              ><vab-icon :icon="['fas', 'lock']"
+            <span
+              class="svg-container svg-container-pass"
+            ><vab-icon
+              :icon="['fas', 'lock']"
             /></span>
             <el-input
               :key="passwordType"
@@ -52,10 +58,15 @@
               v-if="passwordType === 'password'"
               class="show-pwd"
               @click="showPwd"
-              ><vab-icon :icon="['fas', 'eye-slash']"
+            ><vab-icon
+              :icon="['fas', 'eye-slash']"
             /></span>
-            <span v-else class="show-pwd" @click="showPwd"
-              ><vab-icon :icon="['fas', 'eye']"
+            <span
+              v-else
+              class="show-pwd"
+              @click="showPwd"
+            ><vab-icon
+              :icon="['fas', 'eye']"
             /></span>
           </el-form-item>
           <el-button
@@ -63,9 +74,10 @@
             class="login-btn"
             type="primary"
             @click="handleLogin"
-            >登录
+          >
+            登录
           </el-button>
-<!--          <router-link to="/register">
+          <!--          <router-link to="/register">
             <div style="margin-top: 20px;">注册</div>
           </router-link> -->
         </el-form>

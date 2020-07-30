@@ -34,10 +34,14 @@ export function getInfo(accessToken) {
 }
 
 export function logout() {
-  return request({
-    url: "/logout",
-    method: "post",
-  });
+  return {
+    code: 200,
+    msg: "success",
+  };
+  // return request({
+  //   url: "/logout",
+  //   method: "post",
+  // });
 }
 export function register() {
   return request({
