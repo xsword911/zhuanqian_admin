@@ -3,7 +3,7 @@ import storage from "@/api/storage.js";
 import util from "@/utils/util.js";
 
 //封装保存本地数据操作
-module.exports = {
+const utilCore = {
 	//设备号登录（游客登录）
 	loginByDevice(){
 		let device = util.getUuid();
@@ -15,4 +15,6 @@ module.exports = {
 		});
 	},
 
-}
+};
+
+export default storage;

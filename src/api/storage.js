@@ -4,7 +4,8 @@ const token			= "token";				//token
 const uid				= "uid";				//用户uid
 
 //封装保存本地数据操作
-module.exports = {
+const storage = {
+
 	//保存我的数据
 	setMyInfo: function(data) {
 		localStorage.setItem(myInfo, data);
@@ -57,4 +58,6 @@ module.exports = {
 	getUid(){
 		return localStorage.getItem(uid);
 	},
-}
+};
+
+export default storage;

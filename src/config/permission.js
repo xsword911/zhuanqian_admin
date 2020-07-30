@@ -45,6 +45,7 @@ router.beforeResolve(async (to, from, next) => {
       } else {
         try {
           const permissions = await store.dispatch("user/getInfo");
+          //const permissions = [];//请求权限，先不请求
           let accessRoutes = [];
           if (authentication === "intelligence") {
             accessRoutes = await store.dispatch(

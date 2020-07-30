@@ -25,7 +25,7 @@ const httpUtil = {
               //token不同时保存新token
               if(token != oldToken) storage.setToken(token);
             }
-            
+
             //验证token是否失效
             let code = this.getCode(res);
             if(code == 10000)
@@ -37,7 +37,7 @@ const httpUtil = {
             	const fullPath = this.$route.fullPath;
             	this.$store.dispatch("user/logout");
             	this.$router.push(`/login?redirect=${fullPath}`);
-              
+
             	return;
             }
             resolve(funSuccess(res.data));

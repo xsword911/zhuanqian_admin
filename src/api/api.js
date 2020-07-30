@@ -1,7 +1,7 @@
 import httpUtil from "@/api/httpUtil.js";
 import config from "@/api/config.js";
 //网络操作封装
-module.exports = {
+const api = {
   //取返回数据内,code数据
   getCode: function (res) {
     return res.code;
@@ -201,9 +201,11 @@ module.exports = {
   getStatisticsDay: function (path, funSuccess) {
     httpUtil.post("money/getStatisticsDay", path, funSuccess);
   },
-  
+
   //管理员查询玩家月报表
   getStatisticsMonth: function (path, funSuccess) {
     httpUtil.post("money/getStatisticsMonth", path, funSuccess);
   },
 };
+
+export default api;
