@@ -62,8 +62,8 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="account" label="用户名"></el-table-column>
       <el-table-column prop="uid" label="uid"></el-table-column>
+      <el-table-column prop="account" label="用户名"></el-table-column>
       <el-table-column prop="deviceId" label="登录设备"></el-table-column>
       <el-table-column prop="nick" label="昵称"></el-table-column>
       <el-table-column prop="tel" label="手机号"></el-table-column>

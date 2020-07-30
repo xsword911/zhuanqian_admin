@@ -16,7 +16,7 @@
               icon="el-icon-search"
               type="primary"
               native-type="submit"
-              @click="handleQuery"
+              @click="getUserTable"
               >查询
             </el-button>
           </el-form-item>
@@ -24,7 +24,119 @@
       </vab-query-form-right-panel>
     </vab-query-form>
 
-    <div class="table_title"><div>账变明细<text class="title_tips">(显示最近十条记录)</text></div></div>
+    <div class="userInfo" v-if="showData">
+      <div class="info_left">
+        <div class="">
+            <div>用户头像：</div>
+            <el-avatar :size="60" src="" @error="errorHandler">
+              <img :src="userEn.headUrl"/>
+            </el-avatar>
+        </div>
+
+        <div class="">
+            <div>用户id：</div>
+            <div>{{queryForm.uid}}</div>
+        </div>
+
+        <div class="">
+            <div>用户名：</div>
+            <div>{{userEn.account}}</div>
+        </div>
+
+        <div class="">
+            <div>手机号：</div>
+            <div>{{userEn.tel}}</div>
+        </div>
+
+        <div class="">
+            <div>昵称：</div>
+            <div>{{userEn.nick}}</div>
+        </div>
+
+        <div class="">
+            <div>邀请码：</div>
+            <div>{{userEn.code}}</div>
+        </div>
+
+        <div class="">
+            <div>账户类型：</div>
+            <div v-if="userEn.type == 0">普通用户</div>
+            <div v-if="userEn.type == 1">管理员</div>
+        </div>
+
+        <div class="">
+            <div>金币：</div>
+            <div>{{userEn.gold}}</div>
+        </div>
+
+        <div class="">
+            <div>余额：</div>
+            <div>{{userEn.money}}</div>
+        </div>
+
+      </div>
+
+      <div class="info_right">
+
+        <div class="">
+            <div>直属上级：</div>
+            <div>{{userEn.upper}}</div>
+        </div>
+
+        <div class="">
+            <div>所有上级：</div>
+            <div>{{userEn.allUpper}}</div>
+        </div>
+
+        <div class="">
+            <div>直属上级：</div>
+            <div>{{userEn.upper}}</div>
+        </div>
+
+        <div class="">
+            <div>注册时间：</div>
+            <div>{{userEn.regTime}}</div>
+        </div>
+
+        <div class="">
+            <div style="width:33%;">最后一次登录时间：</div>
+            <div>{{userEn.loginTime}}</div>
+        </div>
+
+        <div class="">
+            <div style="width:33%;">最后一次登录时间ip：</div>
+            <div>{{userEn.ip}}</div>
+        </div>
+
+        <div class="">
+            <div>密码错误次数：</div>
+            <div>{{userEn.pwdError}}</div>
+        </div>
+
+        <div class="">
+            <div>账号冻结次数：</div>
+            <div>{{userEn.reezeNum}}</div>
+        </div>
+
+        <div class="">
+            <div>账号状态：</div>
+            <div v-if="userEn.state == 0">正常</div>
+            <div v-if="userEn.state == 1">冻结</div>
+            <div v-if="userEn.state == 2">管理员封号</div>
+        </div>
+
+        <div class="">
+            <div>登录次数：</div>
+            <div>{{userEn.loginNum}}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="table_title" v-if="showData">
+      <div>账变明细</div>
+      <div class="title_tips">(显示最近十条记录)</div>
+    </div>
     <el-table
       ref="tableSort"
       v-loading="listLoading"
@@ -32,6 +144,7 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      v-if="showData"
     >
       <el-table-column prop="uid" label="用户id"></el-table-column>
       <el-table-column label="交易订单号" prop="sn"></el-table-column>
@@ -39,29 +152,28 @@
       <el-table-column label="交易时间" prop="addTime"></el-table-column>
       <el-table-column label="交易金额" prop="money"></el-table-column>
 
-      <el-table-column label="交易类别" prop="sort"></el-table-column>
+      <el-table-column label="交易类别" prop="sortType"></el-table-column>
       <el-table-column label="交易类型" prop="type"></el-table-column>
       <el-table-column label="备注" prop="desc"></el-table-column>
 
     <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-<!--          <el-button type="text" @click="handleEdit(scope.row)"
-            >编辑
-          </el-button> -->
           <el-button type="text" @click="handleCheckEdit(scope.row)"
             >查看
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
     <check-table-edit ref="checkEdit"></check-table-edit>
 
 
 
 
 
-    <div class="table_title"><div>提现记录<text class="title_tips">(显示最近十条记录)</text></div></div>
+    <div class="table_title" v-if="showData">
+      <div>提现记录</div>
+      <div class="title_tips">(显示最近十条记录)</div>
+    </div>
     <el-table
           ref="tableSort"
           v-loading="listLoading"
@@ -69,6 +181,7 @@
           :element-loading-text="elementLoadingText"
           @selection-change="setSelectRows"
           @sort-change="tableSortChange"
+          v-if="showData"
         >
         <el-table-column prop="uid" label="uid"></el-table-column>
         <el-table-column prop="sn" label="账单号"></el-table-column>
@@ -95,31 +208,27 @@
 
         <el-table-column label="操作" width="180px" fixed="right">
             <template slot-scope="scope">
-    <!--          <el-button type="text" @click="handleEdit(scope.row)"
-                >编辑
-              </el-button> -->
-              <el-button type="text" @click="handleCheckEdit(scope.row)"
+              <el-button type="text" @click="handleCheckMoneyEdit(scope.row)"
                 >查看
               </el-button>
             </template>
           </el-table-column>
         </el-table>
-        <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
-        <check-table-edit ref="checkEdit"></check-table-edit>
+        <check-money-table-edit ref="checkMoneyEdit"></check-money-table-edit>
   </div>
 </template>
 
 <script>
 import { getList, doDelete } from "@/api/table";
-import updTableEdit from "./components/updTableEdit";
 import checkTableEdit from "./components/checkTableEdit";
+import checkMoneyTableEdit from "./components/checkTableEdit1.vue";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
   //name: "ComprehensiveTable",
   components: {
     checkTableEdit,
-    updTableEdit
+    checkMoneyTableEdit
   },
   filters: {
     statusFilter(status) {
@@ -160,8 +269,9 @@ export default {
       }],
       value: '',      //交易类型
       imgShow: true,
-      list: [],
-      goldList: [],
+      list: [],  //账变明细列表
+      goldList: [],  //提现明细列表
+      userEn: [],  //用户信息
       listLoading: true,
       layout: "total, sizes, prev, pager, next, jumper",
       total: 0,
@@ -171,12 +281,14 @@ export default {
       queryForm: {
         page: 1,
         count: 10,
-        uid: '155f1a8817377e8',
+        uid: '',
       },
+      showData: false,  //数据是否显示
     };
   },
   created() {
-    this.fetchData();
+    // this.fetchData();
+    // this.getUserInfo();
   },
   beforeDestroy() {},
   mounted() {},
@@ -194,11 +306,11 @@ export default {
     // handleAdd() {
     //   this.$refs["edit"].showEdit();
     // },
-    handleEdit(row) {
-      this.$refs["updEdit"].showEdit(row);
-    },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
+    },
+    handleCheckMoneyEdit(row){
+      this.$refs["checkMoneyEdit"].showEdit(row);
     },
     // handleDelete(row) {
     //   if (row.id) {
@@ -221,6 +333,9 @@ export default {
     //     }
     //   }
     // },
+    errorHandler() {
+      return true
+    },
     handleSizeChange(val) {
       this.queryForm.count = val;
       this.fetchData();
@@ -231,6 +346,22 @@ export default {
     },
     handleQuery() {
       this.fetchData();
+    },
+    //查询个人报表
+    getUserTable(){
+      this.fetchData();
+      this.getUserInfo();
+      this.showData = true;
+    },
+    //获取用户信息
+    getUserInfo(){
+      api.getUserByUid(this.queryForm, (res)=>{
+        let code = api.getCode(res);
+        if(code == 0){
+          let data = res.data;
+          this.userEn = data;
+        }
+      });
     },
     async fetchData() {
       this.listLoading = true;
@@ -262,8 +393,8 @@ export default {
                default:
                  break;
              }
-             if(item.sort == 0) item.sort = "收入"
-             else if(item.sort == 1) item.sort = "支出"
+             if(item.sort == 0) item.sortType = "收入"
+             else if(item.sort == 1) item.sortType = "支出"
            });
            this.list = data;
          }
@@ -330,16 +461,42 @@ export default {
 </script>
 
 <style>
+  .userInfo{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+  }
+  .info_left, .info_right{
+    width:50%;
+    padding:20px;
+    box-sizing:border-box;
+  }
+  .info_left>div, .info_right>div{
+    padding:10px;
+    box-sizing:border-box;
+    border-bottom: 1px solid #EBEEF5;
+    display: flex;
+    align-items: center;
+  }
+  .info_left>div>div:nth-child(1), .info_right>div>div:nth-child(1){
+    width:18%;
+  }
   .table_title{
     width:100%;
     height:40px;
     background-color: #D3DCE6;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
     padding-left:20px;
     box-sizing:border-box;
     margin:50px 0 10px;
     font-weight:bold;
     font-size: 17px;
+  }
+  .title_tips{
+    font-size:14px;
+    font-weight: normal;
   }
 </style>

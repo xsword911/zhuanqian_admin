@@ -57,6 +57,9 @@ const api = {
     httpUtil.post("user/getUser", path, funSuccess);
   },
 
+  //根据uid查询某个用户详细信息
+  getUserByUid: function(path, funSuccess) {httpUtil.post('user/getUserByUid', path, funSuccess);},
+
   //修改用户信息
   setUser: function (path, funSuccess) {
     httpUtil.post("user/setUser", path, funSuccess);
