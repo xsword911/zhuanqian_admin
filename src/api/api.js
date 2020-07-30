@@ -199,12 +199,12 @@ const api = {
 
   //管理员查询玩家日报表
   getStatisticsDay: function (path, funSuccess) {
-    httpUtil.post("money/getStatisticsDay", path, funSuccess);
+    httpUtil.post("statistics/getStatisticsDay", path, funSuccess);
   },
 
   //管理员查询玩家月报表
   getStatisticsMonth: function (path, funSuccess) {
-    httpUtil.post("money/getStatisticsMonth", path, funSuccess);
+    httpUtil.post("statistics/getStatisticsMonth", path, funSuccess);
   },
 };
 
