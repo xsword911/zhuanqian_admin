@@ -1,7 +1,9 @@
 <template>
   <section class="app-main-container">
-    <github-corner v-if="nodeEnv !== 'development'"></github-corner>
-    <vab-keel v-if="show && skeleton" style="margin: 15px;">
+    <vab-keel
+      v-if="show && skeleton"
+      style="margin: 15px;"
+    >
       <vab-keel-heading :img="true" />
       <vab-keel-text :lines="7" />
       <vab-keel-heading :img="true" />
@@ -9,14 +11,24 @@
       <vab-keel-heading :img="true" />
       <vab-keel-text :lines="8" />
     </vab-keel>
-    <transition mode="out-in" name="fade-transform">
-      <keep-alive v-if="routerView" :include="cachedRoutes" :max="10">
-        <router-view :key="key" style="min-height: 80.6vh;" />
+    <transition
+      mode="out-in"
+      name="fade-transform"
+    >
+      <keep-alive
+        v-if="routerView"
+        :include="cachedRoutes"
+        :max="10"
+      >
+        <router-view
+          :key="key"
+          style="min-height: 80.6vh;"
+        />
       </keep-alive>
     </transition>
-   <footer class="footer-copyright">
+    <footer class="footer-copyright">
       Copyright
-      <vab-icon :icon="['fas', 'copyright']"></vab-icon>
+      <vab-icon :icon="['fas', 'copyright']" />
       {{ fullYear }} {{ copyright }}
     </footer>
   </section>
@@ -34,7 +46,6 @@ export default {
     VabKeel,
     VabKeelHeading,
     VabKeelText,
-    GithubCorner,
   },
   data() {
     return {

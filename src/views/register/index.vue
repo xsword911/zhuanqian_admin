@@ -1,14 +1,13 @@
 <template>
   <div class="register-container">
-    <el-alert
-      v-if="nodeEnv !== 'development'"
-      title="beautiful boys and girls欢迎加入vue-admin-beautifulQQ群：972435319"
-      type="success"
-      :closable="false"
-    >
-    </el-alert>
     <el-row>
-      <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
+      <el-col
+        :xs="24"
+        :sm="24"
+        :md="12"
+        :lg="8"
+        :xl="8"
+      >
         <el-form
           ref="registerForm"
           :model="form"
@@ -16,8 +15,12 @@
           :rules="registerRules"
           size="mini"
         >
-          <div class="title">hello !</div>
-          <div class="title-tips">欢迎来到{{ title }}！</div>
+          <div class="title">
+            hello !
+          </div>
+          <div class="title-tips">
+            欢迎来到{{ title }}！
+          </div>
           <el-form-item prop="userName">
             <el-input
               v-model.trim="form.userName"
@@ -27,7 +30,10 @@
               placeholder="请输入用户名"
               auto-complete="off"
             >
-              <vab-icon slot="prefix" :icon="['fas', 'user-alt']"></vab-icon>
+              <vab-icon
+                slot="prefix"
+                :icon="['fas', 'user-alt']"
+              />
             </el-input>
           </el-form-item>
           <el-form-item prop="phone">
@@ -39,19 +45,26 @@
               show-word-limit
               autocomplete="off"
             >
-              <vab-icon slot="prefix" :icon="['fas', 'mobile-alt']"></vab-icon>
+              <vab-icon
+                slot="prefix"
+                :icon="['fas', 'mobile-alt']"
+              />
             </el-input>
           </el-form-item>
-          <el-form-item prop="phoneCode" style="position: relative;">
+          <el-form-item
+            prop="phoneCode"
+            style="position: relative;"
+          >
             <el-input
               v-model.trim="form.phoneCode"
               type="text"
               placeholder="手机验证码"
-              ><vab-icon
+            >
+              <vab-icon
                 slot="prefix"
                 :icon="['fas', 'envelope-open']"
-              ></vab-icon
-            ></el-input>
+              />
+            </el-input>
             <el-button
               type="primary"
               class="show-pwd phone-code"
@@ -67,18 +80,25 @@
               type="password"
               placeholder="设置密码"
               autocomplete="new-password"
-              ><vab-icon slot="prefix" :icon="['fas', 'unlock']"></vab-icon
-            ></el-input>
+            >
+              <vab-icon
+                slot="prefix"
+                :icon="['fas', 'unlock']"
+              />
+            </el-input>
           </el-form-item>
           <el-form-item>
             <el-button
               class="register-btn"
               type="primary"
               @click.native.prevent="handleReister"
-              >注册
+            >
+              注册
             </el-button>
             <router-link to="/login">
-              <div style="margin-top: 20px;">登录</div>
+              <div style="margin-top: 20px;">
+                登录
+              </div>
             </router-link>
           </el-form-item>
         </el-form>

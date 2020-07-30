@@ -10,10 +10,10 @@
         <vab-icon :icon="['fas', 'palette']" />
         <p>主题配置</p>
       </div>
-      <div @click="handleGetCode">
-        <vab-icon :icon="['fas', 'laptop-code']"></vab-icon>
-        <p>拷贝代码</p>
-      </div>
+      <!--      <div @click="handleGetCode">-->
+      <!--        <vab-icon :icon="['fas', 'laptop-code']"></vab-icon>-->
+      <!--        <p>拷贝代码</p>-->
+      <!--      </div>-->
       <!--<div @click="handleChangeQq">
         <vab-remix-icon icon-class="qq-fill" />
         <p>学习交流</p>
@@ -29,7 +29,10 @@
     >
       <el-scrollbar style="height: 94vh; overflow: hidden;">
         <div class="el-drawer__body">
-          <el-form ref="form" :model="theme">
+          <el-form
+            ref="form"
+            :model="theme"
+          >
             <el-form-item label="布局">
               <el-radio-group v-model="theme.layout">
                 <el-radio-button label="vertical">纵向布局</el-radio-button>
@@ -61,52 +64,52 @@
                   '#a80505',
                 ]"
                 show-alpha
-              ></el-color-picker>
+              />
             </el-form-item>
             <el-form-item label="菜单选中色">
               <el-color-picker
                 v-model="theme.menuBackgroundActive"
                 :predefine="['#22468a', '#1890ff', '#21e6af', '#f57e6c']"
                 show-alpha
-              ></el-color-picker>
+              />
             </el-form-item>
             <el-form-item label="菜单文字色">
               <el-color-picker
                 v-model="theme.menuColor"
                 :predefine="['#000', '#fff']"
                 show-alpha
-              ></el-color-picker>
+              />
             </el-form-item>
             <el-form-item label="标签主题色">
               <el-color-picker
                 v-model="theme.tagsBarBackgroundActive"
                 :predefine="['#1890ff', '#0fd59d', '#f56c6c']"
                 show-alpha
-              ></el-color-picker>
+              />
             </el-form-item>
             <el-form-item label="默认按钮主题色">
               <el-color-picker
                 v-model="theme.buttonBackground"
                 :predefine="['#1890ff', '#0fd59d', '#f56c6c']"
                 show-alpha
-              ></el-color-picker>
+              />
             </el-form-item>
             <el-form-item label="分页选中色">
               <el-color-picker
                 v-model="theme.paginationBackgroundActive"
                 :predefine="['#1890ff', '#0fd59d', '#f56c6c']"
                 show-alpha
-              ></el-color-picker>
+              />
             </el-form-item>
             <el-form-item>
               <el-button @click="handleSetDfaultTheme">恢复默认</el-button>
-              <el-button type="primary" @click="handleSaveTheme"
-                >保存</el-button
-              >
+              <el-button
+                type="primary"
+                @click="handleSaveTheme"
+              >保存</el-button>
             </el-form-item>
           </el-form>
-        </div></el-scrollbar
-      >
+        </div></el-scrollbar>
     </el-drawer>
   </span>
 </template>
