@@ -1,8 +1,20 @@
+import Vue from "vue";
+import router from "../router";
+import store from "../store";
 import axios from "axios";
+
 import config from "@/api/config.js";
 import api from "@/api/api.js";
 import storage from "@/api/storage.js";
 import util from "@/utils/util.js";
+
+import {
+  getAccessToken,
+  removeAccessToken,
+  setAccessToken,
+} from "@/utils/accessToken";
+
+
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL = "";
 
@@ -30,14 +42,21 @@ const httpUtil = {
             let code = this.getCode(res);
             if(code == 10000)
             {
+              const fullPath = router.currentRoute.fullPath;
+              console.log(fullPath);
+
+              console.log(res);
             	//清理旧数据
             	storage.setToken("");
             	storage.setUid("");
-            	//跳转登录界面
-            	const fullPath = this.$route.fullPath;
-            	this.$store.dispatch("user/logout");
-            	this.$router.push(`/login?redirect=${fullPath}`);
 
+              //store.dispatch("user/logout");
+              removeAccessToken();//删除token
+              router.push(`/login?redirect=${fullPath}`);
+
+            	//跳转登录界面
+              //const fullPath = router.fullPath;
+              //router.push(`/login?redirect=/`);
             	return;
             }
             resolve(funSuccess(res.data));
