@@ -21,21 +21,7 @@
       </el-form-item>
 
       <el-form-item label="状态" prop="state">
-        <el-select v-model="form.state" placeholder="状态" v-if="form.state == 0">
-          <el-option-group
-            v-for="group in options"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
-
-        <el-select v-model="form.state" placeholder="状态" v-if="form.state != 0" :disabled="true">
+        <el-select v-model="form.state" placeholder="状态">
           <el-option-group
             v-for="group in options"
             :key="group.label"
@@ -119,7 +105,6 @@ export default {
       this.form2.id = this.form.id;
       this.form2.state = this.form.state;
       if(!util.isEmpty(this.form.desc)) this.form2.desc = this.form.desc;
-      this.form2.id = this.form.id;
       api.updMoneyDraw(this.form2, (res)=>{
         let code = api.getCode(res);
         if(code == 0){

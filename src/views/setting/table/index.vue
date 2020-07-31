@@ -1,6 +1,13 @@
 <template>
   <div class="table-container">
     <vab-query-form style="display: flex;">
+      
+      <vab-query-form-left-panel style="max-width:84px;">
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+          >添加</el-button
+        >
+      </vab-query-form-left-panel>
+      
      <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
@@ -104,6 +111,7 @@
     ></el-pagination>
     <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
     <check-table-edit ref="checkEdit"></check-table-edit>
+    <add-table-edit ref="edit" @refreshList="fetchData"></add-table-edit>
   </div>
 </template>
 
@@ -111,13 +119,15 @@
 import { getList, doDelete } from "@/api/table";
 import updTableEdit from "./components/updTableEdit";
 import checkTableEdit from "./components/checkTableEdit";
+import addTableEdit from "./components/addTableEdit";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
   // name: "ComprehensiveTable",
   components: {
     checkTableEdit,
-    updTableEdit
+    updTableEdit,
+    addTableEdit
   },
   filters: {
     statusFilter(status) {
@@ -166,6 +176,9 @@ export default {
   beforeDestroy() {},
   mounted() {},
   methods: {
+    handleAdd() {
+      this.$refs["edit"].showEdit();
+    },
     tableSortChange() {
       const imageList = [];
       this.$refs.tableSort.tableData.forEach((item, index) => {
