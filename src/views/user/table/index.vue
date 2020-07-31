@@ -1,6 +1,13 @@
 <template>
   <div class="table-container">
     <vab-query-form style="display: flex;">
+
+      <vab-query-form-left-panel style="max-width:84px;">
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+          >添加</el-button
+        >
+      </vab-query-form-left-panel>
+
      <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
@@ -90,12 +97,18 @@
           <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
           </el-button>
-<!--          <el-button type="text" @click="handleDelete(scope.row)"
-            >删除
-          </el-button> -->
           <el-button type="text" @click="handleCheckEdit(scope.row)"
             >查看
           </el-button>
+          <el-button type="text" @click="handleUpdPwd(scope.row)"
+             >修改密码
+           </el-button>
+           <el-button type="text" v-if="scope.row.state != 0" @click="handleUpdState(scope.row)"
+              >解冻
+            </el-button>
+            <el-button type="text" v-if="scope.row.state == 0" @click="handleUpdState(scope.row)"
+               >冻结
+             </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -110,6 +123,9 @@
     ></el-pagination>
     <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
     <check-table-edit ref="checkEdit"></check-table-edit>
+    <upd-pwd ref="updPwd" @refreshList="fetchData"></upd-pwd>
+    <upd-state ref="updState" @refreshList="fetchData"></upd-state>
+    <add-table-edit ref="edit" @refreshList="fetchData"></add-table-edit>
   </div>
 </template>
 
@@ -117,13 +133,19 @@
 import { getList, doDelete } from "@/api/table";
 import updTableEdit from "./components/updTableEdit";
 import checkTableEdit from "./components/checkTableEdit";
+import updPwd from "./components/updPwd";
+import updState from "./components/updState";
+import addTableEdit from "./components/addTableEdit";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
   // name: "ComprehensiveTable",
   components: {
     checkTableEdit,
-    updTableEdit
+    updTableEdit,
+    updPwd,
+    updState,
+    addTableEdit
   },
   filters: {
     statusFilter(status) {
@@ -177,6 +199,9 @@ export default {
   beforeDestroy() {},
   mounted() {},
   methods: {
+    handleAdd() {
+      this.$refs["edit"].showEdit();
+    },
     tableSortChange() {
       const imageList = [];
       this.$refs.tableSort.tableData.forEach((item, index) => {
@@ -193,6 +218,13 @@ export default {
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
     },
+    handleUpdPwd(row) {
+      this.$refs["updPwd"].showEdit(row);
+    },
+    handleUpdState(row) {
+      this.$refs["updState"].showEdit(row);
+    },
+
     handleDelete(row) {
       if (row.id) {
         this.$baseConfirm("你确定要删除当前项吗", null, async () => {

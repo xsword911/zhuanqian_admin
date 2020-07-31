@@ -21,13 +21,12 @@
       <el-form-item label="提交时间" prop="addTime">
         <el-input v-model.trim="form.addTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="状态" prop="type">
+      <el-form-item label="类型" prop="type">
         <el-input value="金币转余额" autocomplete="off" :disabled="true" v-show="form.type == 0"></el-input>
         <el-input value="余额转金币" autocomplete="off" :disabled="true" v-show="form.type == 1"></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="state">
-        <el-input value="审核成功" autocomplete="off" v-if="form.state != 0" :disabled="true"></el-input>
-        <el-select v-model="form.state" placeholder="审核状态" v-if="form.state == 0">
+        <el-select v-model="form.state" placeholder="审核状态" :disabled="true">
           <el-option-group
             v-for="group in state"
             :key="group.label"
@@ -109,20 +108,21 @@ export default {
     },
     submitUpd(){
       this.form.admin = "admin2";
-      api.updMoneyDraw(this.form, (res)=>{
-        let code = api.getCode(res);
-        if(code == 0){
-          this.$baseMessage("修改成功", "success");
-          this.$refs["form"].resetFields();
-          this.dialogFormVisible = false;
-          this.$emit("fetchData");
-          this.form = this.$options.data().form;
-          this.$emit('refreshList');
-        }else{
-          let msg = api.getMsg(res);
-          this.$message.error(msg);
-        }
-      });
+      this.close();
+      // api.updMoneyDraw(this.form, (res)=>{
+      //   let code = api.getCode(res);
+      //   if(code == 0){
+      //     this.$baseMessage("修改成功", "success");
+      //     this.$refs["form"].resetFields();
+      //     this.dialogFormVisible = false;
+      //     this.$emit("fetchData");
+      //     this.form = this.$options.data().form;
+      //     this.$emit('refreshList');
+      //   }else{
+      //     let msg = api.getMsg(res);
+      //     this.$message.error(msg);
+      //   }
+      // });
     },
   },
 };

@@ -40,21 +40,7 @@
       <el-form-item label="直属上级" prop="upper">
         <el-input v-model.trim="form.upper" autocomplete="off" clearable></el-input>
       </el-form-item>
-      <el-form-item label="账号状态" prop="state">
-        <el-select v-model="form.state" placeholder="账号状态">
-          <el-option-group
-            v-for="group in options"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
-      </el-form-item>
+
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>

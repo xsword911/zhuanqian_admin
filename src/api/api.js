@@ -209,6 +209,11 @@ const api = {
   getStatisticsMonth: function (path, funSuccess) {
     httpUtil.post("statistics/getStatisticsMonth", path, funSuccess);
   },
+  
+  //用户活跃统计
+  getUserStatistics: function (path, funSuccess) {
+    httpUtil.post("statistics/getUserStatistics", path, funSuccess);
+  },
 };
 
 export default api;
