@@ -177,16 +177,22 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: "change",
-        name: "Change",
-        component: () => import("@/views/finance/changeTable/index"),
-        meta: { title: "额度转换" },
+        path: "welfare",
+        name: "Welfare",
+        component: () => import("@/views/finance/examineTable/index"),
+        meta: { title: "充值" },
       },
       {
         path: "welfare",
         name: "Welfare",
         component: () => import("@/views/finance/examineTable/index"),
-        meta: { title: "福利审核" },
+        meta: { title: "提现" },
+      },
+      {
+        path: "change",
+        name: "Change",
+        component: () => import("@/views/finance/changeTable/index"),
+        meta: { title: "额度转换" },
       },
       {
         path: "goldTable",
@@ -202,7 +208,6 @@ export const asyncRoutes = [
       }
     ],
   },
-
 
   {
     path: "/statistics",
@@ -236,6 +241,94 @@ export const asyncRoutes = [
     ],
   },
 
+  {
+    path: "/notice",
+    component: Layout,
+    // redirect: "noRedirect",
+    name: "notice",
+    meta: {
+      title: "通知设置",
+      icon: "volume-up",
+      permissions: ["admin"],
+    },
+    children: [
+      {
+        path: "roleManagement",
+        name: "RoleManagement",
+        component: () => import("@/views/statistics/userTable/index"),
+        meta: { title: "轮播图" },
+      },
+      {
+        path: "dayStatisticsTable",
+        name: "DayStatisticsTable",
+        component: () => import("@/views/statistics/todayTable/index"),
+        meta: { title: "跑马灯" },
+      },
+      {
+        path: "monthStatisticsTable",
+        name: "MonthStatisticsTable",
+        component: () => import("@/views/statistics/monthTable/index"),
+        meta: { title: "公告" },
+      },
+      {
+        path: "goldTable",
+        name: "GoldTable",
+        component: () => import("@/views/finance/goldTable/index"),
+        meta: { title: "群发消息" },
+      },
+      {
+        path: "change",
+        name: "Change",
+        component: () => import("@/views/finance/changeTable/index"),
+        meta: { title: "站内信" },
+      },
+      {
+        path: "welfare",
+        name: "Welfare",
+        component: () => import("@/views/finance/examineTable/index"),
+        meta: { title: "系统消息" },
+      },
+    ],
+  },
+
+  {
+    path: "/assist",
+    component: Layout,
+    // redirect: "noRedirect",
+    name: "assist",
+    meta: {
+      title: "资讯设置",
+      icon: "envelope",
+      permissions: ["admin"],
+    },
+    children: [
+      {
+        path: "change",
+        name: "Change",
+        component: () => import("@/views/finance/changeTable/index"),
+        meta: { title: "资讯" },
+      },
+      {
+        path: "welfare",
+        name: "Welfare",
+        component: () => import("@/views/finance/examineTable/index"),
+        meta: { title: "常见问题" },
+      },
+      {
+        path: "goldTable",
+        name: "GoldTable",
+        component: () => import("@/views/finance/goldTable/index"),
+        meta: { title: "代理分佣" },
+      },
+      {
+        path: "moneyTable",
+        name: "MoneyTable",
+        component: () => import("@/views/finance/moneyTable/index"),
+        meta: { title: "新手指南" },
+      }
+    ],
+  },
+
 
   {
     path: "/setting",
@@ -243,7 +336,7 @@ export const asyncRoutes = [
     // redirect: "noRedirect",
     name: "setting",
     meta: {
-      title: "系统设置",
+      title: "系统参数",
       icon: "cogs",
       permissions: ["admin"],
     },
