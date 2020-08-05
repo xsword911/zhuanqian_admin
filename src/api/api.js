@@ -209,10 +209,55 @@ const api = {
   getStatisticsMonth: function (path, funSuccess) {
     httpUtil.post("statistics/getStatisticsMonth", path, funSuccess);
   },
-  
+
   //用户活跃统计
   getUserStatistics: function (path, funSuccess) {
     httpUtil.post("statistics/getUserStatistics", path, funSuccess);
+  },
+
+  //查询充值记录
+  getMoneyRecharge: function (path, funSuccess) {
+    httpUtil.post("money/getMoneyRecharge", path, funSuccess);
+  },
+
+  //查询资讯列表
+  getInformation: function (path, funSuccess) {
+    httpUtil.post("message/getInformation", path, funSuccess);
+  },
+
+  //修改资讯
+  updInformation: function (path, funSuccess) {
+    httpUtil.post("message/updInformation", path, funSuccess);
+  },
+
+  //添加资讯
+  addInformation: function (path, funSuccess) {
+    httpUtil.post("message/addInformation", path, funSuccess);
+  },
+
+  //删除资讯
+  delInformationArr: function (path, funSuccess) {
+    httpUtil.post("message/delInformationArr", path, funSuccess);
+  },
+
+  //查询通知设置列表
+  getNotice: function (path, funSuccess) {
+    httpUtil.post("message/getNotice", path, funSuccess);
+  },
+
+  //查询通知设置列表
+  updNotice: function (path, funSuccess) {
+    httpUtil.post("message/updNotice", path, funSuccess);
+  },
+
+  //添加通知设置
+  addNotice: function (path, funSuccess) {
+    httpUtil.post("message/addNotice", path, funSuccess);
+  },
+  
+  //删除通知设置
+  delNoticeArr: function (path, funSuccess) {
+    httpUtil.post("message/delNoticeArr", path, funSuccess);
   },
 };
 

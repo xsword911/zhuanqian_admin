@@ -1,16 +1,7 @@
 <template>
   <div class="table-container">
     <vab-query-form style="display: flex;">
-      <vab-query-form-left-panel style="max-width:84px;">
-        <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
-          >删除
-        </el-button>
-      </vab-query-form-left-panel>
      <vab-query-form-right-panel style="flex: 1;">
-<!--       <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
-       style="position: absolute; left: 0px; top:34%;display:block; transform: translateY(-50%);"
-         >删除
-       </el-button> -->
         <el-form
           ref="form"
           :model="queryForm"
@@ -18,23 +9,22 @@
           @submit.native.prevent
         >
           <el-form-item>
-             <el-input v-model="queryForm.uid" placeholder="uid"  clearable/>
-           </el-form-item>
-          <el-form-item>
-            <el-input v-model="queryForm.title" placeholder="任务名称"  clearable/>
+            <el-input v-model="queryForm.uid" placeholder="uid"  clearable/>
           </el-form-item>
-          <el-form-item>
-            <el-input v-model="queryForm.admin" placeholder="审核人"  clearable/>
-          </el-form-item>
-
+<!--         <el-form-item>
+            <el-input v-model="queryForm.sn" placeholder="订单号"  clearable/>
+          </el-form-item> -->
          <el-form-item>
-              <el-select v-model="stateValue" placeholder="任务状态" clearable>
+            <el-input v-model="queryForm.admin" placeholder="审核人" clearable/>
+          </el-form-item>
+          <el-form-item>
+              <el-select v-model="value" placeholder="审核状态" clearable>
                 <el-option-group
-                  v-for="group in state"
+                  v-for="group in options"
                   :key="group.label"
                   :label="group.label">
                   <el-option
-                    v-for="item in group.state"
+                    v-for="item in group.options"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value">
@@ -77,30 +67,42 @@
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
     >
-      <el-table-column type="selection" width="55"></el-table-column>
+      <!-- <el-table-column type="selection" width="55"></el-table-column> -->
 <!--      <el-table-column label="序号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
       <el-table-column prop="uid" label="uid"></el-table-column>
-      <el-table-column prop="sn" label="订单号"></el-table-column>
-      <el-table-column prop="title" label="任务名称"></el-table-column>
-      <el-table-column prop="award" label="奖励金额"></el-table-column>
-      <el-table-column prop="finishTime" label="完成时间"></el-table-column>
-      <el-table-column prop="stateTest" label="状态"></el-table-column>
-      <el-table-column prop="updTime" label="审核时间"></el-table-column>
-      <el-table-column prop="admin" label="审核人"></el-table-column>
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="sn" label="账单号"></el-table-column>
+      <el-table-column prop="money" label="金额"></el-table-column>
+      <el-table-column prop="addTime" label="申请时间"></el-table-column>
 
+     <el-table-column label="申请状态">
+        <template slot-scope="scope">
+          <el-tooltip
+            :content="scope.row.status"
+            class="item"
+            effect="dark"
+            placement="top-start"
+          >
+            <el-tag :type="scope.row.status | statusFilter"
+              >{{ scope.row.stateTest }}
+            </el-tag>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+      <el-table-column prop="admin" label="审核人"></el-table-column>
+      <el-table-column prop="updTime" label="审核时间"></el-table-column>
+      <el-table-column prop="desc" label="备注"></el-table-column>
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-<!--          <el-button type="text" @click="handleEdit(scope.row)"
-            >编辑
-          </el-button> -->
 <!--          <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
+          <el-button type="text" @click="handleEdit(scope.row)"
+            >审核
+          </el-button>
           <el-button type="text" @click="handleCheckEdit(scope.row)"
             >查看
           </el-button>
@@ -123,8 +125,8 @@
 
 <script>
 import { getList, doDelete } from "@/api/table";
-import updTableEdit from "./components/updTableEdit";
 import checkTableEdit from "./components/checkTableEdit";
+import updTableEdit from "./components/updTableEdit";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
@@ -135,25 +137,29 @@ export default {
   },
   filters: {
     statusFilter(status) {
-      if(status == 1) return "success";
-      if(status == 0) return "danger";
-    }
+      const statusMap = {
+        normal: "success",
+        frozen: "gray",
+        ban: "danger",
+      };
+      return statusMap[status];
+    },
   },
   data() {
     return {
-      state: [{
-        state: [{
+      options: [{
+        options: [{
           value: 0,
-          label: '进行中'
+          label: '未审核'
         },{
           value: 1,
-          label: '已完成'
+          label: '审核通过'
         },{
           value: 2,
-          label: '任务失败'
+          label: '审核未通过'
         }]
       }],
-      stateValue: '',      //选中的状态类型
+      value: '',      //审核类型
 
       searchTime: '', //筛选的时间范围
       imgShow: true,
@@ -168,14 +174,12 @@ export default {
       queryForm: {
         page: 1,
         count: 10,
-        title: '',
-        uid: '',
-        begAddTime: '',
-        endAddTime: '',
-        admin: '',
-        // award: '',
+        sn: "",
+        begAddTime: "",
+        endAddTime: "",
+        admin: "",
+        stateTest: "",
         state: null,
-        stateTest: '',
       },
     };
   },
@@ -195,41 +199,31 @@ export default {
     setSelectRows(val) {
       this.selectRows = val;
     },
-    handleEdit(row) {
-      this.$refs["updEdit"].showEdit(row);
-    },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
     },
+    handleEdit(row) {
+      this.$refs["updEdit"].showEdit(row);
+    },
     handleDelete(row) {
-      if(util.isEmpty(this.selectRows)){
-        this.$baseMessage("未选中任何行", "error");
-        return false;
-      }else {
-        this.$baseConfirm("你确定要删除选中项吗", null, async () => {
-            let delById = [];
-            this.selectRows.forEach((item, index) =>{
-              let obj = {};
-              obj.id = item.id;
-              delById.push(obj);
-            });
-            let delArr = {
-              arr: delById
-            };
-            api.delTaskDetails(delArr, (res)=>{
-              let code = api.getCode(res);
-              if(code == 0){
-                this.$baseMessage("删除成功", "success");
-                this.$refs["form"].resetFields();
-                this.dialogFormVisible = false;
-                this.form = this.$options.data().form;
-                this.fetchData();
-              }else{
-                let msg = api.getMsg(res);
-                this.$message.error(msg);
-              }
-            });
+      if (row.id) {
+        this.$baseConfirm("你确定要删除当前项吗", null, async () => {
+          const { msg } = await doDelete({ ids: row.id });
+          this.$baseMessage(msg, "success");
+          this.fetchData();
         });
+      } else {
+        if (this.selectRows.length > 0) {
+          const ids = this.selectRows.map((item) => item.id).join();
+          this.$baseConfirm("你确定要删除选中项吗", null, async () => {
+            const { msg } = await doDelete({ ids: ids });
+            this.$baseMessage(msg, "success");
+            this.fetchData();
+          });
+        } else {
+          this.$baseMessage("未选中任何行", "error");
+          return false;
+        }
       }
     },
     handleSizeChange(val) {
@@ -245,42 +239,44 @@ export default {
       this.queryForm.page = 1;
       //时间筛选不为空时添加时间属性
       if(!util.isEmpty(this.searchTime)){
-        this.queryForm.begFinishTime = this.searchTime[0];
-        this.queryForm.endFinishTime = this.searchTime[1];
+        this.queryForm.begAddTime = this.searchTime[0];
+        this.queryForm.endAddTime = this.searchTime[1];
       }else{   //时间筛选为空时删除时间属性
-        delete this.queryForm.begFinishTime;
-        delete this.queryForm.endFinishTime;
+        delete this.queryForm.begAddTime;
+        delete this.queryForm.endAddTime;
       };
-
-      //状态类型筛选不为空时添加状态类型属性
-      if(!util.isEmpty(this.stateValue)){
-        this.queryForm.state = this.stateValue;
-      }else{   //状态类型筛选为空时删除状态类型属性
+      //奖励类型筛选不为空时添加奖励类型属性
+      if(!util.isEmpty(this.value)){
+        this.queryForm.state = this.value;
+      }else{   //奖励类型筛选为空时删除奖励类型属性
         delete this.queryForm.state;
       };
-      console.log(this.queryForm);
       this.fetchData();
     },
     async fetchData() {
+
       this.listLoading = true;
-      api.getTaskDetails(this.queryForm, (res)=>{
+      api.getMoneyRecharge(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
            data.forEach((item, index) =>{
               switch (item.state){
                 case 0:
-                  item.stateTest = "进行中";
+                  item.status = 'frozen';
+                  item.stateTest = "未审核";
                   break;
                 case 1:
-                  item.stateTest = "已完成";
+                  item.status = 'normal';
+                  item.stateTest = "审核通过";
                   break;
                 case 2:
-                  item.stateTest = "任务失败";
+                  item.status = 'ban';
+                  item.stateTest = "审核未通过";
                   break;
                 default:
                   break;
-              };
+              }
            });
            this.total = api.getTotal(res);
            this.list = data;
@@ -318,14 +314,6 @@ export default {
     testNotify() {
       this.$baseNotify("测试消息提示", "test", "success", "bottom-right");
     },
-    //获取当前月份一共有几天
-    mGetDate(){
-         var date = new Date();
-         var year = date.getFullYear();
-         var month = date.getMonth()+1;
-         var d = new Date(year, month, 0);
-         return d.getDate();
-    }
   },
 };
 </script>

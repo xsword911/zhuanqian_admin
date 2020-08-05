@@ -177,9 +177,9 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: "welfare",
-        name: "Welfare",
-        component: () => import("@/views/finance/examineTable/index"),
+        path: "recharge",
+        name: "Recharge",
+        component: () => import("@/views/finance/rechargeTable/index"),
         meta: { title: "充值" },
       },
       {
@@ -253,33 +253,27 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: "roleManagement",
-        name: "RoleManagement",
-        component: () => import("@/views/statistics/userTable/index"),
+        path: "tran",
+        name: "Tran",
+        component: () => import("@/views/notice/tran/index"),
         meta: { title: "轮播图" },
       },
       {
-        path: "dayStatisticsTable",
-        name: "DayStatisticsTable",
-        component: () => import("@/views/statistics/todayTable/index"),
+        path: "runHorse",
+        name: "RunHorse",
+        component: () => import("@/views/notice/runHorse/index"),
         meta: { title: "跑马灯" },
       },
       {
-        path: "monthStatisticsTable",
-        name: "MonthStatisticsTable",
-        component: () => import("@/views/statistics/monthTable/index"),
+        path: "notice",
+        name: "Notice",
+        component: () => import("@/views/notice/notice/index"),
         meta: { title: "公告" },
-      },
-      {
-        path: "goldTable",
-        name: "GoldTable",
-        component: () => import("@/views/finance/goldTable/index"),
-        meta: { title: "群发消息" },
       },
       {
         path: "change",
         name: "Change",
-        component: () => import("@/views/finance/changeTable/index"),
+        component: () => import("@/views/notice/notice/index"),
         meta: { title: "站内信" },
       },
       {
@@ -303,27 +297,27 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: "change",
-        name: "Change",
-        component: () => import("@/views/finance/changeTable/index"),
+        path: "msg",
+        name: "Msg",
+        component: () => import("@/views/information/msg/index"),
         meta: { title: "资讯" },
       },
       {
-        path: "welfare",
-        name: "Welfare",
-        component: () => import("@/views/finance/examineTable/index"),
+        path: "question",
+        name: "Question",
+        component: () => import("@/views/information/question/index"),
         meta: { title: "常见问题" },
       },
       {
-        path: "goldTable",
-        name: "GoldTable",
-        component: () => import("@/views/finance/goldTable/index"),
+        path: "agent",
+        name: "Agent",
+        component: () => import("@/views/information/agent/index"),
         meta: { title: "代理分佣" },
       },
       {
-        path: "moneyTable",
-        name: "MoneyTable",
-        component: () => import("@/views/finance/moneyTable/index"),
+        path: "guide",
+        name: "Guide",
+        component: () => import("@/views/information/guide/index"),
         meta: { title: "新手指南" },
       }
     ],

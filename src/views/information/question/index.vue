@@ -1,60 +1,67 @@
 <template>
   <div class="table-container">
     <vab-query-form style="display: flex;">
-      <vab-query-form-left-panel style="max-width:84px;">
+
+      <vab-query-form-left-panel style="max-width:168px;">
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+          >添加</el-button
+        >
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
           >删除
         </el-button>
       </vab-query-form-left-panel>
+
      <vab-query-form-right-panel style="flex: 1;">
-<!--       <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
-       style="position: absolute; left: 0px; top:34%;display:block; transform: translateY(-50%);"
-         >删除
-       </el-button> -->
+<!--       <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+       style="position: absolute; left: 0; top:34%;display:block; transform: translateY(-50%);"
+          >添加
+        </el-button>
+        <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
+        style="position: absolute; left: 80px; top:34%;display:block; transform: translateY(-50%);"
+          >删除
+        </el-button> -->
         <el-form
           ref="form"
           :model="queryForm"
           :inline="true"
           @submit.native.prevent
         >
+        <el-form-item>
+            <el-input v-model="queryForm.title" placeholder="标题"  clearable/>
+        </el-form-item>
+
+        <el-form-item>
+            <el-input v-model="queryForm.admin" placeholder="操作者"  clearable/>
+        </el-form-item>
+
           <el-form-item>
-             <el-input v-model="queryForm.uid" placeholder="uid"  clearable/>
+               <el-select v-model="stateValue" placeholder="状态" clearable>
+                 <el-option-group
+                   v-for="group in state"
+                   :key="group.label"
+                   :label="group.label">
+                   <el-option
+                     v-for="item in group.state"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value">
+                   </el-option>
+                 </el-option-group>
+               </el-select>
            </el-form-item>
-          <el-form-item>
-            <el-input v-model="queryForm.title" placeholder="任务名称"  clearable/>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="queryForm.admin" placeholder="审核人"  clearable/>
-          </el-form-item>
-
-         <el-form-item>
-              <el-select v-model="stateValue" placeholder="任务状态" clearable>
-                <el-option-group
-                  v-for="group in state"
-                  :key="group.label"
-                  :label="group.label">
-                  <el-option
-                    v-for="item in group.state"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-option-group>
-              </el-select>
-          </el-form-item>
-
-          <el-form-item>
-                <div class="block">
-                  <el-date-picker
-                    v-model="searchTime"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    type="datetimerange"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    :default-time="['00:00:00', '23:59:59']">
-                  </el-date-picker>
-                </div>
-          </el-form-item>
+           
+           <el-form-item>
+                 <div class="block">
+                   <el-date-picker
+                     v-model="searchTime"
+                     value-format="yyyy-MM-dd HH:mm:ss"
+                     type="datetimerange"
+                     start-placeholder="开始日期"
+                     end-placeholder="结束日期"
+                     :default-time="['00:00:00', '23:59:59']">
+                   </el-date-picker>
+                 </div>
+           </el-form-item>
 
           <el-form-item>
             <el-button
@@ -83,21 +90,35 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="uid"></el-table-column>
-      <el-table-column prop="sn" label="订单号"></el-table-column>
-      <el-table-column prop="title" label="任务名称"></el-table-column>
-      <el-table-column prop="award" label="奖励金额"></el-table-column>
-      <el-table-column prop="finishTime" label="完成时间"></el-table-column>
-      <el-table-column prop="stateTest" label="状态"></el-table-column>
-      <el-table-column prop="updTime" label="审核时间"></el-table-column>
-      <el-table-column prop="admin" label="审核人"></el-table-column>
+      <el-table-column prop="sort" label="排序id"></el-table-column>
+      <el-table-column prop="title" label="标题"></el-table-column>
+      <el-table-column prop="content" label="内容"></el-table-column>
+
+     <el-table-column label="状态">
+        <template slot-scope="scope">
+          <el-tooltip
+            :content="scope.row.stateTest"
+            class="item"
+            effect="dark"
+            placement="top-start"
+          >
+            <el-tag :type="scope.row.state | statusFilter"
+              >{{ scope.row.stateTest }}
+            </el-tag>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="admin" label="操作者"></el-table-column>
+      <el-table-column prop="addTime" label="添加时间"></el-table-column>
+      <el-table-column prop="updTime" label="修改时间"></el-table-column>
       <el-table-column prop="desc" label="备注"></el-table-column>
 
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-<!--          <el-button type="text" @click="handleEdit(scope.row)"
+          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
-          </el-button> -->
+          </el-button>
 <!--          <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
@@ -118,6 +139,7 @@
     ></el-pagination>
     <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
     <check-table-edit ref="checkEdit"></check-table-edit>
+    <add-table-edit ref="edit" @refreshList="fetchData"></add-table-edit>
   </div>
 </template>
 
@@ -125,13 +147,15 @@
 import { getList, doDelete } from "@/api/table";
 import updTableEdit from "./components/updTableEdit";
 import checkTableEdit from "./components/checkTableEdit";
+import addTableEdit from "./components/addTableEdit";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
   // name: "ComprehensiveTable",
   components: {
     checkTableEdit,
-    updTableEdit
+    updTableEdit,
+    addTableEdit
   },
   filters: {
     statusFilter(status) {
@@ -144,18 +168,14 @@ export default {
       state: [{
         state: [{
           value: 0,
-          label: '进行中'
+          label: '关闭'
         },{
           value: 1,
-          label: '已完成'
-        },{
-          value: 2,
-          label: '任务失败'
+          label: '开启'
         }]
       }],
       stateValue: '',      //选中的状态类型
 
-      searchTime: '', //筛选的时间范围
       imgShow: true,
       list: [],
       imageList: [],
@@ -165,15 +185,11 @@ export default {
       background: true,
       selectRows: "",
       elementLoadingText: "正在加载...",
+      searchTime: '', //筛选的时间范围
       queryForm: {
         page: 1,
         count: 10,
-        title: '',
-        uid: '',
-        begAddTime: '',
-        endAddTime: '',
-        admin: '',
-        // award: '',
+        type: 1,
         state: null,
         stateTest: '',
       },
@@ -185,6 +201,9 @@ export default {
   beforeDestroy() {},
   mounted() {},
   methods: {
+    handleAdd() {
+      this.$refs["edit"].showEdit();
+    },
     tableSortChange() {
       const imageList = [];
       this.$refs.tableSort.tableData.forEach((item, index) => {
@@ -216,7 +235,7 @@ export default {
             let delArr = {
               arr: delById
             };
-            api.delTaskDetails(delArr, (res)=>{
+            api.delInformationArr(delArr, (res)=>{
               let code = api.getCode(res);
               if(code == 0){
                 this.$baseMessage("删除成功", "success");
@@ -245,38 +264,35 @@ export default {
       this.queryForm.page = 1;
       //时间筛选不为空时添加时间属性
       if(!util.isEmpty(this.searchTime)){
-        this.queryForm.begFinishTime = this.searchTime[0];
-        this.queryForm.endFinishTime = this.searchTime[1];
+        this.queryForm.updBegTime = this.searchTime[0];
+        this.queryForm.updEndTime = this.searchTime[1];
       }else{   //时间筛选为空时删除时间属性
-        delete this.queryForm.begFinishTime;
-        delete this.queryForm.endFinishTime;
+        delete this.queryForm.updBegTime;
+        delete this.queryForm.updEndTime;
       };
-
+      
+      
       //状态类型筛选不为空时添加状态类型属性
       if(!util.isEmpty(this.stateValue)){
         this.queryForm.state = this.stateValue;
       }else{   //状态类型筛选为空时删除状态类型属性
         delete this.queryForm.state;
       };
-      console.log(this.queryForm);
       this.fetchData();
     },
     async fetchData() {
       this.listLoading = true;
-      api.getTaskDetails(this.queryForm, (res)=>{
+      api.getInformation(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
            data.forEach((item, index) =>{
               switch (item.state){
                 case 0:
-                  item.stateTest = "进行中";
+                  item.stateTest = "关闭";
                   break;
                 case 1:
-                  item.stateTest = "已完成";
-                  break;
-                case 2:
-                  item.stateTest = "任务失败";
+                  item.stateTest = "开启";
                   break;
                 default:
                   break;

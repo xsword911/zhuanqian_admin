@@ -384,6 +384,9 @@ export default {
               case 3:
                 item.type = "幸运抽奖获奖";
                 break;
+              case 4:
+                item.type = "充值";
+                break;
               case 100:
                 item.type = "提现";
                 break;
