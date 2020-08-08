@@ -179,8 +179,41 @@ export const asyncRoutes = [
       {
         path: "recharge",
         name: "Recharge",
-        component: () => import("@/views/finance/rechargeTable/index"),
-        meta: { title: "充值" },
+        redirect: "noRedirect",
+        alwaysShow: true,
+        component: EmptyLayout,
+        meta: { title: "充值操作" },
+
+        children: [
+          {
+            path: "rechargeExamine",
+            name: "RechargeExamine",
+            component: () => import("@/views/finance/recharge/rechargeTable/index"),
+            meta: { title: "充值审核" },
+          },
+
+          {
+            path: "rechargeWay",
+            name: "RechargeWay",
+            component: () => import("@/views/finance/recharge/rechargeWay/index"),
+            meta: { title: "充值渠道" },
+          },
+
+          {
+            path: "rechargeType",
+            name: "RechargeType",
+            component: () => import("@/views/finance/recharge/rechargeType/index"),
+            meta: { title: "渠道大类" },
+          },
+
+          {
+            path: "rechargeAccount",
+            name: "RechargeAccount",
+            component: () => import("@/views/finance/recharge/rechargeAccount/index"),
+            meta: { title: "收款账户" },
+          },
+
+        ],
       },
       {
         path: "welfare",
@@ -271,15 +304,15 @@ export const asyncRoutes = [
         meta: { title: "公告" },
       },
       {
-        path: "change",
-        name: "Change",
-        component: () => import("@/views/notice/notice/index"),
+        path: "userMessage",
+        name: "UserMessage",
+        component: () => import("@/views/notice/userMessage/index"),
         meta: { title: "站内信" },
       },
       {
-        path: "welfare",
-        name: "Welfare",
-        component: () => import("@/views/finance/examineTable/index"),
+        path: "systemMessage",
+        name: "SystemMessage",
+        component: () => import("@/views/notice/systemMessage/index"),
         meta: { title: "系统消息" },
       },
     ],

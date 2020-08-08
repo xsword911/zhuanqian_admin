@@ -187,9 +187,11 @@ export default {
             let code = api.getCode(res);
             if(code == 0){
               let token = api.getToken(res);
+              let uid = api.getUid(res);
               let data = {
                 account: this.loginForm.account,
-                token: token
+                token: token,
+                uid: uid,
               };
                 this.$store.dispatch("user/login", data);
                 const routerPath =

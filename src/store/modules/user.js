@@ -6,6 +6,7 @@
 import Vue from "vue";
 import { getInfo, login, logout } from "@/api/user";
 import api from "@/api/api";
+import storage from "@/api/storage.js";
 import {
   getAccessToken,
   removeAccessToken,
@@ -46,6 +47,8 @@ const actions = {
       // await api.login(userInfo, (res) => {
           commit("setAccessToken", data.token);
           commit("setUserName", data.account);
+          storage.setToken(data.token);
+          storage.setUid(data.uid);
           const hour = new Date().getHours();
           const thisTime =
             hour < 8

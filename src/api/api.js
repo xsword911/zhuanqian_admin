@@ -254,10 +254,45 @@ const api = {
   addNotice: function (path, funSuccess) {
     httpUtil.post("message/addNotice", path, funSuccess);
   },
-  
+
   //删除通知设置
   delNoticeArr: function (path, funSuccess) {
     httpUtil.post("message/delNoticeArr", path, funSuccess);
+  },
+
+  //查询消息列表
+  getMsg: function (path, funSuccess) {
+    httpUtil.post("message/getMsg", path, funSuccess);
+  },
+
+  //删除消息记录
+  delMsgArr: function (path, funSuccess) {
+    httpUtil.post("message/delMsgArr", path, funSuccess);
+  },
+
+  //发消息
+  sendMsg: function (path, funSuccess) {
+    httpUtil.post("message/sendMsg", path, funSuccess);
+  },
+
+  //查询充值渠道
+  getRechargeWay: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/getRechargeWay", path, funSuccess);
+  },
+
+  //修改充值渠道
+  updRechargeWay: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/updRechargeWay", path, funSuccess);
+  },
+
+  //添加充值渠道
+  addRechargeWay: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/addRechargeWay", path, funSuccess);
+  },
+  
+  //批量删除充值渠道
+  delRechargeWayArr: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/delRechargeWayArr", path, funSuccess);
   },
 };
 
