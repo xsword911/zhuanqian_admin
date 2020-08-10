@@ -212,6 +212,13 @@ export const asyncRoutes = [
             component: () => import("@/views/finance/recharge/rechargeAccount/index"),
             meta: { title: "收款账户" },
           },
+          
+          {
+            path: "bankTable",
+            name: "BankTable",
+            component: () => import("@/views/finance/recharge/bankTable/index"),
+            meta: { title: "银行管理" },
+          },
 
         ],
       },

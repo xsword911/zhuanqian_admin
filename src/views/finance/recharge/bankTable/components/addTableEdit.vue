@@ -6,48 +6,12 @@
     @close="close"
   >
   <el-form ref="form" :model="form" label-width="80px" :rules="rules">
-      <el-form-item label="排序" prop="order">
-         <el-input v-model.trim="form.order" autocomplete="off"></el-input>
+      <el-form-item label="银行id" prop="bankId">
+         <el-input v-model.trim="form.bankId" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="渠道大类" prop="typeId">
-        <el-select v-model="form.typeId" placeholder="渠道大类">
-          <el-option-group
-            v-for="group in rechargeType"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.rechargeType"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="渠道名" prop="wayName">
-         <el-input v-model.trim="form.wayName" autocomplete="off"></el-input>
-      </el-form-item>
-
-      <el-form-item label="渠道id" prop="wayId">
-         <el-input v-model.trim="form.wayId" autocomplete="off"></el-input>
-      </el-form-item>
-
-      <el-form-item label="状态" prop="state">
-        <el-select v-model="form.state" placeholder="状态">
-          <el-option-group
-            v-for="group in state"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.state"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
+      <el-form-item label="银行名称" prop="bankName">
+         <el-input v-model.trim="form.bankName" autocomplete="off"></el-input>
       </el-form-item>
 
       <el-form-item label="备注" prop="desc">
@@ -71,47 +35,27 @@ export default {
   name: "TableEdit",
   data() {
     return {
-      state: [{
-        state: [{
-          value: 0,
-          label: '关闭'
-        },{
-          value: 1,
-          label: '开启'
-        }]
-      }],
-      stateValue: '',      //选中的任务状态
-
       form: {
-        type: 2,
-        admin: "admin1"
+
       },
       title: "",
       dialogFormVisible: false,
-      rechargeType: [{
-        rechargeType: []
-      }],
 
       rules: {
-        typeId: [{ required: true, trigger: "blur", message: "请输入类型id" }],
-        order: [{ required: true, trigger: "blur", message: "请输入排序" }],
-        wayId: [{ required: true, trigger: "blur", message: "请输入渠道id" }],
-        state: [{ required: true, trigger: "blur", message: "请选择状态" }],
-        wayName: [{ required: true, trigger: "blur", message: "请输入渠道名" }],
+        bankId: [{ required: true, trigger: "blur", message: "银行id" }],
+        bankName: [{ required: true, trigger: "blur", message: "银行名称" }],
       }
     };
   },
   created() {},
   methods: {
     showEdit(row) {
-      console.log(row);
       if (!row) {
         this.title = "添加";
       } else {
         this.title = "编辑";
         this.form = Object.assign({}, row);
       }
-      this.rechargeType[0].rechargeType = row;
       this.dialogFormVisible = true;
     },
     close() {
@@ -123,7 +67,7 @@ export default {
     save() {
       this.$refs["form"].validate(async (valid) => {
         if (valid) {
-          api.addRechargeWay(this.form, (res)=>{
+          api.addBank(this.form, (res)=>{
             let code = api.getCode(res);
             if(code == 0){
               this.$baseMessage("添加成功", "success");

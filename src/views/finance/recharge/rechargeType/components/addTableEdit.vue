@@ -5,26 +5,27 @@
     width="500px"
     @close="close"
   >
-    <el-form ref="form" :model="form" label-width="80px" :rules="rules">
-          <!-- <el-input v-model.trim="form.id" autocomplete="off" :disabled="true" v-if="false"></el-input> -->
-    <el-form-item label="排序" prop="order">
-      <el-input v-model.trim="form.order" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="类型id" prop="typeId">
-        <el-input v-model.trim="form.typeId" autocomplete="off"></el-input>
-    </el-form-item>
+  <el-form ref="form" :model="form" label-width="80px" :rules="rules">
+      <el-form-item label="排序" prop="order">
+         <el-input v-model.trim="form.order" autocomplete="off"></el-input>
+      </el-form-item>
+
+      <el-form-item label="类型id" prop="typeId">
+         <el-input v-model.trim="form.typeId" autocomplete="off"></el-input>
+      </el-form-item>
+
       <el-form-item label="类型名称" prop="typeName">
-        <el-input v-model.trim="form.typeName" autocomplete="off"></el-input>
+         <el-input v-model.trim="form.typeName" autocomplete="off"></el-input>
       </el-form-item>
 
       <el-form-item label="状态" prop="state">
         <el-select v-model="form.state" placeholder="状态">
           <el-option-group
-            v-for="group in options"
+            v-for="group in state"
             :key="group.label"
             :label="group.label">
             <el-option
-              v-for="item in group.options"
+              v-for="item in group.state"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -34,26 +35,28 @@
       </el-form-item>
 
       <el-form-item label="备注" prop="desc">
-        <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
+         <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
       </el-form-item>
 
     </el-form>
+
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="submitUpd">确 定</el-button>
+      <el-button type="primary" @click="save">确 定</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
+import { doEdit } from "@/api/table";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
-  // name: "TableEdit",
+  name: "TableEdit",
   data() {
     return {
-      options: [{
-        options: [{
+      state: [{
+        state: [{
           value: 0,
           label: '关闭'
         },{
@@ -61,16 +64,14 @@ export default {
           label: '开启'
         }]
       }],
-      value: '',      //交易类型
+      stateValue: '',      //选中的任务状态
+
       form: {
-        id: '',
-      },
-      form2: {
-        id: '',
-        state: null,
+
       },
       title: "",
       dialogFormVisible: false,
+
       rules: {
         typeId: [{ required: true, trigger: "blur", message: "请输入类型id" }],
         order: [{ required: true, trigger: "blur", message: "请输入排序" }],
@@ -79,9 +80,7 @@ export default {
       }
     };
   },
-  mounted() {
-
-  },
+  created() {},
   methods: {
     showEdit(row) {
       if (!row) {
@@ -98,13 +97,13 @@ export default {
       this.dialogFormVisible = false;
       this.$emit("fetchData");
     },
-    submitUpd(){
+    save() {
       this.$refs["form"].validate(async (valid) => {
         if (valid) {
-          api.updRechargeType(this.form, (res)=>{
+          api.addRechargeType(this.form, (res)=>{
             let code = api.getCode(res);
             if(code == 0){
-              this.$baseMessage("修改成功", "success");
+              this.$baseMessage("添加成功", "success");
               this.$refs["form"].resetFields();
               this.dialogFormVisible = false;
               this.$emit("fetchData");
@@ -124,3 +123,30 @@ export default {
   },
 };
 </script>
+
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin-left:30rpx;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+  }
+  .avatar {
+    width: 80px;
+    height: 80px;
+    display: block;
+  }
+</style>

@@ -10,9 +10,23 @@
     <el-form-item label="排序" prop="order">
       <el-input v-model.trim="form.order" autocomplete="off"></el-input>
     </el-form-item>
-    <el-form-item label="类型id" prop="typeId">
-        <el-input v-model.trim="form.typeId" autocomplete="off"></el-input>
-    </el-form-item>
+
+      <el-form-item label="渠道大类" prop="typeId">
+        <el-select v-model="form.typeId" placeholder="渠道大类">
+          <el-option-group
+            v-for="group in rechargeType"
+            :key="group.label"
+            :label="group.label">
+            <el-option
+              v-for="item in group.rechargeType"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-option-group>
+        </el-select>
+      </el-form-item>
+
       <el-form-item label="渠道名" prop="wayName">
         <el-input v-model.trim="form.wayName" autocomplete="off"></el-input>
       </el-form-item>
@@ -65,6 +79,9 @@ export default {
         }]
       }],
       value: '',      //交易类型
+      rechargeType: [{
+        rechargeType: []
+      }],
       form: {
         id: '',
         state: null,
@@ -89,13 +106,14 @@ export default {
 
   },
   methods: {
-    showEdit(row) {
+    showEdit(row, rechargeType) {
       if (!row) {
         this.title = "添加";
       } else {
         this.title = "编辑";
         this.form = Object.assign({}, row);
       }
+      this.rechargeType[0].rechargeType = rechargeType;
       this.dialogFormVisible = true;
     },
     close() {

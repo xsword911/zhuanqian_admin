@@ -95,7 +95,7 @@
 <!--          <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
-          <el-button type="text" @click="handleEdit(scope.row)"
+          <el-button type="text" @click="handleEdit(scope.row, rechargeType)"
             >编辑
           </el-button>
           <el-button type="text" @click="handleCheckEdit(scope.row)"
@@ -156,6 +156,8 @@ export default {
       }],
       value: '',      //审核类型
 
+      rechargeType: [],  //充值渠道大类列表
+
       imgShow: true,
       list: [],
       imageList: [],
@@ -173,12 +175,13 @@ export default {
   },
   created() {
     this.fetchData();
+    this.getRechargeType();  //获取充值渠道大类列表
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
     handleAdd() {
-      this.$refs["edit"].showEdit();
+      this.$refs["edit"].showEdit(this.rechargeType);
     },
     tableSortChange() {
       const imageList = [];
@@ -193,8 +196,8 @@ export default {
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
     },
-    handleEdit(row) {
-      this.$refs["updEdit"].showEdit(row);
+    handleEdit(row, rechargeType) {
+      this.$refs["updEdit"].showEdit(row, rechargeType);
     },
     handleDelete(row) {
       if(util.isEmpty(this.selectRows)){
@@ -275,6 +278,18 @@ export default {
         this.listLoading = false;
       }, 300);
 
+    },
+    //获取充值渠道大类列表
+    getRechargeType(){
+      api.getRechargeType({page: 1, count: 20, state: 1}, (res)=>{
+        let data = api.getData(res);
+        data.forEach((item,index) =>{
+          let obj = {};
+          obj.value = item.typeId;
+          obj.label = item.typeName;
+          this.rechargeType.push(obj);
+        });
+      });
     },
     testMessage() {
       this.$baseMessage("test1", "success");

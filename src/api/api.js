@@ -289,10 +289,70 @@ const api = {
   addRechargeWay: function (path, funSuccess) {
     httpUtil.post("money/rechargeWay/addRechargeWay", path, funSuccess);
   },
-  
+
   //批量删除充值渠道
   delRechargeWayArr: function (path, funSuccess) {
     httpUtil.post("money/rechargeWay/delRechargeWayArr", path, funSuccess);
+  },
+
+  //查询充值渠道大类
+  getRechargeType: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/getRechargeType", path, funSuccess);
+  },
+
+  //添加充值渠道大类
+  addRechargeType: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/addRechargeType", path, funSuccess);
+  },
+
+  //修改充值渠道大类
+  updRechargeType: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/updRechargeType", path, funSuccess);
+  },
+
+  //批量删除充值渠道大类
+  delRechargeTypeArr: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/delRechargeTypeArr", path, funSuccess);
+  },
+
+  //查询收款账户
+  getRechargeAccount: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/getRechargeAccount", path, funSuccess);
+  },
+
+  //添加充值收款账户
+  addRechargeAccount: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/addRechargeAccount", path, funSuccess);
+  },
+
+  //修改充值收款账户
+  updRechargeAccount: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/updRechargeAccount", path, funSuccess);
+  },
+
+  //批量删除充值收款账户
+  delRechargeAccountArr: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/delRechargeAccountArr", path, funSuccess);
+  },
+
+  //查询银行
+  getBank: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/getBank", path, funSuccess);
+  },
+
+  //添加银行
+  addBank: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/addBank", path, funSuccess);
+  },
+
+  //修改银行
+  updBank: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/updBank", path, funSuccess);
+  },
+  
+  //批量删除银行
+  delBankArr: function (path, funSuccess) {
+    httpUtil.post("money/rechargeWay/delBankArr", path, funSuccess);
   },
 };
 

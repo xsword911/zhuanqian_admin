@@ -7,34 +7,16 @@
   >
     <el-form ref="form" :model="form" label-width="80px" :rules="rules">
           <!-- <el-input v-model.trim="form.id" autocomplete="off" :disabled="true" v-if="false"></el-input> -->
-    <el-form-item label="排序" prop="order">
-      <el-input v-model.trim="form.order" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="类型id" prop="typeId">
-        <el-input v-model.trim="form.typeId" autocomplete="off"></el-input>
-    </el-form-item>
-      <el-form-item label="类型名称" prop="typeName">
-        <el-input v-model.trim="form.typeName" autocomplete="off"></el-input>
+      <el-form-item label="银行id" prop="bankId">
+         <el-input v-model.trim="form.bankId" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="状态" prop="state">
-        <el-select v-model="form.state" placeholder="状态">
-          <el-option-group
-            v-for="group in options"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
+      <el-form-item label="银行名称" prop="bankName">
+         <el-input v-model.trim="form.bankName" autocomplete="off"></el-input>
       </el-form-item>
 
       <el-form-item label="备注" prop="desc">
-        <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
+         <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
       </el-form-item>
 
     </el-form>
@@ -52,16 +34,6 @@ export default {
   // name: "TableEdit",
   data() {
     return {
-      options: [{
-        options: [{
-          value: 0,
-          label: '关闭'
-        },{
-          value: 1,
-          label: '开启'
-        }]
-      }],
-      value: '',      //交易类型
       form: {
         id: '',
       },
@@ -72,10 +44,8 @@ export default {
       title: "",
       dialogFormVisible: false,
       rules: {
-        typeId: [{ required: true, trigger: "blur", message: "请输入类型id" }],
-        order: [{ required: true, trigger: "blur", message: "请输入排序" }],
-        state: [{ required: true, trigger: "blur", message: "请选择状态" }],
-        typeName: [{ required: true, trigger: "blur", message: "请输入类型名称" }],
+        bankId: [{ required: true, trigger: "blur", message: "银行id" }],
+        bankName: [{ required: true, trigger: "blur", message: "银行名称" }],
       }
     };
   },
@@ -101,7 +71,7 @@ export default {
     submitUpd(){
       this.$refs["form"].validate(async (valid) => {
         if (valid) {
-          api.updRechargeType(this.form, (res)=>{
+          api.updBank(this.form, (res)=>{
             let code = api.getCode(res);
             if(code == 0){
               this.$baseMessage("修改成功", "success");
