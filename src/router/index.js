@@ -182,16 +182,21 @@ export const asyncRoutes = [
         redirect: "noRedirect",
         alwaysShow: true,
         component: EmptyLayout,
-        meta: { title: "充值操作" },
+        meta: { title: "收款设置" },
 
         children: [
           {
-            path: "rechargeExamine",
-            name: "RechargeExamine",
-            component: () => import("@/views/finance/recharge/rechargeTable/index"),
-            meta: { title: "充值审核" },
+            path: "bankTable",
+            name: "BankTable",
+            component: () => import("@/views/finance/recharge/bankTable/index"),
+            meta: { title: "银行设置" },
           },
-
+          {
+            path: "rechargeType",
+            name: "RechargeType",
+            component: () => import("@/views/finance/recharge/rechargeType/index"),
+            meta: { title: "渠道大类" },
+          },
           {
             path: "rechargeWay",
             name: "RechargeWay",
@@ -199,34 +204,29 @@ export const asyncRoutes = [
             meta: { title: "充值渠道" },
           },
 
-          {
-            path: "rechargeType",
-            name: "RechargeType",
-            component: () => import("@/views/finance/recharge/rechargeType/index"),
-            meta: { title: "渠道大类" },
-          },
+
 
           {
             path: "rechargeAccount",
             name: "RechargeAccount",
             component: () => import("@/views/finance/recharge/rechargeAccount/index"),
             meta: { title: "收款账户" },
-          },
-          
-          {
-            path: "bankTable",
-            name: "BankTable",
-            component: () => import("@/views/finance/recharge/bankTable/index"),
-            meta: { title: "银行管理" },
-          },
+          }
+
 
         ],
+      },
+      {
+        path: "rechargeExamine",
+        name: "RechargeExamine",
+        component: () => import("@/views/finance/recharge/rechargeTable/index"),
+        meta: { title: "充值审核" },
       },
       {
         path: "welfare",
         name: "Welfare",
         component: () => import("@/views/finance/examineTable/index"),
-        meta: { title: "提现" },
+        meta: { title: "提现审核" },
       },
       {
         path: "change",
