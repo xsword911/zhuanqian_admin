@@ -6,59 +6,28 @@
     @close="close"
   >
   <el-form ref="form" :model="form" label-width="80px" :rules="rules">
-      <el-form-item label="标题" prop="title">
-         <el-input v-model.trim="form.title" autocomplete="off"></el-input>
+      <el-form-item label="等级" prop="level">
+         <el-input v-model.trim="form.level" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="内容" prop="content">
-         <el-input
-           type="textarea"
-           :rows="2"
-           placeholder="请输入内容"
-           v-model="form.content">
-         </el-input>
+      <el-form-item label="等级名称" prop="levelName">
+         <el-input v-model.trim="form.levelName" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="跳转地址" prop="toUrl">
-         <el-input v-model.trim="form.toUrl" autocomplete="off"></el-input>
+      <el-form-item label="需要充值金额" prop="money">
+         <el-input v-model.trim="form.money" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="开始时间" prop="begTime">
-          <el-date-picker
-            v-model="form.begTime"
-            type="datetime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间"
-            align="right"
-            >
-          </el-date-picker>
+      <el-form-item label="可以发布任务数量" prop="publishTaskSum">
+         <el-input v-model.trim="form.publishTaskSum" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="结束时间" prop="endTime">
-          <el-date-picker
-            v-model="form.endTime"
-            type="datetime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间"
-            align="right"
-            >
-          </el-date-picker>
+      <el-form-item label="每天可接任务数量" prop="receiveTaskSum">
+         <el-input v-model.trim="form.receiveTaskSum" autocomplete="off"></el-input>
       </el-form-item>
-
-      <el-form-item label="状态" prop="state">
-        <el-select v-model="form.state" placeholder="状态">
-          <el-option-group
-            v-for="group in state"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.state"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
+      
+      <el-form-item label="提现次数" prop="drawSum">
+        <el-input v-model.trim="form.drawSum" autocomplete="off"></el-input>
       </el-form-item>
 
       <el-form-item label="备注" prop="desc">
@@ -66,6 +35,7 @@
       </el-form-item>
 
     </el-form>
+
 
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
@@ -82,31 +52,18 @@ export default {
   name: "TableEdit",
   data() {
     return {
-      state: [{
-        state: [{
-          value: 0,
-          label: '关闭'
-        },{
-          value: 1,
-          label: '开启'
-        }]
-      }],
-      stateValue: '',      //选中的任务状态
-
       form: {
-        type: 1,
-        admin: "admin1"
+        id: null,
       },
       title: "",
       dialogFormVisible: false,
-
       rules: {
-        title: [{ required: true, trigger: "blur", message: "请输入标题" }],
-        content: [{ required: true, trigger: "blur", message: "请输入内容" }],
-        toUrl: [{ required: true, trigger: "blur", message: "请输入跳转地址" }],
-        state: [{ required: true, trigger: "blur", message: "请选择状态" }],
-        begTime: [{ required: true, trigger: "blur", message: "请选择开始时间" }],
-        endTime: [{ required: true, trigger: "blur", message: "请选择结束时间" }],
+        level: [{ required: true, trigger: "blur", message: "请输入等级" }],
+        levelName: [{ required: true, trigger: "blur", message: "请输入等级名称" }],
+        money: [{ required: true, trigger: "blur", message: "请输入需要充值金额" }],
+        publishTaskSum: [{ required: true, trigger: "blur", message: "请输入可发布任务数量" }],
+        receiveTaskSum: [{ required: true, trigger: "blur", message: "请输入每天可以接任务数量" }],
+        drawSum: [{ required: true, trigger: "blur", message: "请输入提现次数" }]
       }
     };
   },
@@ -130,10 +87,10 @@ export default {
     save() {
       this.$refs["form"].validate(async (valid) => {
         if (valid) {
-          api.addNotice(this.form, (res)=>{
+          api.updUserLevel(this.form, (res)=>{
             let code = api.getCode(res);
             if(code == 0){
-              this.$baseMessage("添加成功", "success");
+              this.$baseMessage("修改成功", "success");
               this.$refs["form"].resetFields();
               this.dialogFormVisible = false;
               this.$emit("fetchData");

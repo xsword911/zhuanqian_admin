@@ -133,7 +133,7 @@ export default {
           api.addNotice(this.form, (res)=>{
             let code = api.getCode(res);
             if(code == 0){
-              this.$baseMessage("修改成功", "success");
+              this.$baseMessage("添加成功", "success");
               this.$refs["form"].resetFields();
               this.dialogFormVisible = false;
               this.$emit("fetchData");

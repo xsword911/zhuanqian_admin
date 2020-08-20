@@ -16,6 +16,22 @@
          <el-input v-model.trim="form.rule" autocomplete="off"></el-input>
        </el-form-item>
 
+         <el-form-item label="任务等级" prop="level">
+           <el-select v-model="form.level" placeholder="任务等级" clearable filterable allow-create>
+             <el-option-group
+               v-for="group in level"
+               :key="group.label"
+               :label="group.label">
+               <el-option
+                 v-for="item in group.level"
+                 :key="item.value"
+                 :label="item.label"
+                 :value="item.value">
+               </el-option>
+             </el-option-group>
+           </el-select>
+         </el-form-item>
+
        <el-form-item label="刷新周期" prop="cycle">
          <el-select v-model="form.cycle" placeholder="刷新周期" clearable filterable allow-create>
            <el-option-group
@@ -199,6 +215,29 @@ export default {
       }],
       stateValue: '',      //选中的任务状态
 
+      level: [{
+        level: [{
+          value: 0,
+          label: '新人'
+        },{
+          value: 1,
+          label: '白银会员'
+        },{
+          value: 2,
+          label: '黄金会员'
+        },{
+          value: 3,
+          label: '铂金会员'
+        },{
+          value: 4,
+          label: '钻石会员'
+        },{
+          value: 5,
+          label: '至尊会员'
+        }]
+      }],
+      levelValue: '',      //选中的任务状态
+
       tip: [{
         tip: [{
           value: 0,
@@ -248,6 +287,7 @@ export default {
         begTime: "",
         endTime: "",
         state: null,
+        level: null,
         sort: null,
         admin: '',
         desc: '',

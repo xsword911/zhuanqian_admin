@@ -93,6 +93,7 @@
       <!-- </el-table-column> -->
       <el-table-column prop="title" label="任务标题"></el-table-column>
       <el-table-column prop="award" label="奖励"></el-table-column>
+      <el-table-column prop="levelTest" label="任务等级"></el-table-column>
       <el-table-column prop="sortTest" label="任务分类"></el-table-column>
       <el-table-column prop="awardTypeTest" label="任务类型"></el-table-column>
       <el-table-column prop="begTime" label="任务开始时间"></el-table-column>
@@ -377,6 +378,28 @@ export default {
                 default:
                   break;
               };
+             switch (item.level){
+              case 0:
+                 item.levelTest = "新人";
+                 break;
+              case 1:
+                 item.levelTest = "白银会员";
+                 break;
+              case 2:
+                 item.levelTest = "黄金会员";
+                 break;
+              case 3:
+                 item.levelTest = "铂金会员";
+                 break;
+              case 4:
+                item.levelTest = "钻石会员";
+                break;
+              case 5:
+                 item.levelTest = "至尊会员";
+                 break;
+               default:
+                 break;
+             };
            });
            this.total = api.getTotal(res);
            this.list = data;

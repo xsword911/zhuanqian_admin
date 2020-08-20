@@ -76,67 +76,102 @@ export const asyncRoutes = [
         meta: { title: "用户管理" },
       },
       {
-        path: "userRegister",
-        name: "UserRegister",
-        component: () => import("@/views/user/form/index"),
-        meta: { title: "用户注册" },
+        path: "userLevel",
+        name: "UserLevel",
+        component: () => import("@/views/user/userLevel/index"),
+        meta: { title: "等级设置" },
       },
     ],
   },
 
   {
-    path: "/sign",
+    path: "/activity",
     component: Layout,
     // redirect: "noRedirect",
-    name: "sign",
+    name: "activity",
     meta: {
-      title: "签到管理",
-      icon: "calendar-check",
+      title: "活动管理",
+      icon: "flag",
       permissions: ["admin"],
     },
     children: [
       {
-        path: "signAward",
-        name: "SignAward",
-        component: () => import("@/views/sign/awardTable/index"),
-        meta: { title: "签到设置" },
+        path: "/sign",
+        component: EmptyLayout,
+        // redirect: "noRedirect",
+        name: "sign",
+        meta: {
+          title: "签到管理",
+          icon: "calendar-check",
+          permissions: ["admin"],
+        },
+        children: [
+          {
+            path: "signAward",
+            name: "SignAward",
+            component: () => import("@/views/sign/awardTable/index"),
+            meta: { title: "签到设置" },
+          },
+          {
+            path: "signRecord",
+            name: "SignRecord",
+            component: () => import("@/views/sign/recordTable/index"),
+            meta: { title: "签到记录" },
+          }
+        ],
       },
       {
-        path: "signRecord",
-        name: "SignRecord",
-        component: () => import("@/views/sign/recordTable/index"),
-        meta: { title: "签到记录" },
-      }
-    ],
-  },
-
-
-  {
-    path: "/luckDraw",
-    component: Layout,
-    // redirect: "noRedirect",
-    name: "luckDraw",
-    meta: {
-      title: "幸运抽奖",
-      icon: "gift",
-      permissions: ["admin"],
-    },
-    children: [
-      {
-        path: "luckDrawManagement",
-        name: "LuckDrawManagement",
-        component: () => import("@/views/luckDraw/awardTable/index"),
-        meta: { title: "抽奖设置" },
+        path: "/luckDraw",
+        component: EmptyLayout,
+        // redirect: "noRedirect",
+        name: "luckDraw",
+        meta: {
+          title: "幸运抽奖",
+          icon: "gift",
+          permissions: ["admin"],
+        },
+        children: [
+          {
+            path: "luckDrawManagement",
+            name: "LuckDrawManagement",
+            component: () => import("@/views/luckDraw/awardTable/index"),
+            meta: { title: "抽奖设置" },
+          },
+          {
+            path: "luckDrawTable",
+            name: "LuckDrawTable",
+            component: () => import("@/views/luckDraw/recordTable/index"),
+            meta: { title: "抽奖记录" },
+          }
+        ],
       },
       {
-        path: "luckDrawTable",
-        name: "LuckDrawTable",
-        component: () => import("@/views/luckDraw/recordTable/index"),
-        meta: { title: "抽奖记录" },
-      }
-    ],
+        path: "/planRate",
+        component: EmptyLayout,
+        // redirect: "noRedirect",
+        name: "planRate",
+        meta: {
+          title: "余额宝",
+          icon: "money-bill-alt",
+          permissions: ["admin"],
+        },
+        children: [
+          {
+            path: "planRateTable",
+            name: "PlanRateTable",
+            component: () => import("@/views/planRate/awardTable/index"),
+            meta: { title: "余额宝设置" },
+          },
+          {
+            path: "planRateRecord",
+            name: "PlanRateRecord",
+            component: () => import("@/views/planRate/recordTable/index"),
+            meta: { title: "余额宝存取记录" },
+          }
+        ],
+      },
+    ]
   },
-
 
   {
     path: "/work",

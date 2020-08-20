@@ -79,14 +79,27 @@
       @sort-change="tableSortChange"
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="key" label="配置名"></el-table-column>
-      <el-table-column prop="value" label="配置值"></el-table-column>
-      <el-table-column prop="typeTest" label="类型"></el-table-column>
-      <el-table-column prop="addTime" label="添加时间"></el-table-column>
+      <el-table-column prop="order" label="排序"></el-table-column>
+      <el-table-column prop="planName" label="存款计划名称"></el-table-column>
+      <el-table-column prop="planDays" label="存款天数"></el-table-column>
+      <el-table-column prop="planRate" label="存款利率"></el-table-column>
+      <el-table-column prop="updTime" label="服务费"></el-table-column>
 
+      <el-table-column label="状态">
+         <template slot-scope="scope">
+           <el-tooltip
+             :content="scope.row.stateTest"
+             class="item"
+             effect="dark"
+             placement="top-start"
+           >
+             <el-tag :type="scope.row.state | statusFilter"
+               >{{ scope.row.stateTest }}
+             </el-tag>
+           </el-tooltip>
+         </template>
+       </el-table-column>
 
-
-      <el-table-column prop="updTime" label="修改时间"></el-table-column>
       <el-table-column prop="desc" label="备注"></el-table-column>
 
       <el-table-column label="操作" width="180px" fixed="right">
@@ -165,14 +178,7 @@ export default {
       elementLoadingText: "正在加载...",
       queryForm: {
         page: 1,
-        count: 10,
-        type: null,
-        id: null,
-        key: '',
-        value: '',
-        addTime: '',
-        updTime: '',
-        desc: '',
+        count: 10
       },
     };
   },
@@ -217,7 +223,7 @@ export default {
             let delArr = {
               arr: delById
             };
-            api.delConfigArr(delArr, (res)=>{
+            api.delPlanRateArr(delArr, (res)=>{
               let code = api.getCode(res);
               if(code == 0){
                 this.$baseMessage("删除成功", "success");
@@ -277,21 +283,22 @@ export default {
     async fetchData() {
 
       this.listLoading = true;
-      api.getConfig(this.queryForm, (res)=>{
+      api.getPlanRate(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
            data.forEach((item, index) =>{
-              switch (item.type){
+              switch (item.state){
                 case 0:
-                item.typeTest = '登录配置'
+                item.stateTest = '关闭'
                   break;
                 case 1:
-                item.typeTest = '客服'
+                item.stateTest = '开启'
                   break;
                 default:
                   break;
               }
+
            });
            this.total = api.getTotal(res);
            this.list = data;

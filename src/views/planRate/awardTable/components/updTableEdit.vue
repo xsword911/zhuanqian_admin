@@ -6,34 +6,45 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="id" prop="id" v-if="false">
-        <el-input v-model="form.id" autocomplete="off" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="配置名" prop="key">
-        <el-input v-model.trim="form.key" autocomplete="off" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="配置值" prop="value">
-        <el-input v-model.trim="form.value" autocomplete="off" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="配置类型" prop="type">
-        <el-select v-model="form.type" placeholder="奖励类型">
-          <el-option-group
-            v-for="group in type"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.type"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
-      </el-form-item>
+ <el-form-item label="排序" prop="order">
+   <el-input v-model="form.order" clearable></el-input>
+ </el-form-item>
+ <el-form-item label="存款计划名称" prop="planName">
+   <el-input v-model="form.planName" clearable></el-input>
+ </el-form-item>
+
+ <el-form-item label="存款天数" prop="planDays">
+   <el-input v-model="form.planDays" clearable></el-input>
+ </el-form-item>
+ <el-form-item label="存款利率" prop="planRate">
+   <el-input v-model="form.planRate" clearable></el-input>
+ </el-form-item>
+ <el-form-item label="服务费" prop="planServe">
+   <el-input v-model="form.planServe" clearable></el-input>
+ </el-form-item>
+
+ <el-form-item label="状态" prop="state">
+   <el-select v-model="form.state" placeholder="状态" clearable>
+     <el-option-group
+       v-for="group in state"
+       :key="group.label"
+       :label="group.label">
+       <el-option
+         v-for="item in group.state"
+         :key="item.value"
+         :label="item.label"
+         :value="item.value">
+       </el-option>
+     </el-option-group>
+   </el-select>
+ </el-form-item>
       <el-form-item label="备注" prop="desc">
         <el-input v-model.trim="form.desc" autocomplete="off" clearable></el-input>
       </el-form-item>
-
+      <el-form-item label="" prop="">
+        注: 存款利率和服务费请按照正确格式填写
+        如：1% 填写100
+      </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
@@ -49,19 +60,23 @@ export default {
   // name: "TableEdit",
   data() {
     return {
-      type: [{
-        type: [{
+      state: [{
+        state: [{
           value: 0,
-          label: '登录配置'
+          label: '关闭'
         },{
           value: 1,
-          label: '客服'
+          label: '开启'
         }]
       }],
-      typeValue: '',      //选中的配置类型
+      stateValue: '',      //选中的配置类型
       rules: {
-        key: [{ required: true, trigger: "blur", message: "请输入配置名" }],
-        value: [{ required: true, trigger: "blur", message: "请输入配置值" }],
+        order: [{ required: true, message: "请输入排序", trigger: "blur"}],
+        planName: [{ required: true, message: "请输入存款计划名称", trigger: "blur"}],
+        planDays: [{ required: true, message: "请输入存款天数", trigger: "blur"}],
+        planRate: [{ required: true, message: "请输入存款利率", trigger: "blur"}],
+        planServe: [{ required: true, message: "请输入服务费", trigger: "blur"}],
+        state: [{ required: true, message: "请输入状态", trigger: "blur"}],
       },
       form: {
         id: '',
@@ -105,7 +120,7 @@ export default {
       this.submitUpd();
     },
     submitUpd(){
-      api.updConfig(this.form, (res)=>{
+      api.updPlanRate(this.form, (res)=>{
         let code = api.getCode(res);
         if(code == 0){
           this.$baseMessage("修改成功", "success");

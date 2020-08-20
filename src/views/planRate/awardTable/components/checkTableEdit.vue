@@ -6,22 +6,26 @@
     @close="close"
   >
    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-     <el-form-item label="配置名" prop="key">
-        <el-input v-model.trim="form.key" autocomplete="off" :disabled="true"></el-input>
+     <el-form-item label="排序" prop="order">
+        <el-input v-model.trim="form.order" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="配置值" prop="value">
-        <el-input v-model.trim="form.value" autocomplete="off" :disabled="true"></el-input>
+      <el-form-item label="存款计划名称" prop="planName">
+        <el-input v-model.trim="form.planName" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="配置类型" prop="type">
-        <el-input value="登录配置" autocomplete="off" :disabled="true" v-show="form.type == 0"></el-input>
-        <el-input value="客服" autocomplete="off" :disabled="true" v-show="form.type == 1"></el-input>
+      <el-form-item label="存款天数" prop="planDays">
+        <el-input v-model.trim="form.planDays" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="添加时间" prop="addTime">
-        <el-input v-model.trim="form.addTime" autocomplete="off" :disabled="true"></el-input>
+      <el-form-item label="存款利率" prop="planRate">
+        <el-input v-model.trim="form.planRate" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="修改时间" prop="updTime">
-        <el-input v-model.trim="form.updTime" autocomplete="off" :disabled="true"></el-input>
+      <el-form-item label="服务费" prop="planServe">
+        <el-input v-model.trim="form.planServe" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
+      <el-form-item label="状态" prop="state">
+        <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
+        <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
+      </el-form-item>
+      
       <el-form-item label="备注" prop="desc">
         <el-input v-model.trim="form.desc" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>

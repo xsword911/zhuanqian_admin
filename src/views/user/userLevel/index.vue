@@ -12,51 +12,24 @@
       </vab-query-form-left-panel>
 
      <vab-query-form-right-panel style="flex: 1;">
+<!--       <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+       style="position: absolute; left: 0; top:34%;display:block; transform: translateY(-50%);"
+          >添加
+        </el-button>
+        <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
+        style="position: absolute; left: 80px; top:34%;display:block; transform: translateY(-50%);"
+          >删除
+        </el-button> -->
         <el-form
           ref="form"
           :model="queryForm"
           :inline="true"
           @submit.native.prevent
         >
-          <el-form-item>
-            <el-input v-model="queryForm.key" placeholder="配置名" clearable />
-          </el-form-item>
+        <el-form-item>
+            <el-input v-model="queryForm.level" placeholder="等级"  clearable/>
+        </el-form-item>
 
-<!--          <el-form-item>
-               <el-select v-model="typeValue" placeholder="配置类型" clearable filterable allow-create>
-                 <el-option-group
-                   v-for="group in type"
-                   :key="group.label"
-                   :label="group.label">
-                   <el-option
-                     v-for="item in group.type"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value">
-                   </el-option>
-                 </el-option-group>
-               </el-select>
-          </el-form-item> -->
-
-<!--          <el-form-item>
-              <el-date-picker
-                v-model="queryForm.addTime"
-                type="datetime"
-                placeholder="添加时间"
-                align="right"
-              >
-              </el-date-picker>
-           </el-form-item> -->
-
-<!--           <el-form-item>
-              <el-date-picker
-                v-model="queryForm.updTime"
-                type="datetime"
-                placeholder="修改时间"
-                align="right"
-              >
-              </el-date-picker>
-            </el-form-item> -->
           <el-form-item>
             <el-button
               icon="el-icon-search"
@@ -79,14 +52,20 @@
       @sort-change="tableSortChange"
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="key" label="配置名"></el-table-column>
-      <el-table-column prop="value" label="配置值"></el-table-column>
-      <el-table-column prop="typeTest" label="类型"></el-table-column>
-      <el-table-column prop="addTime" label="添加时间"></el-table-column>
+<!--      <el-table-column label="序号" width="95">
+        <template slot-scope="scope">
+          {{ scope.$index + 1 }}
+        </template>
+      </el-table-column> -->
+      <el-table-column prop="level" label="等级"></el-table-column>
+      <el-table-column prop="levelName" label="等级名称"></el-table-column>
+      <el-table-column prop="money" label="需要充值金额"></el-table-column>
 
+      <el-table-column prop="publishTaskSum" label="可以发布任务数量"></el-table-column>
+      <el-table-column prop="receiveTaskSum" label="每天可以接任务数量"></el-table-column>
+      <el-table-column prop="drawSum" label="提现次数"></el-table-column>
+      <el-table-column prop="updTime" label="更新时间"></el-table-column>
 
-
-      <el-table-column prop="updTime" label="修改时间"></el-table-column>
       <el-table-column prop="desc" label="备注"></el-table-column>
 
       <el-table-column label="操作" width="180px" fixed="right">
@@ -94,7 +73,7 @@
           <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
           </el-button>
-<!--         <el-button type="text" @click="handleDelete(scope.row)"
+<!--          <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
           <el-button type="text" @click="handleCheckEdit(scope.row)"
@@ -132,47 +111,19 @@ export default {
     updTableEdit,
     addTableEdit
   },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        normal: "success",
-        frozen: "gray",
-        ban: "danger",
-      };
-      return statusMap[status];
-    },
-  },
   data() {
     return {
-      type: [{
-        type: [{
-          value: 0,
-          label: '登录配置'
-        },{
-          value: 1,
-          label: '客服'
-        }]
-      }],
-      typeValue: '',      //选中的配置类型
       imgShow: true,
       list: [],
-      imageList: [],
       listLoading: true,
       layout: "total, sizes, prev, pager, next, jumper",
-      total: null,
+      total: 0,
       background: true,
       selectRows: "",
       elementLoadingText: "正在加载...",
       queryForm: {
         page: 1,
         count: 10,
-        type: null,
-        id: null,
-        key: '',
-        value: '',
-        addTime: '',
-        updTime: '',
-        desc: '',
       },
     };
   },
@@ -201,7 +152,6 @@ export default {
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
     },
-    //删除配置
     handleDelete(row) {
       if(util.isEmpty(this.selectRows)){
         this.$baseMessage("未选中任何行", "error");
@@ -217,7 +167,7 @@ export default {
             let delArr = {
               arr: delById
             };
-            api.delConfigArr(delArr, (res)=>{
+            api.delUserLevelArr(delArr, (res)=>{
               let code = api.getCode(res);
               if(code == 0){
                 this.$baseMessage("删除成功", "success");
@@ -232,34 +182,6 @@ export default {
             });
         });
       }
-      // if (row.id) {
-      //   this.$baseConfirm("你确定要删除当前项吗", null, async () => {
-
-      //     api.delConfigArr({"arr": [{"id": row.id}]}, (res)=>{
-      //       let code = api.getCode(res);
-      //       let msg = api.getMsg(res);
-      //       if(code == 0){
-      //         this.$message({ message: '删除成功', type: 'success'});
-      //         this.fetchData();
-      //       }
-      //       else this.$message.error(msg);
-      //     });
-
-      //   });
-      // }
-      //else {
-      //   if (this.selectRows.length > 0) {
-      //     const ids = this.selectRows.map((item) => item.id).join();
-      //     this.$baseConfirm("你确定要删除选中项吗", null, async () => {
-      //       const { msg } = await doDelete({ ids: ids });
-      //       this.$baseMessage(msg, "success");
-      //       this.fetchData();
-      //     });
-      //   } else {
-      //     this.$baseMessage("未选中任何行", "error");
-      //     return false;
-      //   }
-      // }
     },
     handleSizeChange(val) {
       this.queryForm.count = val;
@@ -275,24 +197,11 @@ export default {
       this.fetchData();
     },
     async fetchData() {
-
       this.listLoading = true;
-      api.getConfig(this.queryForm, (res)=>{
+      api.getUserLevel(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
-           data.forEach((item, index) =>{
-              switch (item.type){
-                case 0:
-                item.typeTest = '登录配置'
-                  break;
-                case 1:
-                item.typeTest = '客服'
-                  break;
-                default:
-                  break;
-              }
-           });
            this.total = api.getTotal(res);
            this.list = data;
          }

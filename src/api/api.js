@@ -261,7 +261,7 @@ const api = {
   },
 
   //查询消息列表
-  getMsg: function (path, funSuccess) {
+  getMssage: function (path, funSuccess) {
     httpUtil.post("message/getMsg", path, funSuccess);
   },
 
@@ -349,10 +349,60 @@ const api = {
   updBank: function (path, funSuccess) {
     httpUtil.post("money/rechargeWay/updBank", path, funSuccess);
   },
-  
+
   //批量删除银行
   delBankArr: function (path, funSuccess) {
     httpUtil.post("money/rechargeWay/delBankArr", path, funSuccess);
+  },
+
+  //查询等级信息
+  getUserLevel: function (path, funSuccess) {
+    httpUtil.post("user/getUserLevel", path, funSuccess);
+  },
+
+  //修改等级信息
+  updUserLevel: function (path, funSuccess) {
+    httpUtil.post("user/updUserLevel", path, funSuccess);
+  },
+
+  //添加等级信息
+  addUserLevel: function (path, funSuccess) {
+    httpUtil.post("user/addUserLevel", path, funSuccess);
+  },
+
+  //批量删除等级信息
+  delUserLevelArr: function (path, funSuccess) {
+    httpUtil.post("user/delUserLevelArr", path, funSuccess);
+  },
+
+  //查询存款利率
+  getPlanRate: function (path, funSuccess) {
+    httpUtil.post("activity/planRate/getPlanRate", path, funSuccess);
+  },
+
+  //添加存款利率
+  addPlanRate: function (path, funSuccess) {
+    httpUtil.post("activity/planRate/addPlanRate", path, funSuccess);
+  },
+
+  //修改存款利率
+  updPlanRate: function (path, funSuccess) {
+    httpUtil.post("activity/planRate/updPlanRate", path, funSuccess);
+  },
+
+  //批量删除存款利率
+  delPlanRateArr: function (path, funSuccess) {
+    httpUtil.post("activity/planRate/delPlanRateArr", path, funSuccess);
+  },
+
+  //查询余额宝存款记录
+  getPlanMoney: function (path, funSuccess) {
+    httpUtil.post("activity/planRate/getPlanMoney", path, funSuccess);
+  },
+  
+  //批量删除存钱记录
+  delPlanMoneyArr: function (path, funSuccess) {
+    httpUtil.post("activity/planRate/delPlanMoneyArr", path, funSuccess);
   },
 };
 

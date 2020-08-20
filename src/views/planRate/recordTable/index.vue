@@ -2,10 +2,7 @@
   <div class="table-container">
     <vab-query-form style="display: flex;">
 
-      <vab-query-form-left-panel style="max-width:168px;">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
-          >添加</el-button
-        >
+      <vab-query-form-left-panel style="max-width:84px;">
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
           >删除
         </el-button>
@@ -79,21 +76,23 @@
       @sort-change="tableSortChange"
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="key" label="配置名"></el-table-column>
-      <el-table-column prop="value" label="配置值"></el-table-column>
-      <el-table-column prop="typeTest" label="类型"></el-table-column>
-      <el-table-column prop="addTime" label="添加时间"></el-table-column>
+      <el-table-column prop="sn" label="订单号"></el-table-column>
+      <el-table-column prop="uid" label="用户id"></el-table-column>
+      <el-table-column prop="planName" label="存款计划名称"></el-table-column>
+      <el-table-column prop="planDays" label="需要存款的天数"></el-table-column>
 
+      <el-table-column prop="planRate" label="存款利率"></el-table-column>
+      <el-table-column prop="planServe" label="服务费利率"></el-table-column>
 
-
-      <el-table-column prop="updTime" label="修改时间"></el-table-column>
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="addTime" label="存款时间"></el-table-column>
+      <el-table-column prop="finishTime" label="计划结束时间"></el-table-column>
+      <el-table-column prop="outTime" label="取出时间"></el-table-column>
 
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
+<!--          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
-          </el-button>
+          </el-button> -->
 <!--         <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
@@ -217,7 +216,7 @@ export default {
             let delArr = {
               arr: delById
             };
-            api.delConfigArr(delArr, (res)=>{
+            api.delPlanMoneyArr(delArr, (res)=>{
               let code = api.getCode(res);
               if(code == 0){
                 this.$baseMessage("删除成功", "success");
@@ -277,7 +276,7 @@ export default {
     async fetchData() {
 
       this.listLoading = true;
-      api.getConfig(this.queryForm, (res)=>{
+      api.getPlanMoney(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);

@@ -266,7 +266,7 @@ export default {
     },
     async fetchData() {
       this.listLoading = true;
-      api.getMsg(this.queryForm, (res)=>{
+      api.getMssage(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);

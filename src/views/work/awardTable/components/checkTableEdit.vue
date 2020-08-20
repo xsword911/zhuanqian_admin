@@ -15,6 +15,15 @@
       <el-form-item label="任务规则" prop="rule">
          <el-input v-model.trim="form.rule" autocomplete="off" :disabled="true"></el-input>
        </el-form-item>
+       
+       <el-form-item label="任务等级" prop="level">
+         <el-input value="新人" autocomplete="off" :disabled="true" v-show="form.level == 0"></el-input>
+         <el-input value="白银会员" autocomplete="off" :disabled="true" v-show="form.level == 1"></el-input>
+         <el-input value="黄金会员" autocomplete="off" :disabled="true" v-show="form.level == 2"></el-input>
+         <el-input value="铂金会员" autocomplete="off" :disabled="true" v-show="form.level == 3"></el-input>
+         <el-input value="钻石会员" autocomplete="off" :disabled="true" v-show="form.level == 4"></el-input>
+         <el-input value="至尊会员" autocomplete="off" :disabled="true" v-show="form.level == 5"></el-input>
+       </el-form-item>
 
        <el-form-item label="刷新周期" prop="cycle">
          <el-input value="只能完成一次" autocomplete="off" :disabled="true" v-show="form.cycle == 0"></el-input>
