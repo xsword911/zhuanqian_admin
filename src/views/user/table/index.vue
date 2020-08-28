@@ -103,12 +103,22 @@
           <el-button type="text" @click="handleUpdPwd(scope.row)"
              >修改密码
            </el-button>
-           <el-button type="text" v-if="scope.row.state != 0" @click="handleUpdState(scope.row)"
+<!--           <el-button type="text" v-if="scope.row.state != 0" @click="handleUpdState(scope.row)"
               >解冻
-            </el-button>
-            <el-button type="text" v-if="scope.row.state == 0" @click="handleUpdState(scope.row)"
+            </el-button> -->
+          <el-button style="padding:0;margin:0 0 0 10px;">
+            <el-dropdown @command="handleCommand">
+              <span class="el-dropdown-link">操作</span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item :command="beforeHandleCommand('解冻', 0 ,scope.row)">解冻</el-dropdown-item>
+                <!-- <el-dropdown-item command="冻结">冻结</el-dropdown-item> -->
+                <el-dropdown-item :command="beforeHandleCommand('禁用', 2 ,scope.row)">禁用</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-button>
+<!--            <el-button type="text" v-if="scope.row.state == 0" @click="handleUpdState(scope.row)"
                >冻结
-             </el-button>
+             </el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -194,11 +204,42 @@ export default {
     };
   },
   created() {
-    this.fetchData();
+    this.fetchData();  //查询用户列表
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //封装下拉菜单传入参数
+    beforeHandleCommand(test, stateCode, row){
+      return {
+         'test': test,
+         'stateCode': stateCode,
+         'row': row
+      }
+    },
+    //下拉菜单操作
+    handleCommand(command){
+      this.$baseConfirm("你确定要" + command.test + "该账号？", null, async () => {
+        let data = {
+          id: command.row.id,
+          state: command.stateCode
+        };
+        api.userStopOrCommon(data, (res)=>{
+          let code = api.getCode(res);
+          if(code == 0){
+            this.$baseMessage(command.test + "成功", "success");
+            this.$refs["form"].resetFields();
+            this.dialogFormVisible = false;
+            this.form = this.$options.data().form;
+            this.fetchData();
+          }else{
+            let msg = api.getMsg(res);
+            this.$message.error(msg);
+          }
+        });
+      });
+    },
+    //添加用户
     handleAdd() {
       this.$refs["edit"].showEdit();
     },
@@ -224,7 +265,6 @@ export default {
     handleUpdState(row) {
       this.$refs["updState"].showEdit(row);
     },
-
     handleDelete(row) {
       if (row.id) {
         this.$baseConfirm("你确定要删除当前项吗", null, async () => {
@@ -265,6 +305,7 @@ export default {
       };
       this.fetchData();
     },
+    //查询用户列表
     fetchData() {
       this.listLoading = true;
       api.getUser(this.queryForm, (res)=>{
@@ -328,3 +369,14 @@ export default {
   },
 };
 </script>
+
+
+<style>
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+</style>

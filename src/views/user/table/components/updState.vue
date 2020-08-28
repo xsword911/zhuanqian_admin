@@ -79,16 +79,18 @@ export default {
       this.$emit("fetchData");
     },
     save() {
-      this.$refs["form"].validate(async (valid) => {
-        if (valid) {
-          const { msg } = await doEdit(this.form);
-          this.$baseMessage(msg, "success");
+      api.userStopOrCommon(this.submitForm, (res)=>{
+        let code = api.getCode(res);
+        if(code == 0){
+          this.$baseMessage("修改成功", "success");
           this.$refs["form"].resetFields();
           this.dialogFormVisible = false;
           this.$emit("fetchData");
           this.form = this.$options.data().form;
-        } else {
-          return false;
+          this.$emit('refreshList');
+        }else{
+          let msg = api.getMsg(res);
+          this.$message.error(msg);
         }
       });
     },

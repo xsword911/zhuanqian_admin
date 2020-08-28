@@ -54,14 +54,14 @@
         <el-input value="分享朋友圈" autocomplete="off" :disabled="true" v-show="form.type == 1"></el-input>
         <el-input value="加好友" autocomplete="off" :disabled="true" v-show="form.type == 2"></el-input>
         <el-input value="下载app" autocomplete="off" :disabled="true" v-show="form.type == 3"></el-input>
-        <el-input value="签到奖励" autocomplete="off" :disabled="true" v-show="form.type == 4"></el-input>
+        <el-input value="点赞" autocomplete="off" :disabled="true" v-show="form.type == 4"></el-input>
       </el-form-item>
 
-      <el-form-item label="开始时间" prop="begTime">
+      <el-form-item label="发布开始时间" prop="begTime">
          <el-input v-model.trim="form.begTime" autocomplete="off" :disabled="true"></el-input>
        </el-form-item>
 
-       <el-form-item label="结束时间" prop="endTime">
+       <el-form-item label="发布截止时间" prop="endTime">
           <el-input v-model.trim="form.endTime" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
 

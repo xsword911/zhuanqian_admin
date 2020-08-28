@@ -2,7 +2,7 @@
   <div class="table-container">
     <vab-query-form style="display: flex;">
       <vab-query-form-left-panel style="max-width:168px;">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd(type)"
           >添加</el-button
         >
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
@@ -96,8 +96,8 @@
       <el-table-column prop="levelTest" label="任务等级"></el-table-column>
       <el-table-column prop="sortTest" label="任务分类"></el-table-column>
       <el-table-column prop="awardTypeTest" label="任务类型"></el-table-column>
-      <el-table-column prop="begTime" label="任务开始时间"></el-table-column>
-      <el-table-column prop="endTime" label="任务结束时间"></el-table-column>
+      <el-table-column prop="begTime" label="发布开始时间"></el-table-column>
+      <el-table-column prop="endTime" label="发布截止时间"></el-table-column>
 
       <el-table-column prop="admin" label="操作者"></el-table-column>
 
@@ -120,7 +120,7 @@
 
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
+          <el-button type="text" @click="handleEdit(scope.row, type)"
             >编辑
           </el-button>
 <!--         <el-button type="text" @click="handleDelete(scope.row)"
@@ -238,16 +238,38 @@ export default {
         desc: '',
         sortTest: '',
       },
+      levelDescList: [],  //全部任务会员类型
     };
   },
   created() {
+    this.getTaskType();  //获取任务类型
+    this.getLevelDesc(); //获取全部任务会员类型
     this.fetchData();
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
-    handleAdd() {
-      this.$refs["edit"].showEdit();
+    //获取全部任务会员类型
+    getLevelDesc(){
+      api.getLevelDesc({}, (res)=>{
+         let data = res.data;
+         this.levelDescList = data;  //保存全部任务会员类型
+         console.log(this.levelDescList);
+      });
+    },
+    //获取任务类型
+    getTaskType(){
+      api.getTaskType({}, (res)=>{
+        let data = res.data;
+        data.forEach((item) =>{
+          item.value = parseInt(item.key);
+          item.label = item.val;
+        });
+        this.type[0].type = data;
+      });
+    },
+    handleAdd(type) {
+      this.$refs["edit"].showEdit(type);
     },
     tableSortChange() {
       const imageList = [];
@@ -259,8 +281,8 @@ export default {
     setSelectRows(val) {
       this.selectRows = val;
     },
-    handleEdit(row) {
-      this.$refs["updEdit"].showEdit(row);
+    handleEdit(row, arrType) {
+      this.$refs["updEdit"].showEdit(row, arrType);
     },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
@@ -360,7 +382,7 @@ export default {
                   item.awardTypeTest = "下载app";
                   break;
                 case 4:
-                  item.awardTypeTest = "签到任务";
+                  item.awardTypeTest = "点赞";
                   break;
                 default:
                   break;
@@ -371,35 +393,40 @@ export default {
                   break;
                 case 1:
                   item.sortTest = "限时推荐";
-                  break;
                 case 2:
                   item.sortTest = "赚赚";
                   break;
                 default:
                   break;
               };
-             switch (item.level){
-              case 0:
-                 item.levelTest = "新人";
-                 break;
-              case 1:
-                 item.levelTest = "白银会员";
-                 break;
-              case 2:
-                 item.levelTest = "黄金会员";
-                 break;
-              case 3:
-                 item.levelTest = "铂金会员";
-                 break;
-              case 4:
-                item.levelTest = "钻石会员";
-                break;
-              case 5:
-                 item.levelTest = "至尊会员";
-                 break;
-               default:
-                 break;
-             };
+              this.levelDescList.forEach((item1, index1) =>{
+
+                  item1.key = parseInt(item1.key);
+                  console.log(item1.key);
+                  if(item1.key == item.level) item.levelTest = item1.val;
+              });
+             // switch (item.level){
+             //  case 0:
+             //     item.levelTest = "新人";
+             //     break;
+             //  case 1:
+             //     item.levelTest = "白银会员";
+             //     break;
+             //  case 2:
+             //     item.levelTest = "黄金会员";
+             //     break;
+             //  case 3:
+             //     item.levelTest = "铂金会员";
+             //     break;
+             //  case 4:
+             //    item.levelTest = "钻石会员";
+             //    break;
+             //  case 5:
+             //     item.levelTest = "至尊会员";
+             //     break;
+             //   default:
+             //     break;
+             // };
            });
            this.total = api.getTotal(res);
            this.list = data;

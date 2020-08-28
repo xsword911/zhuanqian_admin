@@ -185,6 +185,18 @@ export const asyncRoutes = [
     },
     children: [
       {
+        path: "taskBigClassify",
+        name: "TaskBigClassify",
+        component: () => import("@/views/work/taskBigClassifyTable/index"),
+        meta: { title: "任务大类" },
+      },
+      {
+        path: "taskClassify",
+        name: "TaskClassify",
+        component: () => import("@/views/work/taskClassifyTable/index"),
+        meta: { title: "任务子类" },
+      },
+      {
         path: "workManagement",
         name: "WorkManagement",
         component: () => import("@/views/work/awardTable/index"),

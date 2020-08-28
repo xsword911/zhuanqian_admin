@@ -15,6 +15,7 @@
       <el-form-item label="配置类型" prop="type">
         <el-input value="登录配置" autocomplete="off" :disabled="true" v-show="form.type == 0"></el-input>
         <el-input value="客服" autocomplete="off" :disabled="true" v-show="form.type == 1"></el-input>
+        <el-input value="幸运大转盘配置" autocomplete="off" :disabled="true" v-show="form.type == 2"></el-input>
       </el-form-item>
       <el-form-item label="添加时间" prop="addTime">
         <el-input v-model.trim="form.addTime" autocomplete="off" :disabled="true"></el-input>

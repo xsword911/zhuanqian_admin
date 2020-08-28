@@ -56,6 +56,9 @@ export default {
         },{
           value: 1,
           label: '客服'
+        },{
+          value: 2,
+          label: '幸运大转盘配置'
         }]
       }],
       typeValue: '',      //选中的配置类型

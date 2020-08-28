@@ -103,7 +103,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="开始时间" prop="begTime">
+      <el-form-item label="发布开始时间" prop="begTime">
           <el-date-picker
             v-model="form.begTime"
             type="datetime"
@@ -114,7 +114,7 @@
           </el-date-picker>
        </el-form-item>
 
-       <el-form-item label="结束时间" prop="endTime">
+       <el-form-item label="发布截止时间" prop="endTime">
           <el-date-picker
             v-model="form.endTime"
             type="datetime"
@@ -185,22 +185,7 @@ export default {
   data() {
     return {
       type: [{
-        type: [{
-          value: 0,
-          label: '邀请好友'
-        },{
-          value: 1,
-          label: '分享朋友圈'
-        },{
-          value: 2,
-          label: '加好友'
-        },{
-          value: 3,
-          label: '下载app'
-        },{
-          value: 4,
-          label: '签到奖励'
-        }]
+        type: []
       }],
       typeValue: '',      //选中的任务类型
 
@@ -312,7 +297,8 @@ export default {
       // this.imgUrlNew = URL.createObjectURL(file.raw);
       this.form.imgUrl = res.data.url;
     },
-    showEdit(row) {
+    showEdit(row, arrType) {
+      this.type = arrType;   //获取任务类型
       if (!row) {
         this.title = "添加";
       } else {

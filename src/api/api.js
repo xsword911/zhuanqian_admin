@@ -355,6 +355,11 @@ const api = {
     httpUtil.post("money/rechargeWay/delBankArr", path, funSuccess);
   },
 
+  //返回会员等级下拉信息
+  getLevelDesc: function (path, funSuccess) {
+    httpUtil.post("user/getLevelDesc", path, funSuccess);
+  },
+
   //查询等级信息
   getUserLevel: function (path, funSuccess) {
     httpUtil.post("user/getUserLevel", path, funSuccess);
@@ -399,10 +404,60 @@ const api = {
   getPlanMoney: function (path, funSuccess) {
     httpUtil.post("activity/planRate/getPlanMoney", path, funSuccess);
   },
-  
+
   //批量删除存钱记录
   delPlanMoneyArr: function (path, funSuccess) {
     httpUtil.post("activity/planRate/delPlanMoneyArr", path, funSuccess);
+  },
+
+  //查询任务类型
+  getTaskType: function (path, funSuccess) {
+    httpUtil.post("activity/getTaskType", path, funSuccess);
+  },
+
+  //禁用，解冻账户账户
+  userStopOrCommon: function (path, funSuccess) {
+    httpUtil.post("user/userStopOrCommon", path, funSuccess);
+  },
+
+  //查询任务大类
+  getTaskBigClassify: function (path, funSuccess) {
+    httpUtil.post("activity/task/getTaskBigClassify", path, funSuccess);
+  },
+
+  //添加任务大类
+  addTaskBigClassify: function (path, funSuccess) {
+    httpUtil.post("activity/task/addTaskBigClassify", path, funSuccess);
+  },
+
+  //修改任务大类
+  updTaskBigClassify: function (path, funSuccess) {
+    httpUtil.post("activity/task/updTaskBigClassify", path, funSuccess);
+  },
+
+  //批量删除任务大类
+  delTaskBigClassifyArr: function (path, funSuccess) {
+    httpUtil.post("activity/task/delTaskBigClassifyArr", path, funSuccess);
+  },
+
+  //查询任务分类
+  getTaskClassify: function (path, funSuccess) {
+    httpUtil.post("activity/task/getTaskClassify", path, funSuccess);
+  },
+
+  //添加任务分类
+  addTaskClassify: function (path, funSuccess) {
+    httpUtil.post("activity/task/addTaskClassify", path, funSuccess);
+  },
+
+  //修改任务分类
+  updTaskClassify: function (path, funSuccess) {
+    httpUtil.post("activity/task/updTaskClassify", path, funSuccess);
+  },
+
+  //批量删除任务分类
+  delTaskClassifyArr: function (path, funSuccess) {
+    httpUtil.post("activity/task/delTaskClassifyArr", path, funSuccess);
   },
 };
 
