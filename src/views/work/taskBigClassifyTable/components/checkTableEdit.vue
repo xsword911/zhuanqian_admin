@@ -28,6 +28,7 @@
       <el-form-item label="状态" prop="state">
         <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
         <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
+        <el-input value="开发中" autocomplete="off" :disabled="true" v-show="form.state == 2"></el-input>
       </el-form-item>
 
     </el-form>

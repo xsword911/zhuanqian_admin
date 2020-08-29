@@ -26,7 +26,7 @@
           @submit.native.prevent
         >
          <el-form-item>
-           <el-input v-model="queryForm.name" placeholder="任务子类名称"  clearable/>
+           <el-input v-model="queryForm.name" placeholder="子类名称"  clearable/>
          </el-form-item>
 
           <el-form-item>
@@ -73,9 +73,10 @@
         </template> -->
       <!-- </el-table-column> -->
       <el-table-column prop="order" label="排序"></el-table-column>
-      <el-table-column prop="bigClassifyId" label="任务大类id"></el-table-column>
-      <el-table-column prop="name" label="任务子类名称"></el-table-column>
-      <el-table-column prop="classifyId" label="分类id"></el-table-column>
+      <el-table-column prop="bigClassifyId" label="大类id"></el-table-column>
+      <el-table-column prop="bigName" label="大类名称"></el-table-column>
+      <el-table-column prop="classifyId" label="子类id"></el-table-column>
+      <el-table-column prop="name" label="子类名称"></el-table-column>
 
      <el-table-column label="状态">
         <template slot-scope="scope">
@@ -137,8 +138,9 @@ export default {
   },
   filters: {
     statusFilter(status) {
-      if(status == 1) return "success";
       if(status == 0) return "danger";
+      if(status == 1) return "success";
+      if(status == 2) return "gray";
     }
   },
   data() {
@@ -150,6 +152,9 @@ export default {
         },{
           value: 1,
           label: '开启'
+        },{
+          value: 2,
+          label: '开发中'
         }]
       }],
       stateValue: '',      //选中的任务状态
@@ -166,14 +171,28 @@ export default {
         page: 1,
         count: 10
       },
+      bigClassifyList: [], //大类列表
     };
   },
   created() {
     this.fetchData();
+    this.getTaskBigClassify();  //查询任务大类
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //查询任务大类
+    getTaskBigClassify(){
+      api.getTaskBigClassify({page: 1, count: 10}, (res)=>{
+         let data = api.getData(res);
+         data.forEach((item,index) =>{
+           let obj = {};
+           obj.value = item.bigClassifyId;
+           obj.label = item.name;
+           this.bigClassifyList.push(obj);
+         });
+      });
+    },
     handleAdd() {
       this.$refs["edit"].showEdit();
     },
@@ -258,6 +277,8 @@ export default {
                 case 1:
                   item.stateTest = "开启";
                   break;
+                case 2:
+                  item.stateTest = "开发中"
                 default:
                   break;
               };

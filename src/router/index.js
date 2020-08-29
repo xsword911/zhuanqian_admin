@@ -200,13 +200,13 @@ export const asyncRoutes = [
         path: "workManagement",
         name: "WorkManagement",
         component: () => import("@/views/work/awardTable/index"),
-        meta: { title: "任务设置" },
+        meta: { title: "发布任务" },
       },
       {
         path: "workTable",
         name: "WorkTable",
         component: () => import("@/views/work/recordTable/index"),
-        meta: { title: "任务记录" },
+        meta: { title: "任务审核" },
       }
     ],
   },

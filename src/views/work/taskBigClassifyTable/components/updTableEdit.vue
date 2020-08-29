@@ -73,6 +73,9 @@ export default {
         },{
           value: 1,
           label: '开启'
+        },{
+          value: 2,
+          label: '开发中'
         }]
       }],
       stateValue: '',      //选中的任务状态
