@@ -93,6 +93,7 @@
       <!-- </el-table-column> -->
       <el-table-column prop="title" label="任务标题"></el-table-column>
       <el-table-column prop="award" label="奖励"></el-table-column>
+      <el-table-column prop="classifyName" label="子类名称"></el-table-column>
       <el-table-column prop="levelTest" label="任务等级"></el-table-column>
       <el-table-column prop="sortTest" label="任务分类"></el-table-column>
       <el-table-column prop="awardTypeTest" label="任务类型"></el-table-column>
@@ -239,22 +240,30 @@ export default {
         sortTest: '',
       },
       levelDescList: [],  //全部任务会员类型
+      taskClassifyList: [],  //任务子类
     };
   },
   created() {
     this.getTaskType();  //获取任务类型
     this.getLevelDesc(); //获取全部任务会员类型
-    this.fetchData();
+    this.getTaskClassify();  //获取任务子类
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //获取任务子类
+    getTaskClassify(){
+      api.getTaskClassify({page: 1, count: 99}, (res)=>{
+        let data = api.getData(res);
+        this.taskClassifyList = data;
+      });
+    },
     //获取全部任务会员类型
     getLevelDesc(){
       api.getLevelDesc({}, (res)=>{
          let data = res.data;
          this.levelDescList = data;  //保存全部任务会员类型
-         console.log(this.levelDescList);
+         this.fetchData();
       });
     },
     //获取任务类型
@@ -356,7 +365,7 @@ export default {
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
-           // console.log(data);
+           console.log(data);
            data.forEach((item, index) =>{
               switch (item.state){
                 case 0:
@@ -400,10 +409,11 @@ export default {
                   break;
               };
               this.levelDescList.forEach((item1, index1) =>{
-
                   item1.key = parseInt(item1.key);
-                  console.log(item1.key);
                   if(item1.key == item.level) item.levelTest = item1.val;
+              });
+              this.taskClassifyList.forEach((item2, index2) =>{
+                  if(item2.classifyId == item.classify) item.classifyName = item2.name;
               });
              // switch (item.level){
              //  case 0:

@@ -9,7 +9,7 @@
     <el-form-item label="排序" prop="order">
        <el-input v-model.trim="form.order" autocomplete="off"></el-input>
      </el-form-item>
-     
+
       <el-form-item label="大类" prop="bigClassifyId">
         <el-select v-model="form.bigClassifyId" placeholder="大类">
           <el-option-group
@@ -25,7 +25,7 @@
           </el-option-group>
         </el-select>
       </el-form-item>
-      
+
       <el-form-item label="子类名称" prop="name">
          <el-input v-model.trim="form.name" autocomplete="off"></el-input>
        </el-form-item>
@@ -91,7 +91,7 @@ export default {
         }]
       }],
       stateValue: '',      //选中的任务状态
-      
+
       bigClassify: [{
         bigClassify: []
       }],
@@ -105,10 +105,10 @@ export default {
 
       rules: {
         order: [{ required: true, trigger: "blur", message: "请输入排序" }],
-        name: [{ required: true, trigger: "blur", message: "请输入任务大类名称" }],
-        bigClassifyId: [{ required: true, trigger: "blur", message: "请输入任务大类id" }],
+        name: [{ required: true, trigger: "blur", message: "请输入子类名称" }],
+        bigClassifyId: [{ required: true, trigger: "blur", message: "请选择大类" }],
         state: [{ required: true, trigger: "blur", message: "请输入状态" }],
-        classifyId: [{ required: true, trigger: "blur", message: "请输入任务子类id" }],
+        classifyId: [{ required: true, trigger: "blur", message: "请输入子类id" }],
         imgUrl: [{ required: true, trigger: "blur", message: "请选择子类图片" }],
       }
     };
@@ -138,8 +138,8 @@ export default {
             }
             return isJPG && isLt2M;
           },
-    showEdit(bigClassifyList) {
-
+    showEdit(bigClassify) {
+      this.bigClassify[0].bigClassify = bigClassify;
       this.title = "添加";
       this.dialogFormVisible = true;
     },

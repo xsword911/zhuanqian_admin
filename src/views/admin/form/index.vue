@@ -18,9 +18,9 @@
           <el-form-item label="确认密码" prop="pwd2">
             <el-input v-model="ruleForm.pwd2" clearable></el-input>
           </el-form-item>
-          <el-form-item label="邀请码" prop="upperCode">
+<!--          <el-form-item label="邀请码" prop="upperCode">
             <el-input v-model="ruleForm.upperCode" clearable></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item>
             <el-button type="primary" @click="submitForm"
               >立即注册

@@ -110,7 +110,7 @@ export const asyncRoutes = [
             path: "signAward",
             name: "SignAward",
             component: () => import("@/views/sign/awardTable/index"),
-            meta: { title: "签到设置" },
+            meta: { title: "签到奖励" },
           },
           {
             path: "signRecord",
@@ -135,7 +135,7 @@ export const asyncRoutes = [
             path: "luckDrawManagement",
             name: "LuckDrawManagement",
             component: () => import("@/views/luckDraw/awardTable/index"),
-            meta: { title: "抽奖设置" },
+            meta: { title: "抽奖奖品" },
           },
           {
             path: "luckDrawTable",
@@ -160,13 +160,13 @@ export const asyncRoutes = [
             path: "planRateTable",
             name: "PlanRateTable",
             component: () => import("@/views/planRate/awardTable/index"),
-            meta: { title: "余额宝设置" },
+            meta: { title: "存款利率" },
           },
           {
             path: "planRateRecord",
             name: "PlanRateRecord",
             component: () => import("@/views/planRate/recordTable/index"),
-            meta: { title: "余额宝存取记录" },
+            meta: { title: "存款记录" },
           }
         ],
       },
@@ -384,16 +384,34 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: "msg",
-        name: "Msg",
-        component: () => import("@/views/information/msg/index"),
-        meta: { title: "资讯" },
+        path: "introduce",
+        name: "Introduce",
+        component: () => import("@/views/information/introduce/index"),
+        meta: { title: "平台简介" },
       },
       {
-        path: "question",
-        name: "Question",
-        component: () => import("@/views/information/question/index"),
-        meta: { title: "常见问题" },
+        path: "qualification",
+        name: "Qualification",
+        component: () => import("@/views/information/qualification/index"),
+        meta: { title: "公司资质" },
+      },
+      {
+        path: "guide",
+        name: "Guide",
+        component: () => import("@/views/information/guide/index"),
+        meta: { title: "新手指南" },
+      },
+      {
+        path: "levelPower",
+        name: "LevelPower",
+        component: () => import("@/views/information/levelPower/index"),
+        meta: { title: "会员特权" },
+      },
+      {
+        path: "cooperation",
+        name: "Cooperation",
+        component: () => import("@/views/information/cooperation/index"),
+        meta: { title: "代理合作" },
       },
       {
         path: "agent",
@@ -402,10 +420,16 @@ export const asyncRoutes = [
         meta: { title: "代理分佣" },
       },
       {
-        path: "guide",
-        name: "Guide",
-        component: () => import("@/views/information/guide/index"),
-        meta: { title: "新手指南" },
+        path: "question",
+        name: "Question",
+        component: () => import("@/views/information/question/index"),
+        meta: { title: "常见问题" },
+      },
+      {
+        path: "msg",
+        name: "Msg",
+        component: () => import("@/views/information/msg/index"),
+        meta: { title: "资讯" },
       }
     ],
   },

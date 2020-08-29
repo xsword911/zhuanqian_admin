@@ -19,9 +19,9 @@
         <el-input v-model.trim="form.pwd2" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="邀请码" prop="upperCode">
+<!--      <el-form-item label="邀请码" prop="upperCode">
         <el-input v-model.trim="form.upperCode" autocomplete="off"></el-input>
-      </el-form-item>
+      </el-form-item> -->
 
     </el-form>
 
