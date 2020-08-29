@@ -3,7 +3,7 @@ import router from "../router";
 import store from "../store";
 import axios from "axios";
 
-import config from "@/api/config.js";
+import config from "@/static/app/config.js";
 import api from "@/api/api.js";
 import storage from "@/api/storage.js";
 import util from "@/utils/util.js";

@@ -9,13 +9,27 @@
     <el-form-item label="排序" prop="order">
        <el-input v-model.trim="form.order" autocomplete="off"></el-input>
      </el-form-item>
-     <el-form-item label="任务大类id" prop="bigClassifyId">
-        <el-input v-model.trim="form.bigClassifyId" autocomplete="off"></el-input>
+     
+      <el-form-item label="大类" prop="bigClassifyId">
+        <el-select v-model="form.bigClassifyId" placeholder="大类">
+          <el-option-group
+            v-for="group in bigClassify"
+            :key="group.label"
+            :label="group.label">
+            <el-option
+              v-for="item in group.bigClassify"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-option-group>
+        </el-select>
       </el-form-item>
-      <el-form-item label="任务大类名称" prop="name">
+      
+      <el-form-item label="子类名称" prop="name">
          <el-input v-model.trim="form.name" autocomplete="off"></el-input>
        </el-form-item>
-      <el-form-item label="任务子类id" prop="classifyId">
+      <el-form-item label="子类id" prop="classifyId">
          <el-input v-model.trim="form.classifyId" autocomplete="off"></el-input>
        </el-form-item>
 
@@ -77,6 +91,10 @@ export default {
         }]
       }],
       stateValue: '',      //选中的任务状态
+      
+      bigClassify: [{
+        bigClassify: []
+      }],
 
       form: {
         imgUrl: '',
@@ -120,7 +138,8 @@ export default {
             }
             return isJPG && isLt2M;
           },
-    showEdit(row) {
+    showEdit(bigClassifyList) {
+
       this.title = "添加";
       this.dialogFormVisible = true;
     },

@@ -101,8 +101,6 @@ export default {
       bigClassify: [{
         bigClassify: []
       }],
-      stateValue: '',      //选中的任务状态
-
 
       form: {
         id: null,
@@ -128,7 +126,8 @@ export default {
       // this.imgUrlNew = URL.createObjectURL(file.raw);
       this.form.imgUrl = res.data.url;
     },
-    showEdit(row) {
+    showEdit(row, bigClassifyList) {
+      this.bigClassify[0].bigClassify = bigClassifyList;
       if (!row) {
         this.title = "添加";
       } else {

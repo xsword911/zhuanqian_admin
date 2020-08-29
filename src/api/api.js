@@ -1,5 +1,5 @@
 import httpUtil from "@/api/httpUtil.js";
-import config from "@/api/config.js";
+import config from "@/static/app/config.js";
 //网络操作封装
 const api = {
   //取返回数据内,code数据

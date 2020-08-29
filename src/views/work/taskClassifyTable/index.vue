@@ -2,7 +2,7 @@
   <div class="table-container">
     <vab-query-form style="display: flex;">
       <vab-query-form-left-panel style="max-width:168px;">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd(bigClassifyList)"
           >添加</el-button
         >
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
@@ -95,7 +95,7 @@
 
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
+          <el-button type="text" @click="handleEdit(scope.row, bigClassifyList)"
             >编辑
           </el-button>
 <!--         <el-button type="text" @click="handleDelete(scope.row)"
@@ -193,8 +193,8 @@ export default {
          });
       });
     },
-    handleAdd() {
-      this.$refs["edit"].showEdit();
+    handleAdd(bigClassifyList) {
+      this.$refs["edit"].showEdit(bigClassifyList);
     },
     tableSortChange() {
       const imageList = [];
@@ -206,8 +206,8 @@ export default {
     setSelectRows(val) {
       this.selectRows = val;
     },
-    handleEdit(row) {
-      this.$refs["updEdit"].showEdit(row);
+    handleEdit(row, bigClassifyList) {
+      this.$refs["updEdit"].showEdit(row, bigClassifyList);
     },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
