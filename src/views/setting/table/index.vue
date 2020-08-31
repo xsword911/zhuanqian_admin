@@ -157,6 +157,12 @@ export default {
         },{
           value: 3,
           label: '代理'
+        },{
+          value: 4,
+          label: '注册配置'
+        },{
+          value: 5,
+          label: '平台配置'
         }]
       }],
       typeValue: '',      //选中的配置类型
@@ -300,6 +306,12 @@ export default {
                   break;
                 case 3:
                 item.typeTest = '代理'
+                  break;
+                case 4:
+                item.typeTest = '注册配置'
+                  break;
+                case 5:
+                item.typeTest = '平台配置'
                   break;
                 default:
                   break;

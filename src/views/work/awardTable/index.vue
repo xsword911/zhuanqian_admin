@@ -2,7 +2,7 @@
   <div class="table-container">
     <vab-query-form style="display: flex;">
       <vab-query-form-left-panel style="max-width:168px;">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd(type)"
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd(type, taskClassifyList)"
           >添加</el-button
         >
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
@@ -28,9 +28,9 @@
          <el-form-item>
            <el-input v-model="queryForm.title" placeholder="任务标题"  clearable/>
          </el-form-item>
-         <el-form-item>
+<!--         <el-form-item>
             <el-input v-model="queryForm.admin" placeholder="操作者"  clearable/>
-          </el-form-item>
+          </el-form-item> -->
 
          <el-form-item>
               <el-select v-model="typeValue" placeholder="任务类型" clearable>
@@ -121,7 +121,7 @@
 
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row, type)"
+          <el-button type="text" @click="handleEdit(scope.row, type, taskClassifyList)"
             >编辑
           </el-button>
 <!--         <el-button type="text" @click="handleDelete(scope.row)"
@@ -277,8 +277,8 @@ export default {
         this.type[0].type = data;
       });
     },
-    handleAdd(type) {
-      this.$refs["edit"].showEdit(type);
+    handleAdd(type, taskClassifyList) {
+      this.$refs["edit"].showEdit(type, taskClassifyList);
     },
     tableSortChange() {
       const imageList = [];
@@ -290,8 +290,8 @@ export default {
     setSelectRows(val) {
       this.selectRows = val;
     },
-    handleEdit(row, arrType) {
-      this.$refs["updEdit"].showEdit(row, arrType);
+    handleEdit(row, arrType, taskClassifyList) {
+      this.$refs["updEdit"].showEdit(row, arrType, taskClassifyList);
     },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
@@ -415,28 +415,6 @@ export default {
               this.taskClassifyList.forEach((item2, index2) =>{
                   if(item2.classifyId == item.classify) item.classifyName = item2.name;
               });
-             // switch (item.level){
-             //  case 0:
-             //     item.levelTest = "新人";
-             //     break;
-             //  case 1:
-             //     item.levelTest = "白银会员";
-             //     break;
-             //  case 2:
-             //     item.levelTest = "黄金会员";
-             //     break;
-             //  case 3:
-             //     item.levelTest = "铂金会员";
-             //     break;
-             //  case 4:
-             //    item.levelTest = "钻石会员";
-             //    break;
-             //  case 5:
-             //     item.levelTest = "至尊会员";
-             //     break;
-             //   default:
-             //     break;
-             // };
            });
            this.total = api.getTotal(res);
            this.list = data;

@@ -62,6 +62,12 @@ export default {
         },{
           value: 3,
           label: '代理'
+        },{
+          value: 4,
+          label: '注册配置'
+        },{
+          value: 5,
+          label: '平台配置'
         }]
       }],
       typeValue: '',      //选中的配置类型

@@ -2,44 +2,19 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="500px"
+    width="700px"
     @close="close"
   >
-   <el-form ref="form" :model="form" label-width="80px">
-     <el-form-item label="奖励标题" prop="title">
-        <el-input v-model.trim="form.title" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="任务说明" prop="explain">
-         <el-input v-model.trim="form.explain" autocomplete="off"></el-input>
-       </el-form-item>
-      <el-form-item label="任务规则" prop="rule">
-         <el-input v-model.trim="form.rule" autocomplete="off"></el-input>
-       </el-form-item>
-
-         <el-form-item label="任务等级" prop="level">
-           <el-select v-model="form.level" placeholder="任务等级" clearable filterable allow-create>
-             <el-option-group
-               v-for="group in level"
-               :key="group.label"
-               :label="group.label">
-               <el-option
-                 v-for="item in group.level"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value">
-               </el-option>
-             </el-option-group>
-           </el-select>
-         </el-form-item>
-
-       <el-form-item label="刷新周期" prop="cycle">
-         <el-select v-model="form.cycle" placeholder="刷新周期" clearable filterable allow-create>
+   <el-form ref="form" :model="form" label-width="80px" style="display: flex; justify-content: space-between;">
+     <div>
+       <el-form-item label="任务分类" prop="classify">
+         <el-select v-model="form.classify" placeholder="任务分类" clearable filterable allow-create>
            <el-option-group
-             v-for="group in cycle"
+             v-for="group in taskClassify"
              :key="group.label"
              :label="group.label">
              <el-option
-               v-for="item in group.cycle"
+               v-for="item in group.taskClassify"
                :key="item.value"
                :label="item.label"
                :value="item.value">
@@ -47,38 +22,42 @@
            </el-option-group>
          </el-select>
        </el-form-item>
-
-       <el-form-item label="图片url" prop="imgUrl">
-          <div style="display: flex;">
-            <div class="block" style="width: 80px; height: 80px;">
-                 <el-image
-                   :src="form.imgUrl"
-                 ></el-image>
-             </div>
-
-             <el-upload
-               class="avatar-uploader"
-               :action= "getPostFileUrl()"
-               :show-file-list="false"
-               :on-success="handleAvatarSuccess">
-               <img v-if="imgUrlNew" :src="imgUrlNew"  class="avatar">
-               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-             </el-upload>
-          </div>
+       
+       
+       <el-form-item label="奖励标题" prop="title">
+          <el-input v-model.trim="form.title" autocomplete="off"></el-input>
         </el-form-item>
-
-        <el-form-item label="奖励" prop="award">
-           <el-input v-model.trim="form.award" autocomplete="off" ></el-input>
+        <el-form-item label="任务说明" prop="explain">
+           <el-input v-model.trim="form.explain" autocomplete="off"></el-input>
          </el-form-item>
-
-         <el-form-item label="任务标记" prop="tip">
-           <el-select v-model="form.tip" placeholder="任务状态" clearable filterable allow-create>
+        <el-form-item label="任务规则" prop="rule">
+           <el-input v-model.trim="form.rule" autocomplete="off"></el-input>
+         </el-form-item>
+       
+           <el-form-item label="任务等级" prop="level">
+             <el-select v-model="form.level" placeholder="任务等级" clearable filterable allow-create>
+               <el-option-group
+                 v-for="group in level"
+                 :key="group.label"
+                 :label="group.label">
+                 <el-option
+                   v-for="item in group.level"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value">
+                 </el-option>
+               </el-option-group>
+             </el-select>
+           </el-form-item>
+       
+         <el-form-item label="刷新周期" prop="cycle">
+           <el-select v-model="form.cycle" placeholder="刷新周期" clearable filterable allow-create>
              <el-option-group
-               v-for="group in tip"
+               v-for="group in cycle"
                :key="group.label"
                :label="group.label">
                <el-option
-                 v-for="item in group.tip"
+                 v-for="item in group.cycle"
                  :key="item.value"
                  :label="item.label"
                  :value="item.value">
@@ -86,88 +65,229 @@
              </el-option-group>
            </el-select>
          </el-form-item>
+       
+         <el-form-item label="图片url" prop="imgUrl">
+            <div style="display: flex;">
+              <div class="block" style="width: 80px; height: 80px;">
+                   <el-image
+                     :src="form.imgUrl"
+                   ></el-image>
+               </div>
+       
+               <el-upload
+                 class="avatar-uploader"
+                 :action= "getPostFileUrl()"
+                 :show-file-list="false"
+                 :on-success="handleAvatarSuccess">
+                 <img v-if="imgUrlNew" :src="imgUrlNew"  class="avatar">
+                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+               </el-upload>
+            </div>
+          </el-form-item>
+       
+          <el-form-item label="宣传文本" prop="taskTxt">
+             <el-input v-model.trim="form.taskTxt" autocomplete="off" ></el-input>
+           </el-form-item>
+       
+           <el-form-item label="宣传图片" prop="taskImg">
+              <div style="display: flex;">
+                <div class="block" style="width: 80px; height: 80px;">
+                     <el-image
+                       :src="form.taskImg"
+                     ></el-image>
+                 </div>
+       
+                 <el-upload
+                   class="avatar-uploader"
+                   :action= "getPostFileUrl()"
+                   :show-file-list="false"
+                   :on-success="handleImgSuccess">
+                   <img v-if="imgUrlNew" :src="imgUrlNew"  class="avatar">
+                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                 </el-upload>
+              </div>
+            </el-form-item>
+       
+          <el-form-item label="打开链接" prop="taskUrl">
+             <el-input v-model.trim="form.taskUrl" autocomplete="off"></el-input>
+           </el-form-item>
+       
+         <el-form-item label="打开app" prop="taskApp">
+           <el-select v-model="form.taskApp" placeholder="刷新周期" clearable filterable allow-create>
+             <el-option-group
+               v-for="group in taskApp"
+               :key="group.label"
+               :label="group.label">
+               <el-option
+                 v-for="item in group.taskApp"
+                 :key="item.value"
+                 :label="item.label"
+                 :value="item.value">
+               </el-option>
+             </el-option-group>
+           </el-select>
+         </el-form-item>
+       
+          <el-form-item label="奖励" prop="award">
+             <el-input v-model.trim="form.award" autocomplete="off" ></el-input>
+           </el-form-item>
+       
+           <el-form-item label="奖励类型" prop="awardType">
+             <el-select v-model="form.awardType" placeholder="奖励类型" clearable filterable allow-create>
+               <el-option-group
+                 v-for="group in awardType"
+                 :key="group.label"
+                 :label="group.label">
+                 <el-option
+                   v-for="item in group.awardType"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value">
+                 </el-option>
+               </el-option-group>
+             </el-select>
+           </el-form-item>
+     </div>
 
-      <el-form-item label="任务类型" prop="type">
-        <el-select v-model="form.type" placeholder="任务状态" clearable filterable allow-create>
-          <el-option-group
-            v-for="group in type"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.type"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="发布开始时间" prop="begTime">
-          <el-date-picker
-            v-model="form.begTime"
-            type="datetime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间"
-            align="right"
-            >
-          </el-date-picker>
-       </el-form-item>
-
-       <el-form-item label="发布截止时间" prop="endTime">
-          <el-date-picker
-            v-model="form.endTime"
-            type="datetime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间"
-            align="right"
-            >
-          </el-date-picker>
-        </el-form-item>
-
-      <el-form-item label="任务状态" prop="state">
-        <el-select v-model="form.state" placeholder="任务状态">
-          <el-option-group
-            v-for="group in state"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.state"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="任务分类" prop="sort">
-        <el-select v-model="form.sort" placeholder="任务分类">
-          <el-option-group
-            v-for="group in sort"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.sort"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="更新时间" prop="updTime">
-        <el-input v-model.trim="form.updTime"  autocomplete="off" clearable :disabled="true"></el-input>
-      </el-form-item>
-
-      <el-form-item label="操作者" prop="admin">
-        <el-input v-model.trim="form.admin"  autocomplete="off" clearable :disabled="true"></el-input>
-      </el-form-item>
-
-      <el-form-item label="备注" prop="desc">
-        <el-input v-model.trim="form.desc" autocomplete="off" clearable></el-input>
-      </el-form-item>
+    <div>
+      <el-form-item label="任务标记" prop="tip">
+                 <el-select v-model="form.tip" placeholder="任务状态" clearable filterable allow-create>
+                   <el-option-group
+                     v-for="group in tip"
+                     :key="group.label"
+                     :label="group.label">
+                     <el-option
+                       v-for="item in group.tip"
+                       :key="item.value"
+                       :label="item.label"
+                       :value="item.value">
+                     </el-option>
+                   </el-option-group>
+                 </el-select>
+               </el-form-item>
+      
+            <el-form-item label="任务类型" prop="type">
+              <el-select v-model="form.type" placeholder="任务状态" clearable filterable allow-create>
+                <el-option-group
+                  v-for="group in type"
+                  :key="group.label"
+                  :label="group.label">
+                  <el-option
+                    v-for="item in group.type"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-option-group>
+              </el-select>
+            </el-form-item>
+      
+            <el-form-item label="发布开始时间" prop="begTime">
+                <el-date-picker
+                  v-model="form.begTime"
+                  type="datetime"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="选择日期时间"
+                  align="right"
+                  >
+                </el-date-picker>
+             </el-form-item>
+      
+             <el-form-item label="发布截止时间" prop="endTime">
+                <el-date-picker
+                  v-model="form.endTime"
+                  type="datetime"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="选择日期时间"
+                  align="right"
+                  >
+                </el-date-picker>
+              </el-form-item>
+      
+            <el-form-item label="任务状态" prop="state">
+              <el-select v-model="form.state" placeholder="任务状态">
+                <el-option-group
+                  v-for="group in state"
+                  :key="group.label"
+                  :label="group.label">
+                  <el-option
+                    v-for="item in group.state"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-option-group>
+              </el-select>
+            </el-form-item>
+      
+            <el-form-item label="任务审核(分钟)" prop="doneLong">
+                <el-input v-model.trim="form.doneLong" autocomplete="off" clearable type="number"></el-input>
+            </el-form-item>
+      
+            <el-form-item label="任务审核(分钟)" prop="auditLong">
+                <el-input v-model.trim="form.auditLong" autocomplete="off" clearable type="number"></el-input>
+            </el-form-item>
+      
+            <el-form-item label="任务是否需要凭证" prop="isDoneProve">
+              <el-select v-model="form.isDoneProve" placeholder="刷新周期" clearable filterable allow-create>
+                <el-option-group
+                  v-for="group in isDoneProve"
+                  :key="group.label"
+                  :label="group.label">
+                  <el-option
+                    v-for="item in group.isDoneProve"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-option-group>
+              </el-select>
+            </el-form-item>
+      
+            <el-form-item label="任务是否需要截图" prop="isDoneImg">
+              <el-select v-model="form.isDoneImg" placeholder="刷新周期" clearable filterable allow-create>
+                <el-option-group
+                  v-for="group in isDoneImg"
+                  :key="group.label"
+                  :label="group.label">
+                  <el-option
+                    v-for="item in group.isDoneImg"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-option-group>
+              </el-select>
+            </el-form-item>
+      
+      <!--      <el-form-item label="任务分类" prop="sort">
+              <el-select v-model="form.sort" placeholder="任务分类">
+                <el-option-group
+                  v-for="group in sort"
+                  :key="group.label"
+                  :label="group.label">
+                  <el-option
+                    v-for="item in group.sort"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-option-group>
+              </el-select>
+            </el-form-item> -->
+      
+            <el-form-item label="更新时间" prop="updTime">
+              <el-input v-model.trim="form.updTime"  autocomplete="off" clearable :disabled="true"></el-input>
+            </el-form-item>
+      
+            <el-form-item label="操作者" prop="admin">
+              <el-input v-model.trim="form.admin"  autocomplete="off" clearable :disabled="true"></el-input>
+            </el-form-item>
+      
+            <el-form-item label="备注" prop="desc">
+              <el-input v-model.trim="form.desc" autocomplete="off" clearable></el-input>
+            </el-form-item>
+    </div>
 
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -203,21 +323,24 @@ export default {
       level: [{
         level: [{
           value: 0,
-          label: '新人'
+          label: '全部'
         },{
           value: 1,
-          label: '白银会员'
+          label: '新人'
         },{
           value: 2,
-          label: '黄金会员'
+          label: '白银会员'
         },{
           value: 3,
-          label: '铂金会员'
+          label: '黄金会员'
         },{
           value: 4,
-          label: '钻石会员'
+          label: '铂金会员'
         },{
           value: 5,
+          label: '钻石会员'
+        },{
+          value: 6,
           label: '至尊会员'
         }]
       }],
@@ -259,6 +382,56 @@ export default {
       }],
       cycleValue: '',      //任务刷新周期
 
+      taskApp: [{
+        taskApp: [{
+          value: 0,
+          label: '不打开任何app'
+        },{
+          value: 1,
+          label: '微信'
+        },{
+          value: 2,
+          label: '抖音'
+        },{
+          value: 3,
+          label: '快手'
+        }]
+      }],
+
+      isDoneProve: [{
+        isDoneProve: [{
+          value: 0,
+          label: '不需要凭证'
+        },{
+          value: 1,
+          label: '需要凭证'
+        }]
+      }],
+
+      isDoneImg: [{
+        isDoneImg: [{
+          value: 0,
+          label: '不需要截图'
+        },{
+          value: 1,
+          label: '需要截图'
+        }]
+      }],
+
+      taskClassify: [{
+        taskClassify: []
+      }],
+
+      awardType: [{
+        awardType: [{
+          value: 0,
+          label: '金币'
+        },{
+          value: 1,
+          label: '现金'
+        }]
+      }],
+
       form: {
         id: null,
         title: '',
@@ -266,6 +439,7 @@ export default {
         rule: '',
         cycle: null,
         imgUrl: '',
+        taskImg: '',
         award: null,
         tip: null,
         type: null,
@@ -297,13 +471,26 @@ export default {
       // this.imgUrlNew = URL.createObjectURL(file.raw);
       this.form.imgUrl = res.data.url;
     },
-    showEdit(row, arrType) {
+    handleImgSuccess(res, file) {
+      // this.imgUrlNew = URL.createObjectURL(file.raw);
+      this.form.taskImg = res.data.url;
+    },
+    showEdit(row, arrType, taskClassifyList) {
       this.type = arrType;   //获取任务类型
+      this.taskClassify[0].taskClassify = [];
+      taskClassifyList.forEach((item,index) =>{
+        let obj = {};
+        obj.value = item.classifyId;
+        obj.label = item.name;
+        this.taskClassify[0].taskClassify.push(obj);
+      });
       if (!row) {
         this.title = "添加";
       } else {
         this.title = "编辑";
         this.form = Object.assign({}, row);
+        this.form.doneLong = this.form.doneLong / 60;
+        this.form.auditLong = this.form.auditLong / 60;
       }
       this.dialogFormVisible = true;
     },
@@ -322,6 +509,8 @@ export default {
         this.$message.error('任务说明不能为空');
         return;
       };
+      this.form.doneLong = parseInt(this.form.doneLong) * 60;   //任务限时分钟转为秒
+      this.form.auditLong = parseInt(this.form.auditLong) * 60; //审核时长分钟转为秒
         api.updTask(this.form, (res)=>{
           let code = api.getCode(res);
           if(code == 0){
