@@ -56,6 +56,21 @@ export default {
         type: [{
           value: 0,
           label: '登录配置'
+        },{
+          value: 1,
+          label: '客服'
+        },{
+          value: 2,
+          label: '幸运大转盘配置'
+        },{
+          value: 3,
+          label: '代理'
+        },{
+          value: 4,
+          label: '注册配置'
+        },{
+          value: 5,
+          label: '平台配置'
         }]
       }],
       typeValue: '',      //选中的配置类型

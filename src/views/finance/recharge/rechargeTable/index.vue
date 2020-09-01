@@ -14,7 +14,7 @@
 <!--         <el-form-item>
             <el-input v-model="queryForm.sn" placeholder="订单号"  clearable/>
           </el-form-item> -->
-         <el-form-item>
+        <el-form-item>
             <el-input v-model="queryForm.admin" placeholder="审核人" clearable/>
           </el-form-item>
           <el-form-item>
@@ -86,7 +86,7 @@
             effect="dark"
             placement="top-start"
           >
-            <el-tag :type="scope.row.status | statusFilter"
+           <el-tag :type="scope.row.status | statusFilter"
               >{{ scope.row.stateTest }}
             </el-tag>
           </el-tooltip>
@@ -149,6 +149,9 @@ export default {
     return {
       options: [{
         options: [{
+          value: -1,
+          label: '未提交'
+        },{
           value: 0,
           label: '未审核'
         },{
@@ -262,6 +265,10 @@ export default {
            let data = api.getData(res);
            data.forEach((item, index) =>{
               switch (item.state){
+                case -1:
+                  item.status = 'frozen';
+                  item.stateTest = "未提交";
+                  break;
                 case 0:
                   item.status = 'frozen';
                   item.stateTest = "未审核";

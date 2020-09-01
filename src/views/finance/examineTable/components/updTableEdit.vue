@@ -89,7 +89,7 @@ export default {
       if (!row) {
         this.title = "添加";
       } else {
-        this.title = "编辑";
+        this.title = "审核";
         this.form = Object.assign({}, row);
       }
       this.dialogFormVisible = true;
@@ -101,14 +101,14 @@ export default {
       this.$emit("fetchData");
     },
     submitUpd(){
-      this.form2.admin = "admin2";
+      this.form2.admin = "admin1";
       this.form2.id = this.form.id;
       this.form2.state = this.form.state;
       if(!util.isEmpty(this.form.desc)) this.form2.desc = this.form.desc;
       api.updMoneyDraw(this.form2, (res)=>{
         let code = api.getCode(res);
         if(code == 0){
-          this.$baseMessage("修改成功", "success");
+          this.$baseMessage("审核成功", "success");
           this.$refs["form"].resetFields();
           this.dialogFormVisible = false;
           this.$emit("fetchData");

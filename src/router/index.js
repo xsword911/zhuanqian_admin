@@ -292,6 +292,12 @@ export const asyncRoutes = [
         name: "MoneyTable",
         component: () => import("@/views/finance/moneyTable/index"),
         meta: { title: "账变明细" },
+      },
+      {
+        path: "moneyAddOrReduce",
+        name: "MoneyAddOrReduce",
+        component: () => import("@/views/finance/form/index"),
+        meta: { title: "加款扣款" },
       }
     ],
   },

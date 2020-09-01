@@ -23,9 +23,25 @@
           <el-form-item>
             <el-input v-model="queryForm.title" placeholder="任务名称"  clearable/>
           </el-form-item>
-          <el-form-item>
+<!--          <el-form-item>
             <el-input v-model="queryForm.admin" placeholder="审核人"  clearable/>
-          </el-form-item>
+          </el-form-item> -->
+
+          <el-form-item>
+               <el-select v-model="typeValue" placeholder="任务类型" clearable>
+                 <el-option-group
+                   v-for="group in type"
+                   :key="group.label"
+                   :label="group.label">
+                   <el-option
+                     v-for="item in group.type"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value">
+                   </el-option>
+                 </el-option-group>
+               </el-select>
+           </el-form-item>
 
          <el-form-item>
               <el-select v-model="stateValue" placeholder="任务状态" clearable>
@@ -83,21 +99,24 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="uid"></el-table-column>
+      <el-table-column prop="uid" label="发布者"></el-table-column>
+      <el-table-column prop="doneUid" label="完成者"></el-table-column>
       <el-table-column prop="sn" label="订单号"></el-table-column>
       <el-table-column prop="title" label="任务名称"></el-table-column>
+      <el-table-column prop="awardTypeTest" label="任务类型"></el-table-column>
+      <el-table-column prop="classifyName" label="子类名称"></el-table-column>
       <el-table-column prop="award" label="奖励金额"></el-table-column>
       <el-table-column prop="finishTime" label="完成时间"></el-table-column>
       <el-table-column prop="stateTest" label="状态"></el-table-column>
-      <el-table-column prop="updTime" label="审核时间"></el-table-column>
-      <el-table-column prop="admin" label="审核人"></el-table-column>
-      <el-table-column prop="desc" label="备注"></el-table-column>
+<!--      <el-table-column prop="updTime" label="审核时间"></el-table-column>
+      <el-table-column prop="auditName" label="审核人"></el-table-column> -->
+      <el-table-column prop="auditTime" label="备注"></el-table-column>
 
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-<!--          <el-button type="text" @click="handleEdit(scope.row)"
-            >编辑
-          </el-button> -->
+         <el-button type="text" @click="handleEdit(scope.row)">
+           审核
+          </el-button>
 <!--          <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
@@ -141,16 +160,27 @@ export default {
   },
   data() {
     return {
+      type: [{
+        type: []
+      }],
+      typeValue: '',      //选中的任务类型
+
       state: [{
         state: [{
           value: 0,
           label: '进行中'
         },{
           value: 1,
-          label: '已完成'
+          label: '未审核'
         },{
           value: 2,
+          label: '已完成'
+        },{
+          value: 3,
           label: '任务失败'
+        },{
+          value: 10,
+          label: '任务取消'
         }]
       }],
       stateValue: '',      //选中的状态类型
@@ -177,14 +207,36 @@ export default {
         state: null,
         stateTest: '',
       },
+      levelDescList: [],  //全部任务会员类型
+      taskClassifyList: [],  //任务子类
     };
   },
   created() {
-    this.fetchData();
+    this.getTaskClassify();  //获取任务子类
+    this.getTaskType();  //获取任务类型
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //获取任务类型
+    getTaskType(){
+      api.getTaskType({}, (res)=>{
+        let data = res.data;
+        data.forEach((item) =>{
+          item.value = parseInt(item.key);
+          item.label = item.val;
+        });
+        this.type[0].type = data;
+      });
+    },
+    //获取任务子类
+    getTaskClassify(){
+      api.getTaskClassify({page: 1, count: 99}, (res)=>{
+        let data = api.getData(res);
+        this.taskClassifyList = data;
+        this.fetchData();
+      });
+    },
     tableSortChange() {
       const imageList = [];
       this.$refs.tableSort.tableData.forEach((item, index) => {
@@ -243,6 +295,12 @@ export default {
     //搜索关键字
     handleQuery() {
       this.queryForm.page = 1;
+      //奖励类型筛选不为空时添加奖励类型属性
+      if(!util.isEmpty(this.typeValue)){
+        this.queryForm.type = this.typeValue;
+      }else{   //奖励类型筛选为空时删除奖励类型属性
+        delete this.queryForm.type;
+      };
       //时间筛选不为空时添加时间属性
       if(!util.isEmpty(this.searchTime)){
         this.queryForm.begFinishTime = this.searchTime[0];
@@ -258,7 +316,6 @@ export default {
       }else{   //状态类型筛选为空时删除状态类型属性
         delete this.queryForm.state;
       };
-      console.log(this.queryForm);
       this.fetchData();
     },
     async fetchData() {
@@ -273,14 +330,27 @@ export default {
                   item.stateTest = "进行中";
                   break;
                 case 1:
-                  item.stateTest = "已完成";
+                  item.stateTest = "未审核";
                   break;
                 case 2:
+                  item.stateTest = "已完成";
+                  break;
+                case 3:
                   item.stateTest = "任务失败";
+                  break;
+
+                case 10:
+                  item.stateTest = "任务取消";
                   break;
                 default:
                   break;
               };
+              this.type[0].type.forEach((item3, index3) =>{
+                  if(item3.value == item.type) item.awardTypeTest = item3.label;
+              });
+              this.taskClassifyList.forEach((item2, index2) =>{
+                  if(item2.classifyId == item.classify) item.classifyName = item2.name;
+              });
            });
            this.total = api.getTotal(res);
            this.list = data;

@@ -459,6 +459,21 @@ const api = {
   delTaskClassifyArr: function (path, funSuccess) {
     httpUtil.post("activity/task/delTaskClassifyArr", path, funSuccess);
   },
+  
+  //审核任务记录
+  auditTaskDetails: function (path, funSuccess) {
+    httpUtil.post("activity/auditTaskDetails", path, funSuccess);
+  },
+  
+  //审核充值记录
+  updMoneyRecharge: function (path, funSuccess) {
+    httpUtil.post("money/updMoneyRecharge", path, funSuccess);
+  },
+  
+  //价款扣款
+  moneyChange: function (path, funSuccess) {
+    httpUtil.post("money/moneyChange", path, funSuccess);
+  },
 };
 
 export default api;

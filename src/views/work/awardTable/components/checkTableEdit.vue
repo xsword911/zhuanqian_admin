@@ -13,7 +13,7 @@
           <el-input value="微视" autocomplete="off" :disabled="true" v-show="form.classify == 3"></el-input>
           <el-input value="火山小视频" autocomplete="off" :disabled="true" v-show="form.classify == 4"></el-input>
           <el-input value="今日头条" autocomplete="off" :disabled="true" v-show="form.classify == 5"></el-input>
-          <el-input value="微信" autocomplete="off" :disabled="true" v-show="form.classify == 5"></el-input>
+          <el-input value="微信" autocomplete="off" :disabled="true" v-show="form.classify == 6"></el-input>
         </el-form-item>
 
         <el-form-item label="奖励标题" prop="title">

@@ -377,25 +377,6 @@ export default {
                 default:
                   break;
               };
-              switch (item.type){
-                case 0:
-                  item.awardTypeTest = "邀请好友";
-                  break;
-                case 1:
-                  item.awardTypeTest = "分享朋友圈";
-                  break;
-                case 2:
-                  item.awardTypeTest = "加好友";
-                  break;
-                case 3:
-                  item.awardTypeTest = "下载app";
-                  break;
-                case 4:
-                  item.awardTypeTest = "点赞";
-                  break;
-                default:
-                  break;
-              };
               switch (item.sort){
                 case 0:
                   item.sortTest = "热门活动";
@@ -414,6 +395,9 @@ export default {
               });
               this.taskClassifyList.forEach((item2, index2) =>{
                   if(item2.classifyId == item.classify) item.classifyName = item2.name;
+              });
+              this.type[0].type.forEach((item4, index4) =>{
+                  if(item4.value == item.type) item.awardTypeTest = item4.label;
               });
            });
            this.total = api.getTotal(res);

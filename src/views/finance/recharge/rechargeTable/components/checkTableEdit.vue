@@ -19,6 +19,7 @@
         <el-input v-model.trim="form.addTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="state">
+        <el-input value="未提交" autocomplete="off" :disabled="true" v-show="form.state == -1"></el-input>
         <el-input value="未审核" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
         <el-input value="审核成功" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
         <el-input value="审核未通过" autocomplete="off" :disabled="true" v-show="form.state == 2"></el-input>
