@@ -12,7 +12,7 @@ module.exports = {
   // 默认的接口地址 如果是开发环境或测试环境那么走vab-mock-server，如果是生产环境那么默认为空当然你也可以选择自己配置成需要的接口地址
   baseURL: process.env !== "production" ? "vab-mock-server" : "",
   //标题 （包括初次加载雪花屏的标题 页面的标题 浏览器的标题）
-  title: "消消乐",
+  title: " ",
   //简写
   abbreviation: "vab",
   //开发环境端口号

@@ -172,6 +172,18 @@ export default {
         },{
           value: 3,
           label: '幸运抽奖获奖'
+        },{
+          value: 4,
+          label: '充值'
+        },{
+          value: 5,
+          label: '利息宝取出'
+        },{
+          value: 10,
+          label: '加款'
+        },{
+          value: 50,
+          label: '代理佣金'
         }]
       },{
         label: '支出',
@@ -181,6 +193,15 @@ export default {
         },{
           value: 101,
           label: '余额转金币'
+        },{
+          value: 102,
+          label: '升级'
+        },{
+          value: 103,
+          label: '利息宝转入'
+        },{
+          value: 104,
+          label: '扣款'
         }]
       }],
       value: '',      //交易类型
@@ -294,11 +315,32 @@ export default {
               case 3:
                 item.type = "幸运抽奖获奖";
                 break;
+              case 4:
+                item.type = "充值";
+                break;
+              case 5:
+                item.type = "利息宝取出";
+                break;
+              case 10:
+                item.type = "加款";
+                break;
+              case 50:
+                item.type = "代理佣金";
+                break;
               case 100:
                 item.type = "提现";
                 break;
               case 101:
                 item.type = "余额转金币";
+                break;
+              case 102:
+                item.type = "升级";
+                break;
+              case 103:
+                item.type = "利息宝转入";
+                break;
+              case 104:
+                item.type = "扣款";
                 break;
                default:
                  break;

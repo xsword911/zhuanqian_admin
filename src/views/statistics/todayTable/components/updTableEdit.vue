@@ -38,6 +38,15 @@
       <el-form-item label="任务次数" prop="taskSum">
         <el-input v-model.trim="form.taskSum" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
+      
+      <el-form-item label="加款" prop="moneyIns">
+        <el-input v-model.trim="form.moneyIns" autocomplete="off" :disabled="true"></el-input>
+      </el-form-item>
+      
+      <el-form-item label="扣款" prop="moneySubtract">
+        <el-input v-model.trim="form.moneySubtract" autocomplete="off" :disabled="true"></el-input>
+      </el-form-item>
+      
       <el-form-item label="备注" prop="desc">
         <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
       </el-form-item>

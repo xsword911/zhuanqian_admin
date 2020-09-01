@@ -68,7 +68,7 @@
           {{ scope.$index + 1 }}
         </template> -->
       <!-- </el-table-column> -->
-      <el-table-column prop="uid" label="用户id" @click="toUserInfo()"></el-table-column>
+      <el-table-column prop="uid" label="用户id"></el-table-column>
       <el-table-column label="时间" prop="addTime"></el-table-column>
       <el-table-column label="前一天余额" prop="moneyOld"></el-table-column>
       <el-table-column label="增加金额" prop="moneyAdd"></el-table-column>
@@ -178,9 +178,6 @@ export default {
   beforeDestroy() {},
   mounted() {},
   methods: {
-    toUserInfo(){
-      console.log(1);
-    },
     tableSortChange() {
       // const imageList = [];
       // this.$refs.tableSort.tableData.forEach((item, index) => {
