@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
     <vab-query-form style="display: flex;">
-<!--    <vab-query-form-left-panel>
+      <!--    <vab-query-form-left-panel>
         <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
           >添加
         </el-button>
@@ -13,7 +13,7 @@
         <el-button type="primary" @click="testConfirm">baseConfirm</el-button>
         <el-button type="primary" @click="testNotify">baseNotify</el-button>
       </vab-query-form-left-panel> -->
-     <vab-query-form-right-panel style="flex: 1;">
+      <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
           :model="queryForm"
@@ -21,25 +21,29 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.uid" placeholder="用户id" clearable />
+            <el-input
+              v-model="queryForm.uid"
+              placeholder="用户id"
+              clearable
+            />
           </el-form-item>
-<!--          <el-form-item>
+          <!--          <el-form-item>
             <el-input v-model="queryForm.code" placeholder="邀请码" />
           </el-form-item>
           <el-form-item>
             <el-input v-model="queryForm.upper" placeholder="直属上级" />
           </el-form-item> -->
           <el-form-item>
-                <div class="block">
-                  <el-date-picker
-                    v-model="searchTime"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    type="datetimerange"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    :default-time="['00:00:00', '23:59:59']">
-                  </el-date-picker>
-                </div>
+            <div class="block">
+              <el-date-picker
+                v-model="searchTime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                type="datetimerange"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :default-time="['00:00:00', '23:59:59']"
+              />
+            </div>
           </el-form-item>
           <el-form-item>
             <el-button
@@ -47,7 +51,8 @@
               type="primary"
               native-type="submit"
               @click="handleQuery"
-              >查询
+            >
+              查询
             </el-button>
           </el-form-item>
         </el-form>
@@ -62,32 +67,83 @@
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
     >
-     <!-- <el-table-column type="selection" width="55"></el-table-column> -->
-     <!-- <el-table-column label="序号" width="95"> -->
-<!--        <template slot-scope="scope">
+      <!-- <el-table-column type="selection" width="55"></el-table-column> -->
+      <!-- <el-table-column label="序号" width="95"> -->
+      <!--        <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template> -->
       <!-- </el-table-column> -->
-      <el-table-column prop="uid" label="用户id"></el-table-column>
-      <el-table-column label="时间" prop="addTime"></el-table-column>
-      <el-table-column label="前一天余额" prop="moneyOld"></el-table-column>
-      <el-table-column label="增加金额" prop="moneyAdd"></el-table-column>
-      <el-table-column label="减少金额" prop="moneyLose"></el-table-column>
-      <el-table-column label="提现次数" prop="drawSum"></el-table-column>
+      <el-table-column
+        prop="uid"
+        label="用户id"
+      />
+      <el-table-column
+        label="时间"
+        prop="addTime"
+      />
+      <el-table-column
+        label="前一天余额"
+        prop="moneyOld"
+      />
+      <el-table-column
+        label="增加金额"
+        prop="moneyAdd"
+      />
+      <el-table-column
+        label="减少金额"
+        prop="moneyLose"
+      />
+      <el-table-column
+        label="提现次数"
+        prop="drawSum"
+      />
+      <el-table-column
+        label="加款"
+        prop="moneyIns"
+      />
+      <el-table-column
+        label="扣款"
+        prop="moneySubtract"
+      />
 
-      <el-table-column label="前一天金币" prop="goldOld"></el-table-column>
-      <el-table-column label="得到金币" prop="goldAdd"></el-table-column>
-      <el-table-column label="消耗金币" prop="goldLose"></el-table-column>
-      <el-table-column label="任务次数" prop="taskSum"></el-table-column>
+      <el-table-column
+        label="前一天金币"
+        prop="goldOld"
+      />
+      <el-table-column
+        label="得到金币"
+        prop="goldAdd"
+      />
+      <el-table-column
+        label="消耗金币"
+        prop="goldLose"
+      />
+      <el-table-column
+        label="任务次数"
+        prop="taskSum"
+      />
 
-      <el-table-column label="备注"prop="desc"></el-table-column>
-    <el-table-column label="操作" width="180px" fixed="right">
+      <el-table-column
+        label="备注"
+        prop="desc"
+      />
+      <el-table-column
+        label="操作"
+        width="180px"
+        fixed="right"
+      >
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
-            >编辑
+          <el-button
+            type="text"
+            @click="handleEdit(scope.row)"
+          >
+            编辑
           </el-button>
-          <el-button type="text" @click="handleCheckEdit(scope.row)"
-            >查看
+          <el-button
+            type="text"
+            @click="handleCheckEdit(scope.row)"
+          >
+            查看
           </el-button>
         </template>
       </el-table-column>
@@ -100,9 +156,12 @@
       :total="total"
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
-    ></el-pagination>
-    <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
-    <check-table-edit ref="checkEdit"></check-table-edit>
+    />
+    <upd-table-edit
+      ref="updEdit"
+      @refreshList="fetchData"
+    />
+    <check-table-edit ref="checkEdit" />
   </div>
 </template>
 
