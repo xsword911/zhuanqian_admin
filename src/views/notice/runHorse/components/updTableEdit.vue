@@ -20,7 +20,7 @@
       </el-form-item>
 
       <el-form-item label="跳转地址" prop="toUrl">
-         <el-input v-model.trim="form.toUrl" autocomplete="off"></el-input>
+         <el-input v-model.trim="form.toUrl" autocomplete="off" placeholder="跳转地址为空时不跳转"></el-input>
       </el-form-item>
 
       <el-form-item label="开始时间" prop="begTime">
@@ -95,12 +95,13 @@ export default {
       stateValue: '',      //选中的任务状态
       form: {
         id: null,
+        toUrl: "",
       },
       title: "",
       dialogFormVisible: false,
 
       rules: {
-        toUrl: [{ required: true, trigger: "blur", message: "请输入跳转地址" }],
+        // toUrl: [{ required: true, trigger: "blur", message: "请输入跳转地址" }],
         title: [{ required: true, trigger: "blur", message: "请输入标题" }],
         content: [{ required: true, trigger: "blur", message: "请输入内容" }],
         state: [{ required: true, trigger: "blur", message: "请选择状态" }],

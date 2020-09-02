@@ -29,10 +29,11 @@
             <img v-if="form.imgUrl" :src="form.imgUrl"  class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
+          <div><div style="color:#FF3A00; display:inline-block;">*</div>注意：上传图片大小建议750*300</div>
         </el-form-item>
 
       <el-form-item label="跳转地址" prop="toUrl">
-         <el-input v-model.trim="form.toUrl" autocomplete="off"></el-input>
+         <el-input v-model.trim="form.toUrl" autocomplete="off" placeholder="跳转地址为空时不跳转"></el-input>
       </el-form-item>
 
       <el-form-item label="开始时间" prop="begTime">
@@ -109,6 +110,7 @@ export default {
         type: 0,
         admin: "admin1",
         imgUrl: '',
+        toUrl: "",
       },
       title: "",
       dialogFormVisible: false,
@@ -119,7 +121,7 @@ export default {
         title: [{ required: true, trigger: "blur", message: "请输入标题" }],
         content: [{ required: true, trigger: "blur", message: "请输入内容" }],
         // imgUrl: [{ required: true, trigger: "blur", message: "请选择图片" }],
-        toUrl: [{ required: true, trigger: "blur", message: "请输入跳转地址" }],
+        // toUrl: [{ required: true, trigger: "blur", message: "请输入跳转地址" }],
         state: [{ required: true, trigger: "blur", message: "请选择状态" }],
         begTime: [{ required: true, trigger: "blur", message: "请选择开始时间" }],
         endTime: [{ required: true, trigger: "blur", message: "请选择结束时间" }],

@@ -12,6 +12,10 @@
       <el-form-item label="用户名" prop="account">
         <el-input v-model.trim="form.account" autocomplete="off" :disabled="true" clearable></el-input>
       </el-form-item>
+      <el-form-item label="邀请码" prop="code">
+        <el-input v-model.trim="form.code" autocomplete="off" clearable></el-input>
+        <div><div style="color:#FF3A00; display:inline-block;">*</div>邀请码为六位数</div>
+      </el-form-item>
       <el-form-item label="手机号" prop="tel">
         <el-input v-model.trim="form.tel" autocomplete="off" clearable></el-input>
       </el-form-item>
@@ -36,6 +40,7 @@
                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
              </el-upload>
           </div>
+          <div><div style="color:#FF3A00; display:inline-block;">*</div>注意：上传图片大小建议200*200</div>
       </el-form-item>
       <el-form-item label="直属上级" prop="upper">
         <el-input v-model.trim="form.upper" autocomplete="off" clearable></el-input>
@@ -85,6 +90,8 @@ export default {
       imgUrlOld: "",
       imgUrlNew: ''  ,//选择的图片
       imgServeUrl: '',  //图片的服务器地址
+
+      oldHeadImg: '',  //旧头像路径
     };
   },
   created() {
@@ -123,6 +130,7 @@ export default {
         this.form = Object.assign({}, row);
       }
       this.dialogFormVisible = true;
+      this.oldHeadImg = this.form.headUrl;
     },
     close() {
       this.$refs["form"].resetFields();
@@ -151,8 +159,9 @@ export default {
         uid: this.form.uid,
         nick: this.form.nick,
         tel: this.form.tel,
-        headUrl: this.form.headUrl
+        code: this.form.code
       };
+      if(this.oldHeadImg != this.form.headUrl) data.headUrl = this.form.headUrl;
       api.setUser(data, (res)=>{
         let code = api.getCode(res);
         if(code == 0){

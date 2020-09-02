@@ -178,8 +178,8 @@ export default {
         this.title = "查看";
         this.form = Object.assign({}, row);
         this.dialogFormVisible = true;
-        this.form.doneLong = this.form.doneLong / 60;
-        this.form.auditLong = this.form.auditLong / 60;
+        this.form.doneLong = parseInt(this.form.doneLong / 60);
+        this.form.auditLong = parseInt(this.form.auditLong / 60);
     },
     close() {
       this.$refs["form"].resetFields();

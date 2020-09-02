@@ -459,21 +459,32 @@ const api = {
   delTaskClassifyArr: function (path, funSuccess) {
     httpUtil.post("activity/task/delTaskClassifyArr", path, funSuccess);
   },
-  
+
   //审核任务记录
   auditTaskDetails: function (path, funSuccess) {
     httpUtil.post("activity/auditTaskDetails", path, funSuccess);
   },
-  
+
   //审核充值记录
   updMoneyRecharge: function (path, funSuccess) {
     httpUtil.post("money/updMoneyRecharge", path, funSuccess);
   },
-  
+
   //价款扣款
   moneyChange: function (path, funSuccess) {
     httpUtil.post("money/moneyChange", path, funSuccess);
   },
+
+  //查询未审核充值记录总数
+  getRechargeUnknownSum: function (path, funSuccess) {
+    httpUtil.post("money/getRechargeUnknownSum", path, funSuccess);
+  },
+
+  //查询未审核提现记录总数
+  getDrawUnknownSum: function (path, funSuccess) {
+    httpUtil.post("money/getDrawUnknownSum", path, funSuccess);
+  },
+
 };
 
 export default api;

@@ -43,29 +43,6 @@
       </el-form-item>
 
       <el-form-item
-        label="加款"
-        prop="moneyIns"
-      >
-        <el-input
-          v-model.trim="form.money"
-          autocomplete="off"
-          :disabled="true"
-        />
-      </el-form-item>
-
-      <el-form-item
-        label="扣款"
-        prop="moneySubtract"
-      >
-        <el-input
-          v-model.trim="form.money"
-          autocomplete="off"
-          :disabled="true"
-        />
-      </el-form-item>
-
-
-      <el-form-item
         label="提现次数"
         prop="drawSum"
       >

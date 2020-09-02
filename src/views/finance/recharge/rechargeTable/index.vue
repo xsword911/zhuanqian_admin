@@ -190,7 +190,10 @@ export default {
     this.fetchData();
   },
   beforeDestroy() {},
-  mounted() {},
+  activated() {
+    console.log(10);
+    console.log(this.$route.params.state);
+  },
   methods: {
     tableSortChange() {
       const imageList = [];

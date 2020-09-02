@@ -35,6 +35,7 @@
            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
          </el-upload>
       </div>
+	    <div><div style="color:#FF3A00; display:inline-block;">*</div>注意：上传图片大小建议100*100</div>
      </el-form-item>
 
       <el-form-item label="奖励类型" prop="type">

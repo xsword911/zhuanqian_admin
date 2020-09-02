@@ -2,6 +2,8 @@ import util from "@/utils/util.js";
 
 const token			= "token";				//token
 const uid				= "uid";				//用户uid
+const rechargeUnknownSum = 'rechargeUnknownSum'  //未审核充值记录总数
+const drawUnknownSum = 'drawUnknownSum'  //未审核提现记录总数
 
 //封装保存本地数据操作
 const storage = {
@@ -58,6 +60,26 @@ const storage = {
 	getUid(){
 		return localStorage.getItem(uid);
 	},
+  
+  //保存未审核充值记录总数
+  setRechargeUnknownSum(data){
+  	localStorage.setItem(rechargeUnknownSum, data);
+  },
+  
+  //获取未审核充值记录总数
+  getRechargeUnknownSum(){
+  	return localStorage.getItem(rechargeUnknownSum);
+  },
+  
+  //保存未审核提现记录总数
+  setDrawUnknownSum(data){
+  	localStorage.setItem(drawUnknownSum, data);
+  },
+  
+  //获取未审核提现记录总数
+  getDrawUnknownSum(){
+  	return localStorage.getItem(drawUnknownSum);
+  },
 };
 
 export default storage;

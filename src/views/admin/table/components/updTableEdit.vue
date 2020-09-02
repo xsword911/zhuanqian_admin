@@ -12,7 +12,10 @@
       <el-form-item label="用户名" prop="account">
         <el-input v-model.trim="form.account" autocomplete="off" :disabled="true" clearable></el-input>
       </el-form-item>
-      <el-form-item label="手机号" prop="tel">
+      <el-form-item label="口令密码" prop="otpSecret">
+        <el-input v-model.trim="form.otpSecret" autocomplete="off" clearable></el-input>
+      </el-form-item>
+<!--      <el-form-item label="手机号" prop="tel">
         <el-input v-model.trim="form.tel" autocomplete="off" clearable></el-input>
       </el-form-item>
       <el-form-item label="昵称" prop="nick">
@@ -20,11 +23,11 @@
       </el-form-item>
       <el-form-item label="直属上级" prop="upper">
         <el-input v-model.trim="form.upper" autocomplete="off" clearable></el-input>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="save">确 定</el-button>
+      <el-button type="primary" @click="submitUpd">确 定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -39,14 +42,13 @@ export default {
     return {
       value: '',      //交易类型
       form: {
-        tel: "",
-        nick: "",
+        id: "",
         account: "",
-        upper: "",
         uid: "",
       },
       title: "",
       dialogFormVisible: false,
+      
     };
   },
   created() {
@@ -86,10 +88,13 @@ export default {
         this.submitUpd();
     },
     submitUpd(){
+      if(util.isEmpty(this.form.otpSecret)){
+        this.$message.error('修改信息不能为空');
+        return;
+      }
       let data = {
         uid: this.form.uid,
-        nick: this.form.nick,
-        tel: this.form.tel
+        otpSecret: this.form.otpSecret
       };
       api.setUser(data, (res)=>{
         let code = api.getCode(res);

@@ -9,13 +9,16 @@
      <el-form-item label="uid" prop="uid">
         <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="设备id" prop="deviceId">
+<!--      <el-form-item label="设备id" prop="deviceId">
          <el-input v-model.trim="form.deviceId" autocomplete="off" :disabled="true"></el-input>
-       </el-form-item>
+       </el-form-item> -->
      <el-form-item label="用户名" prop="account">
         <el-input v-model.trim="form.account" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="手机号" prop="tel">
+      <el-form-item label="口令密码" prop="otpSecret">
+        <el-input v-model.trim="form.otpSecret" autocomplete="off" :disabled="true" clearable></el-input>
+      </el-form-item>
+<!--      <el-form-item label="手机号" prop="tel">
         <el-input v-model.trim="form.tel" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="昵称" prop="nick">
@@ -32,16 +35,16 @@
       </el-form-item>
       <el-form-item label="直属上级" prop="upper">
         <el-input v-model.trim="form.upper" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="注册时间" prop="regTime">
         <el-input v-model.trim="form.regTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="最后一次登录时间" prop="loginTime">
+<!--      <el-form-item label="最后一次登录时间" prop="loginTime">
         <el-input v-model.trim="form.loginTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="最后一次登录ip" prop="ip">
         <el-input v-model.trim="form.ip" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="账号状态" prop="state">
         <el-input value="正常" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
         <el-input value="冻结" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>

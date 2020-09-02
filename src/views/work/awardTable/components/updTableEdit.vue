@@ -22,8 +22,8 @@
            </el-option-group>
          </el-select>
        </el-form-item>
-       
-       
+
+
        <el-form-item label="奖励标题" prop="title">
           <el-input v-model.trim="form.title" autocomplete="off"></el-input>
         </el-form-item>
@@ -33,7 +33,7 @@
         <el-form-item label="任务规则" prop="rule">
            <el-input v-model.trim="form.rule" autocomplete="off"></el-input>
          </el-form-item>
-       
+
            <el-form-item label="任务等级" prop="level">
              <el-select v-model="form.level" placeholder="任务等级" clearable filterable allow-create>
                <el-option-group
@@ -49,7 +49,7 @@
                </el-option-group>
              </el-select>
            </el-form-item>
-       
+
          <el-form-item label="刷新周期" prop="cycle">
            <el-select v-model="form.cycle" placeholder="刷新周期" clearable filterable allow-create>
              <el-option-group
@@ -65,7 +65,7 @@
              </el-option-group>
            </el-select>
          </el-form-item>
-       
+
          <el-form-item label="图片url" prop="imgUrl">
             <div style="display: flex;">
               <div class="block" style="width: 80px; height: 80px;">
@@ -73,7 +73,7 @@
                      :src="form.imgUrl"
                    ></el-image>
                </div>
-       
+
                <el-upload
                  class="avatar-uploader"
                  :action= "getPostFileUrl()"
@@ -83,12 +83,13 @@
                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                </el-upload>
             </div>
+            <div><div style="color:#FF3A00; display:inline-block;">*</div>注意：上传图片大小建议200*200</div>
           </el-form-item>
-       
+
           <el-form-item label="宣传文本" prop="taskTxt">
              <el-input v-model.trim="form.taskTxt" autocomplete="off" ></el-input>
            </el-form-item>
-       
+
            <el-form-item label="宣传图片" prop="taskImg">
               <div style="display: flex;">
                 <div class="block" style="width: 80px; height: 80px;">
@@ -96,7 +97,7 @@
                        :src="form.taskImg"
                      ></el-image>
                  </div>
-       
+
                  <el-upload
                    class="avatar-uploader"
                    :action= "getPostFileUrl()"
@@ -107,11 +108,11 @@
                  </el-upload>
               </div>
             </el-form-item>
-       
+
           <el-form-item label="打开链接" prop="taskUrl">
              <el-input v-model.trim="form.taskUrl" autocomplete="off"></el-input>
            </el-form-item>
-       
+
          <el-form-item label="打开app" prop="taskApp">
            <el-select v-model="form.taskApp" placeholder="刷新周期" clearable filterable allow-create>
              <el-option-group
@@ -127,11 +128,11 @@
              </el-option-group>
            </el-select>
          </el-form-item>
-       
+
           <el-form-item label="奖励" prop="award">
              <el-input v-model.trim="form.award" autocomplete="off" ></el-input>
            </el-form-item>
-       
+
            <el-form-item label="奖励类型" prop="awardType">
              <el-select v-model="form.awardType" placeholder="奖励类型" clearable filterable allow-create>
                <el-option-group
@@ -165,7 +166,7 @@
                    </el-option-group>
                  </el-select>
                </el-form-item>
-      
+
             <el-form-item label="任务类型" prop="type">
               <el-select v-model="form.type" placeholder="任务状态" clearable filterable allow-create>
                 <el-option-group
@@ -181,7 +182,7 @@
                 </el-option-group>
               </el-select>
             </el-form-item>
-      
+
             <el-form-item label="发布开始时间" prop="begTime">
                 <el-date-picker
                   v-model="form.begTime"
@@ -192,7 +193,7 @@
                   >
                 </el-date-picker>
              </el-form-item>
-      
+
              <el-form-item label="发布截止时间" prop="endTime">
                 <el-date-picker
                   v-model="form.endTime"
@@ -203,7 +204,7 @@
                   >
                 </el-date-picker>
               </el-form-item>
-      
+
             <el-form-item label="任务状态" prop="state">
               <el-select v-model="form.state" placeholder="任务状态">
                 <el-option-group
@@ -219,15 +220,15 @@
                 </el-option-group>
               </el-select>
             </el-form-item>
-      
+
             <el-form-item label="任务审核(分钟)" prop="doneLong">
                 <el-input v-model.trim="form.doneLong" autocomplete="off" clearable type="number"></el-input>
             </el-form-item>
-      
+
             <el-form-item label="任务审核(分钟)" prop="auditLong">
                 <el-input v-model.trim="form.auditLong" autocomplete="off" clearable type="number"></el-input>
             </el-form-item>
-      
+
             <el-form-item label="任务是否需要凭证" prop="isDoneProve">
               <el-select v-model="form.isDoneProve" placeholder="刷新周期" clearable filterable allow-create>
                 <el-option-group
@@ -243,7 +244,7 @@
                 </el-option-group>
               </el-select>
             </el-form-item>
-      
+
             <el-form-item label="任务是否需要截图" prop="isDoneImg">
               <el-select v-model="form.isDoneImg" placeholder="刷新周期" clearable filterable allow-create>
                 <el-option-group
@@ -259,7 +260,7 @@
                 </el-option-group>
               </el-select>
             </el-form-item>
-      
+
       <!--      <el-form-item label="任务分类" prop="sort">
               <el-select v-model="form.sort" placeholder="任务分类">
                 <el-option-group
@@ -275,15 +276,15 @@
                 </el-option-group>
               </el-select>
             </el-form-item> -->
-      
+
             <el-form-item label="更新时间" prop="updTime">
               <el-input v-model.trim="form.updTime"  autocomplete="off" clearable :disabled="true"></el-input>
             </el-form-item>
-      
+
             <el-form-item label="操作者" prop="admin">
               <el-input v-model.trim="form.admin"  autocomplete="off" clearable :disabled="true"></el-input>
             </el-form-item>
-      
+
             <el-form-item label="备注" prop="desc">
               <el-input v-model.trim="form.desc" autocomplete="off" clearable></el-input>
             </el-form-item>
@@ -489,8 +490,8 @@ export default {
       } else {
         this.title = "编辑";
         this.form = Object.assign({}, row);
-        this.form.doneLong = this.form.doneLong / 60;
-        this.form.auditLong = this.form.auditLong / 60;
+        this.form.doneLong = parseInt(this.form.doneLong / 60);
+        this.form.auditLong = parseInt(this.form.auditLong / 60);
       }
       this.dialogFormVisible = true;
     },

@@ -20,7 +20,7 @@
       </el-form-item>
 
       <el-form-item label="跳转地址" prop="toUrl">
-         <el-input v-model.trim="form.toUrl" autocomplete="off"></el-input>
+         <el-input v-model.trim="form.toUrl" autocomplete="off" placeholder="跳转地址为空时不跳转"></el-input>
       </el-form-item>
 
       <el-form-item label="开始时间" prop="begTime">
@@ -95,7 +95,8 @@ export default {
 
       form: {
         type: 1,
-        admin: "admin1"
+        admin: "admin1",
+        toUrl: "",
       },
       title: "",
       dialogFormVisible: false,
@@ -103,7 +104,7 @@ export default {
       rules: {
         title: [{ required: true, trigger: "blur", message: "请输入标题" }],
         content: [{ required: true, trigger: "blur", message: "请输入内容" }],
-        toUrl: [{ required: true, trigger: "blur", message: "请输入跳转地址" }],
+        // toUrl: [{ required: true, trigger: "blur", message: "请输入跳转地址" }],
         state: [{ required: true, trigger: "blur", message: "请选择状态" }],
         begTime: [{ required: true, trigger: "blur", message: "请选择开始时间" }],
         endTime: [{ required: true, trigger: "blur", message: "请选择结束时间" }],

@@ -15,7 +15,7 @@
       
       
       <el-form-item label="跳转地址" prop="toUrl">
-         <el-input v-model.trim="form.toUrl" autocomplete="off" :disabled="true"></el-input>
+         <el-input v-model.trim="form.toUrl" autocomplete="off" :disabled="true" placeholder="跳转地址为空时不跳转"></el-input>
        </el-form-item>
       
       <el-form-item label="开始时间" prop="begTime">

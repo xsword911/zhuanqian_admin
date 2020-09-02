@@ -69,6 +69,21 @@
               :icon="['fas', 'eye']"
             /></span>
           </el-form-item>
+          <el-form-item
+            prop="userName"
+          >
+            <span class="svg-container svg-container-admin">
+              <vab-icon :icon="['fas', 'lock']" />
+            </span>
+            <el-input
+              v-model.trim="loginForm.otpSecret"
+              v-focus
+              auto-complete="off"
+              placeholder="请输入口令密码"
+              tabindex="1"
+              type="text"
+            />
+          </el-form-item>
           <el-button
             :loading="loading"
             class="login-btn"

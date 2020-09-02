@@ -68,6 +68,7 @@
              <img v-if="account.imgUrl" :src="account.imgUrl"  class="avatar">
              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
            </el-upload>
+           <div><div style="color:#FF3A00; display:inline-block;">*</div>注意：上传图片大小建议200*200</div>
          </el-form-item>
       </div>
 

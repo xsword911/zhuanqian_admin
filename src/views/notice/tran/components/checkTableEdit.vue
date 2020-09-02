@@ -12,7 +12,7 @@
       <el-form-item label="内容" prop="content">
         <el-input v-model.trim="form.content" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      
+
       <el-form-item label="图片url" prop="imgUrl">
          <div class="block" style="width: 80px; height: 80px;">
               <el-image
@@ -21,18 +21,18 @@
               ></el-image>
           </div>
        </el-form-item>
-      
+
       <el-form-item label="跳转地址" prop="toUrl">
-         <el-input v-model.trim="form.toUrl" autocomplete="off" :disabled="true"></el-input>
+         <el-input v-model.trim="form.toUrl" autocomplete="off" :disabled="true"  placeholder="跳转地址为空时不跳转"></el-input>
        </el-form-item>
-      
+
       <el-form-item label="开始时间" prop="begTime">
         <el-input v-model.trim="form.begTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="结束时间" prop="endTime">
         <el-input v-model.trim="form.endTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      
+
       <el-form-item label="状态" prop="state">
         <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
         <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
