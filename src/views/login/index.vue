@@ -76,7 +76,7 @@
               <vab-icon :icon="['fas', 'lock']" />
             </span>
             <el-input
-              v-model.trim="loginForm.otpSecret"
+              v-model.trim="loginForm.otpCode"
               v-focus
               auto-complete="off"
               placeholder="请输入口令密码"
