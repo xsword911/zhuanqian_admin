@@ -186,13 +186,15 @@ export default {
       },
     };
   },
-  created() {
-    this.fetchData();
-  },
+  created() {},
   beforeDestroy() {},
-  activated() {
-    console.log(10);
-    console.log(this.$route.params.state);
+  mounted() {
+    //设置查询记录状态为未审核
+    // if(!util.isEmpty(this.$route.params.state)){
+    //   this.value = this.$route.params.state;
+    //   this.queryForm.state = this.$route.params.state;
+    // }
+    this.fetchData();
   },
   methods: {
     tableSortChange() {

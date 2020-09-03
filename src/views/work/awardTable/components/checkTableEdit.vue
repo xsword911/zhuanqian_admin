@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="700px"
+    width="1050px"
     @close="close"
   >
    <el-form ref="form" :model="form" label-width="80px" style="display: flex; justify-content: space-between;">
@@ -63,29 +63,41 @@
                    ></el-image>
                </div>
             </el-form-item>
-
-            <el-form-item label="打开链接" prop="taskUrl">
-               <el-input v-model.trim="form.taskUrl" autocomplete="off" :disabled="true"></el-input>
-             </el-form-item>
-
-             <el-form-item label="打开app" prop="taskApp">
-                <el-input value="不打开任何app" autocomplete="off" :disabled="true" v-show="form.taskApp == 0"></el-input>
-                <el-input value="微信" autocomplete="off" :disabled="true" v-show="form.taskApp == 1"></el-input>
-                <el-input value="抖音" autocomplete="off" :disabled="true" v-show="form.taskApp == 2"></el-input>
-                <el-input value="快手" autocomplete="off" :disabled="true" v-show="form.taskApp == 3"></el-input>
-              </el-form-item>
-              
-              <el-form-item label="奖励" prop="award">
-                 <el-input v-model.trim="form.award" autocomplete="off" :disabled="true"></el-input>
-               </el-form-item>
-              
-              <el-form-item label="奖励类型" prop="awardType">
-                <el-input value="金币" autocomplete="off" :disabled="true" v-show="form.awardType == 0"></el-input>
-                <el-input value="现金" autocomplete="off" :disabled="true" v-show="form.awardType == 1"></el-input>
-              </el-form-item>
       </div>
 
       <div>
+        <el-form-item label="打开链接" prop="taskUrl">
+           <el-input v-model.trim="form.taskUrl" autocomplete="off" :disabled="true"></el-input>
+         </el-form-item>
+
+         <el-form-item label="打开app" prop="taskApp">
+            <el-input value="不打开任何app" autocomplete="off" :disabled="true" v-show="form.taskApp == 0"></el-input>
+            <el-input value="微信" autocomplete="off" :disabled="true" v-show="form.taskApp == 1"></el-input>
+            <el-input value="抖音" autocomplete="off" :disabled="true" v-show="form.taskApp == 2"></el-input>
+            <el-input value="快手" autocomplete="off" :disabled="true" v-show="form.taskApp == 3"></el-input>
+          </el-form-item>
+
+          <el-form-item label="奖励" prop="award">
+             <el-input v-model.trim="form.award" autocomplete="off" :disabled="true"></el-input>
+           </el-form-item>
+
+          <el-form-item label="奖励类型" prop="awardType">
+            <el-input value="金币" autocomplete="off" :disabled="true" v-show="form.awardType == 0"></el-input>
+            <el-input value="现金" autocomplete="off" :disabled="true" v-show="form.awardType == 1"></el-input>
+          </el-form-item>
+          
+          <el-form-item label="任务数量" prop="sum">
+             <el-input v-model.trim="form.sum" autocomplete="off" :disabled="true"></el-input>
+           </el-form-item>
+           
+           <el-form-item label="已完成数" prop="finishSum">
+               <el-input v-model.trim="form.finishSum" autocomplete="off" :disabled="true"></el-input>
+             </el-form-item>
+           
+           <el-form-item label="剩余数量" prop="surplus">
+              <el-input v-model.trim="form.surplus" autocomplete="off" :disabled="true"></el-input>
+            </el-form-item>
+
                  <el-form-item label="标记" prop="tip">
                    <el-input value="NEW" autocomplete="off" :disabled="true" v-show="form.tip == 0"></el-input>
                    <el-input value="HOT" autocomplete="off" :disabled="true" v-show="form.tip == 1"></el-input>
@@ -106,12 +118,14 @@
                <el-form-item label="发布截止时间" prop="endTime">
                   <el-input v-model.trim="form.endTime" autocomplete="off" :disabled="true"></el-input>
                 </el-form-item>
+      </div>
 
-              <el-form-item label="任务状态" prop="state">
-                <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
-                <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
-              </el-form-item>
-
+      <div>
+        <el-form-item label="任务状态" prop="state">
+          <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
+          <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
+        </el-form-item>
+        
               <el-form-item label="任务限时(分钟)" prop="doneLong">
                  <el-input v-model.trim="form.doneLong" autocomplete="off" :disabled="true"></el-input>
                </el-form-item>

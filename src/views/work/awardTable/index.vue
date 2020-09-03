@@ -2,7 +2,7 @@
   <div class="table-container">
     <vab-query-form style="display: flex;">
       <vab-query-form-left-panel style="max-width:168px;">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd(type, taskClassifyList)"
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd(type, taskClassifyList, level)"
           >添加</el-button
         >
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
@@ -47,6 +47,22 @@
                 </el-option-group>
               </el-select>
           </el-form-item>
+
+          <el-form-item>
+               <el-select v-model="levelValue" placeholder="任务等级" clearable>
+                 <el-option-group
+                   v-for="group in level"
+                   :key="group.label"
+                   :label="group.label">
+                   <el-option
+                     v-for="item in group.level"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value">
+                   </el-option>
+                 </el-option-group>
+               </el-select>
+           </el-form-item>
 
           <el-form-item>
                <el-select v-model="stateValue" placeholder="任务状态" clearable>
@@ -99,8 +115,9 @@
       <el-table-column prop="awardTypeTest" label="任务类型"></el-table-column>
       <el-table-column prop="begTime" label="发布开始时间"></el-table-column>
       <el-table-column prop="endTime" label="发布截止时间"></el-table-column>
+      <el-table-column prop="surplus" label="剩余数量"></el-table-column>
 
-      <el-table-column prop="admin" label="操作者"></el-table-column>
+      <!-- <el-table-column prop="admin" label="操作者"></el-table-column> -->
 
      <el-table-column label="状态">
         <template slot-scope="scope">
@@ -121,7 +138,7 @@
 
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row, type, taskClassifyList)"
+          <el-button type="text" @click="handleEdit(scope.row, type, taskClassifyList, level)"
             >编辑
           </el-button>
 <!--         <el-button type="text" @click="handleDelete(scope.row)"
@@ -201,6 +218,11 @@ export default {
       }],
       stateValue: '',      //选中的任务状态
 
+      level: [{
+        level: []
+      }],
+      levelValue: '',      //选中的任务等级
+
       limitSum: [{
         limitSum: [{
           value: -1,
@@ -221,23 +243,8 @@ export default {
       queryForm: {
         page: 1,
         count: 10,
-        title: '',
-        explain: '',
-        rule: '',
-        cycle: '',
-        imgUrl: '',
-        award: '',
-        tip: '',
         type: null,
-        begTime: '',
-        endTime: '',
         state: null,
-        stateTest: '',
-        sort: '',
-        updTime: '',
-        admin: '',
-        desc: '',
-        sortTest: '',
       },
       levelDescList: [],  //全部任务会员类型
       taskClassifyList: [],  //任务子类
@@ -263,6 +270,11 @@ export default {
       api.getLevelDesc({}, (res)=>{
          let data = res.data;
          this.levelDescList = data;  //保存全部任务会员类型
+         data.forEach((item) =>{
+           item.value = parseInt(item.key);
+           item.label = item.val;
+         });
+         this.level[0].level = data;
          this.fetchData();
       });
     },
@@ -277,8 +289,8 @@ export default {
         this.type[0].type = data;
       });
     },
-    handleAdd(type, taskClassifyList) {
-      this.$refs["edit"].showEdit(type, taskClassifyList);
+    handleAdd(type, taskClassifyList, level) {
+      this.$refs["edit"].showEdit(type, taskClassifyList, level);
     },
     tableSortChange() {
       const imageList = [];
@@ -290,8 +302,8 @@ export default {
     setSelectRows(val) {
       this.selectRows = val;
     },
-    handleEdit(row, arrType, taskClassifyList) {
-      this.$refs["updEdit"].showEdit(row, arrType, taskClassifyList);
+    handleEdit(row, arrType, taskClassifyList, level) {
+      this.$refs["updEdit"].showEdit(row, arrType, taskClassifyList, level);
     },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
@@ -338,6 +350,13 @@ export default {
     //搜索关键字
     handleQuery() {
       this.queryForm.page = 1;
+      //任务等级筛选不为空时添加任务等级属性
+      if(!util.isEmpty(this.levelValue)){
+        this.queryForm.level = this.levelValue;
+      }else{   //任务等级筛选为空时删除任务等级属性
+        delete this.queryForm.level;
+      };
+
       //奖励类型筛选不为空时添加奖励类型属性
       if(!util.isEmpty(this.typeValue)){
         this.queryForm.type = this.typeValue;
@@ -365,8 +384,8 @@ export default {
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
-           console.log(data);
            data.forEach((item, index) =>{
+              item.surplus = item.sum - item.finishSum;  //计算任务剩余数量
               switch (item.state){
                 case 0:
                   item.stateTest = "关闭";
@@ -389,13 +408,16 @@ export default {
                 default:
                   break;
               };
+              //获取任务等级
               this.levelDescList.forEach((item1, index1) =>{
                   item1.key = parseInt(item1.key);
                   if(item1.key == item.level) item.levelTest = item1.val;
               });
+              //获取任务子类名称
               this.taskClassifyList.forEach((item2, index2) =>{
                   if(item2.classifyId == item.classify) item.classifyName = item2.name;
               });
+              //获取任务类型
               this.type[0].type.forEach((item4, index4) =>{
                   if(item4.value == item.type) item.awardTypeTest = item4.label;
               });

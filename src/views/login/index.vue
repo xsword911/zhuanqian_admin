@@ -73,7 +73,7 @@
             prop="userName"
           >
             <span class="svg-container svg-container-admin">
-              <vab-icon :icon="['fas', 'lock']" />
+              <vab-icon :icon="['fas', 'user-lock']" />
             </span>
             <el-input
               v-model.trim="loginForm.otpSecret"

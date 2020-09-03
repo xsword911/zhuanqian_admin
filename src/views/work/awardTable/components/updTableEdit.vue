@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="700px"
+    width="1050px"
     @close="close"
   >
    <el-form ref="form" :model="form" label-width="80px" style="display: flex; justify-content: space-between;">
@@ -109,48 +109,61 @@
               </div>
             </el-form-item>
 
-          <el-form-item label="打开链接" prop="taskUrl">
-             <el-input v-model.trim="form.taskUrl" autocomplete="off"></el-input>
-           </el-form-item>
-
-         <el-form-item label="打开app" prop="taskApp">
-           <el-select v-model="form.taskApp" placeholder="刷新周期" clearable filterable allow-create>
-             <el-option-group
-               v-for="group in taskApp"
-               :key="group.label"
-               :label="group.label">
-               <el-option
-                 v-for="item in group.taskApp"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value">
-               </el-option>
-             </el-option-group>
-           </el-select>
-         </el-form-item>
-
-          <el-form-item label="奖励" prop="award">
-             <el-input v-model.trim="form.award" autocomplete="off" ></el-input>
-           </el-form-item>
-
-           <el-form-item label="奖励类型" prop="awardType">
-             <el-select v-model="form.awardType" placeholder="奖励类型" clearable filterable allow-create>
-               <el-option-group
-                 v-for="group in awardType"
-                 :key="group.label"
-                 :label="group.label">
-                 <el-option
-                   v-for="item in group.awardType"
-                   :key="item.value"
-                   :label="item.label"
-                   :value="item.value">
-                 </el-option>
-               </el-option-group>
-             </el-select>
-           </el-form-item>
      </div>
 
     <div>
+      <el-form-item label="打开链接" prop="taskUrl">
+          <el-input v-model.trim="form.taskUrl" autocomplete="off"></el-input>
+        </el-form-item>
+
+      <el-form-item label="打开app" prop="taskApp">
+        <el-select v-model="form.taskApp" placeholder="刷新周期" clearable filterable allow-create>
+          <el-option-group
+            v-for="group in taskApp"
+            :key="group.label"
+            :label="group.label">
+            <el-option
+              v-for="item in group.taskApp"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-option-group>
+        </el-select>
+      </el-form-item>
+
+       <el-form-item label="奖励" prop="award">
+          <el-input v-model.trim="form.award" autocomplete="off" ></el-input>
+        </el-form-item>
+
+        <el-form-item label="奖励类型" prop="awardType">
+          <el-select v-model="form.awardType" placeholder="奖励类型" clearable filterable allow-create>
+            <el-option-group
+              v-for="group in awardType"
+              :key="group.label"
+              :label="group.label">
+              <el-option
+                v-for="item in group.awardType"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-option-group>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="任务数量" prop="sum">
+           <el-input v-model.trim="form.sum" autocomplete="off" ></el-input>
+         </el-form-item>
+
+         <el-form-item label="已完成数" prop="finishSum">
+            <el-input v-model.trim="form.finishSum" autocomplete="off" :disabled="true"></el-input>
+          </el-form-item>
+
+        <el-form-item label="剩余数量" prop="surplus">
+           <el-input v-model.trim="form.surplus" autocomplete="off" :disabled="true"></el-input>
+         </el-form-item>
+
       <el-form-item label="任务标记" prop="tip">
                  <el-select v-model="form.tip" placeholder="任务状态" clearable filterable allow-create>
                    <el-option-group
@@ -204,24 +217,26 @@
                   >
                 </el-date-picker>
               </el-form-item>
+    </div>
 
-            <el-form-item label="任务状态" prop="state">
-              <el-select v-model="form.state" placeholder="任务状态">
-                <el-option-group
-                  v-for="group in state"
-                  :key="group.label"
-                  :label="group.label">
-                  <el-option
-                    v-for="item in group.state"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-option-group>
-              </el-select>
-            </el-form-item>
-
-            <el-form-item label="任务审核(分钟)" prop="doneLong">
+    <div>
+      <el-form-item label="任务状态" prop="state">
+        <el-select v-model="form.state" placeholder="任务状态">
+          <el-option-group
+            v-for="group in state"
+            :key="group.label"
+            :label="group.label">
+            <el-option
+              v-for="item in group.state"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-option-group>
+        </el-select>
+      </el-form-item>
+      
+      <el-form-item label="任务审核(分钟)" prop="doneLong">
                 <el-input v-model.trim="form.doneLong" autocomplete="off" clearable type="number"></el-input>
             </el-form-item>
 
@@ -321,39 +336,16 @@ export default {
       }],
       stateValue: '',      //选中的任务状态
 
-      level: [{
-        level: [{
-          value: 0,
-          label: '全部'
-        },{
-          value: 1,
-          label: '新人'
-        },{
-          value: 2,
-          label: '白银会员'
-        },{
-          value: 3,
-          label: '黄金会员'
-        },{
-          value: 4,
-          label: '铂金会员'
-        },{
-          value: 5,
-          label: '钻石会员'
-        },{
-          value: 6,
-          label: '至尊会员'
-        }]
-      }],
+      level: [],
       levelValue: '',      //选中的任务状态
 
       tip: [{
         tip: [{
           value: 0,
-          label: '最新'
+          label: 'NEW'
         },{
           value: 1,
-          label: '热门'
+          label: 'HOT'
         }]
       }],
       tipValue: '',      //标记类型
@@ -476,7 +468,7 @@ export default {
       // this.imgUrlNew = URL.createObjectURL(file.raw);
       this.form.taskImg = res.data.url;
     },
-    showEdit(row, arrType, taskClassifyList) {
+    showEdit(row, arrType, taskClassifyList, level) {
       this.type = arrType;   //获取任务类型
       this.taskClassify[0].taskClassify = [];
       taskClassifyList.forEach((item,index) =>{
@@ -485,6 +477,7 @@ export default {
         obj.label = item.name;
         this.taskClassify[0].taskClassify.push(obj);
       });
+      this.level = level;
       if (!row) {
         this.title = "添加";
       } else {

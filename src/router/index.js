@@ -264,13 +264,13 @@ export const asyncRoutes = [
         ],
       },
       {
-        path: "rechargeExamine",
+        path: "rechargeExamine/:state",
         name: "RechargeExamine",
         component: () => import("@/views/finance/recharge/rechargeTable/index"),
         meta: { title: "充值审核" },
       },
       {
-        path: "welfare",
+        path: "welfare/:state",
         name: "Welfare",
         component: () => import("@/views/finance/examineTable/index"),
         meta: { title: "提现审核" },

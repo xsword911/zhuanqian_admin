@@ -43,6 +43,22 @@
                </el-select>
            </el-form-item>
 
+           <el-form-item>
+                <el-select v-model="levelValue" placeholder="任务等级" clearable>
+                  <el-option-group
+                    v-for="group in level"
+                    :key="group.label"
+                    :label="group.label">
+                    <el-option
+                      v-for="item in group.level"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-option-group>
+                </el-select>
+            </el-form-item>
+
          <el-form-item>
               <el-select v-model="stateValue" placeholder="任务状态" clearable>
                 <el-option-group
@@ -105,6 +121,7 @@
       <el-table-column prop="title" label="任务名称"></el-table-column>
       <el-table-column prop="awardTypeTest" label="任务类型"></el-table-column>
       <el-table-column prop="classifyName" label="子类名称"></el-table-column>
+      <el-table-column prop="levelTest" label="任务等级"></el-table-column>
       <el-table-column prop="award" label="奖励金额"></el-table-column>
       <el-table-column prop="finishTime" label="完成时间"></el-table-column>
       <el-table-column prop="stateTest" label="状态"></el-table-column>
@@ -160,6 +177,11 @@ export default {
   },
   data() {
     return {
+      level: [{
+        level: []
+      }],
+      levelValue: '',      //选中的任务等级
+
       type: [{
         type: []
       }],
@@ -198,14 +220,7 @@ export default {
       queryForm: {
         page: 1,
         count: 10,
-        title: '',
-        uid: '',
-        begAddTime: '',
-        endAddTime: '',
-        admin: '',
-        // award: '',
         state: null,
-        stateTest: '',
       },
       levelDescList: [],  //全部任务会员类型
       taskClassifyList: [],  //任务子类
@@ -214,10 +229,24 @@ export default {
   created() {
     this.getTaskClassify();  //获取任务子类
     this.getTaskType();  //获取任务类型
+    this.getLevelDesc(); //获取全部任务会员类型
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //获取全部任务会员类型
+    getLevelDesc(){
+      api.getLevelDesc({}, (res)=>{
+         let data = res.data;
+         this.levelDescList = data;  //保存全部任务会员类型
+         data.forEach((item) =>{
+           item.value = parseInt(item.key);
+           item.label = item.val;
+         });
+         this.level[0].level = data;
+         this.fetchData();
+      });
+    },
     //获取任务类型
     getTaskType(){
       api.getTaskType({}, (res)=>{
@@ -234,7 +263,6 @@ export default {
       api.getTaskClassify({page: 1, count: 99}, (res)=>{
         let data = api.getData(res);
         this.taskClassifyList = data;
-        this.fetchData();
       });
     },
     tableSortChange() {
@@ -295,6 +323,13 @@ export default {
     //搜索关键字
     handleQuery() {
       this.queryForm.page = 1;
+      //任务等级筛选不为空时添加任务等级属性
+      if(!util.isEmpty(this.levelValue)){
+        this.queryForm.taskLv = this.levelValue;
+      }else{   //任务等级筛选为空时删除任务等级属性
+        delete this.queryForm.taskLv;
+      };
+
       //奖励类型筛选不为空时添加奖励类型属性
       if(!util.isEmpty(this.typeValue)){
         this.queryForm.type = this.typeValue;
@@ -350,6 +385,11 @@ export default {
               });
               this.taskClassifyList.forEach((item2, index2) =>{
                   if(item2.classifyId == item.classify) item.classifyName = item2.name;
+              });
+              //获取任务等级
+              this.levelDescList.forEach((item1, index1) =>{
+                  item1.key = parseInt(item1.key);
+                  if(item1.key == item.taskLv) item.levelTest = item1.val;
               });
            });
            this.total = api.getTotal(res);

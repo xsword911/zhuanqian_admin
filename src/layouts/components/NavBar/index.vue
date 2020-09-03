@@ -122,7 +122,12 @@ export default {
     },
     //跳转到提现审核
     toExamine(){
-      this.$router.push('/finance/welfare');
+      this.$router.push({
+        name: 'Welfare',
+        params: {
+          state: 0
+        }
+      });
     },
     //定时刷新
     refresh(){
