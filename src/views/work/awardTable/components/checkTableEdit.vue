@@ -7,7 +7,7 @@
   >
    <el-form ref="form" :model="form" label-width="80px" style="display: flex; justify-content: space-between;">
       <div>
-        <el-form-item label="发布者id" prop="uid">
+        <el-form-item label="发布者uid" prop="uid">
            <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
          </el-form-item>
         

@@ -26,7 +26,7 @@
           @submit.native.prevent
         >
         <el-form-item>
-            <el-input v-model="queryForm.uid" placeholder="发布者id"  clearable/>
+            <el-input v-model="queryForm.uid" placeholder="发布者uid"  clearable/>
           </el-form-item>
          <el-form-item>
            <el-input v-model="queryForm.title" placeholder="任务标题"  clearable/>
@@ -107,7 +107,7 @@
           {{ scope.$index + 1 }}
         </template> -->
       <!-- </el-table-column> -->
-      <el-table-column prop="uid" label="发布者id"></el-table-column>
+      <el-table-column prop="uid" label="发布者uid"></el-table-column>
       <el-table-column prop="title" label="任务标题"></el-table-column>
       <el-table-column prop="award" label="奖励"></el-table-column>
       <el-table-column prop="classifyName" label="子类名称"></el-table-column>

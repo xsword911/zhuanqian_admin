@@ -19,7 +19,7 @@
             <el-input v-model="queryForm.account" placeholder="用户名" clearable />
           </el-form-item>
           <el-form-item>
-            <el-input v-model="queryForm.tel" placeholder="手机号" clearable />
+            <el-input v-model="queryForm.uid" placeholder="用户uid" clearable />
           </el-form-item>
 <!--          <el-form-item>
             <el-input v-model="queryForm.code" placeholder="邀请码" />
