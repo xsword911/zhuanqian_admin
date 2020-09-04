@@ -3,7 +3,7 @@
     <vab-query-form style="display: flex;">
 
       <vab-query-form-left-panel style="max-width:84px;">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd" v-if="showData"
           >添加</el-button
         >
       </vab-query-form-left-panel>
@@ -15,19 +15,19 @@
           :inline="true"
           @submit.native.prevent
         >
-          <el-form-item>
+<!--          <el-form-item>
             <el-input v-model="queryForm.account" placeholder="用户名"  clearable/>
           </el-form-item>
           <el-form-item>
             <el-input v-model="queryForm.uid" placeholder="用户uid"  clearable/>
           </el-form-item>
-<!--          <el-form-item>
+         <el-form-item>
             <el-input v-model="queryForm.code" placeholder="邀请码" />
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="queryForm.upper" placeholder="直属上级" />
           </el-form-item> -->
           <el-form-item>
+            <el-input v-model="queryForm.upper" placeholder="直属上级uid" clearable/>
+          </el-form-item>
+<!--          <el-form-item>
               <el-select v-model="value" placeholder="账号状态" clearable>
                 <el-option-group
                   v-for="group in options"
@@ -41,7 +41,7 @@
                   </el-option>
                 </el-option-group>
               </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item>
             <el-button
               icon="el-icon-search"
@@ -69,7 +69,12 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="uid"></el-table-column>
+      <el-table-column prop="uid" label="uid">
+          <template slot-scope="scope">
+              <a @click="queryUpper(scope.row)"
+              :class="{'allSubSum': scope.row.allSubSum > 0}">{{scope.row.uid}}</a>
+          </template>
+      </el-table-column>
       <el-table-column prop="account" label="用户名"></el-table-column>
       <!-- <el-table-column prop="deviceId" label="登录设备"></el-table-column> -->
       <el-table-column prop="nick" label="昵称"></el-table-column>
@@ -195,21 +200,24 @@ export default {
       queryForm: {
         page: 1,
         count: 10,
-        type: 0,
-        account: "",
-        tel: "",
-        code: "",
         upper: "",
-        stateTest: "",
+        type: 0
       },
     };
   },
   created() {
-    this.fetchData();  //查询用户列表
+    this.fetchData();
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    queryUpper(data){
+      
+      if(data.allSubSum <= 0) return;
+      this.queryForm.page = 1;
+      this.queryForm.upper = data.uid;
+      this.fetchData();
+    },
     //封装下拉菜单传入参数
     beforeHandleCommand(test, stateCode, row){
       return {
@@ -379,5 +387,13 @@ export default {
   }
   .el-icon-arrow-down {
     font-size: 12px;
+  }
+  a{
+    color:#000;
+  }
+  .allSubSum{
+    text-decoration: underline;
+    color:blue;
+    cursor:pointer;
   }
 </style>

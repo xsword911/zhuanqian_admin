@@ -56,7 +56,7 @@ export const asyncRoutes = [
           title: "首页",
           icon: "home",
           affix: true,
-          noKeepAlive: true,
+          // noKeepAlive: true,
         },
       },
     ],
@@ -74,6 +74,12 @@ export const asyncRoutes = [
         name: "UserManagement",
         component: () => import("@/views/user/table/index"),
         meta: { title: "用户管理" },
+      },
+      {
+        path: "agent",
+        name: "Agent",
+        component: () => import("@/views/user/agentTable/index"),
+        meta: { title: "代理管理" },
       },
       {
         path: "userLevel",
@@ -232,7 +238,7 @@ export const asyncRoutes = [
       {
         path: "recharge",
         name: "Recharge",
-        redirect: "noRedirect",
+        // redirect: "noRedirect",
         alwaysShow: true,
         component: EmptyLayout,
         meta: { title: "收款设置" },
@@ -265,18 +271,16 @@ export const asyncRoutes = [
             component: () => import("@/views/finance/recharge/rechargeAccount/index"),
             meta: { title: "收款账户" },
           }
-
-
         ],
       },
       {
-        path: "rechargeExamine/:state",
+        path: "rechargeExamine",
         name: "RechargeExamine",
         component: () => import("@/views/finance/recharge/rechargeTable/index"),
         meta: { title: "充值审核" },
       },
       {
-        path: "welfare/:state",
+        path: "welfare",
         name: "Welfare",
         component: () => import("@/views/finance/examineTable/index"),
         meta: { title: "提现审核" },
@@ -516,6 +520,11 @@ const router = new VueRouter({
   }),
   routes: constantRoutes,
 });
+
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((err) => err);
+};
 
 export function resetRouter() {
   router.matcher = new VueRouter({

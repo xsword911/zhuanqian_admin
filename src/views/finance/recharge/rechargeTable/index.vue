@@ -182,18 +182,12 @@ export default {
         endAddTime: "",
         admin: "",
         stateTest: "",
-        state: null,
       },
     };
   },
   created() {},
   beforeDestroy() {},
   mounted() {
-    //设置查询记录状态为未审核
-    // if(!util.isEmpty(this.$route.params.state)){
-    //   this.value = this.$route.params.state;
-    //   this.queryForm.state = this.$route.params.state;
-    // }
     this.fetchData();
   },
   methods: {

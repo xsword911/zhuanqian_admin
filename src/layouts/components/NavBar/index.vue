@@ -18,7 +18,7 @@
           <audio controls="controls" hidden :src="require('@/assets/down.mp3')" ref="downAudio"></audio>
           <div class="record" @click="toRecharge">未审核充值记录（<div class="record_sum"> {{rechargeUnknownSum}} </div>）</div>
           <div class="record" @click="toExamine" style="margin-right:10px;">未审核提现记录（<div class="record_sum"> {{drawUnknownSum}} </div>）</div>
-          <error-log></error-log>
+          <!-- <error-log></error-log> -->
           <full-screen-bar @refresh="refreshRoute"></full-screen-bar>
           <!-- <theme-bar></theme-bar>-->
           <vab-icon
@@ -115,18 +115,15 @@ export default {
     toRecharge(){
       this.$router.push({
         name: 'RechargeExamine',
-        params: {
-          state: 0
-        }
+        // params: {
+        //   state: 0
+        // }
       });
     },
     //跳转到提现审核
     toExamine(){
       this.$router.push({
         name: 'Welfare',
-        params: {
-          state: 0
-        }
       });
     },
     //定时刷新

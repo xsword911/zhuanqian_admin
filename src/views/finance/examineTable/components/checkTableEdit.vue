@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="700px"
+    width="950px"
     @close="close"
   >
     <el-form
@@ -151,6 +151,95 @@
           />
         </el-form-item>
       </div>
+
+      <div>
+        <el-form-item
+          label="用户名"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.account"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="手机号"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.tel"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="昵称"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.nick"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="金币"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.gold"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="余额"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.money"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="登录ip"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.ip"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="登录时间"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.loginTime"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="账号状态"
+          prop="bankUserName"
+        >
+          <el-input value="正常" autocomplete="off":disabled="true" v-if="userInfo.state == 0"/>
+          <el-input value="冻结" autocomplete="off":disabled="true" v-if="userInfo.state == 1"/>
+          <el-input value="管理员封号" autocomplete="off":disabled="true" v-if="userInfo.state == 2"/>
+        </el-form-item>
+      </div>
+
     </el-form>
   </el-dialog>
 </template>
@@ -183,12 +272,10 @@ export default {
       title: "",
       dialogFormVisible: false,
       userBank: null, //用户银行
+      userInfo: null, //用户信息
     };
   },
   mounted() {},
-  onLoad() {
-    this.getUserBank();//取用户银行卡
-  },
   methods: {
     //取用户银行卡数据
     getUserBank()
@@ -203,11 +290,28 @@ export default {
         }
       });
     },
+
+    //取用户数据
+    getUserInfo()
+    {
+      api.getUserByUid({uid: this.form.uid}, (res)=>{
+        let code = api.getCode(res);
+        if(code == 0){
+          this.userInfo = res.data;
+          console.log(this.userInfo);
+        }else{
+          let msg = api.getMsg(res);
+          this.$message.error(msg);
+        }
+      });
+    },
+
     showEdit(row) {
       this.title = "查看";
       this.form = Object.assign({}, row);
       this.dialogFormVisible = true;
       this.getUserBank();//取用户银行卡
+      this.getUserInfo();  //获取用户信息
     },
     close() {
       this.$refs["form"].resetFields();

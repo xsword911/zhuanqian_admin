@@ -27,6 +27,22 @@
               clearable
             />
           </el-form-item>
+
+          <el-form-item>
+               <el-select v-model="branchValue" placeholder="下级" clearable>
+                 <el-option-group
+                   v-for="group in branch"
+                   :key="group.label"
+                   :label="group.label">
+                   <el-option
+                     v-for="item in group.branch"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value">
+                   </el-option>
+                 </el-option-group>
+               </el-select>
+           </el-form-item>
           <!--          <el-form-item>
             <el-input v-model="queryForm.code" placeholder="邀请码" />
           </el-form-item>
@@ -174,7 +190,7 @@
       </el-table-column>
     </el-table>
     <div style="color: #ff0000; text-align:center;">
-        盈利金额 = （任务收入 + 代理佣金 + 活动收入 + 加款）- （任务发布支出 - 活动支出 - 扣款）
+        盈利金额 = （任务收入 + 代理佣金 + 活动收入 + 加款）- （任务发布支出 + 活动支出 + 扣款）
     </div>
     <el-pagination
       :background="background"
@@ -217,6 +233,21 @@ export default {
   },
   data() {
     return {
+      branch:[{
+        branch:[{
+          label: "自己",
+          value: 0
+        },{
+          label: "直系下属",
+          value: 1
+        },{
+          label: "所有下属",
+          value: 2
+        },]
+      }],
+      branchValue: null,
+
+
       options: [{
         label: '收入',
         options: [{
@@ -315,6 +346,12 @@ export default {
     },
     handleQuery() {
       this.queryForm.page = 1;
+      //查询下级
+      if(this.branchValue == 0) this.queryForm.isSubAll = null;
+      if(this.branchValue == 1) this.queryForm.isSubAll = false;
+      if(this.branchValue == 2) this.queryForm.isSubAll = true;
+
+
       //时间筛选不为空时添加时间属性
       if(!util.isEmpty(this.searchTime)){
         this.queryForm.begFinishTime = this.searchTime[0];
@@ -346,10 +383,10 @@ export default {
               item.moneySubtract = parseFloat(item.moneySubtract).toFixed(2);  //扣款
 
               //计算盈利金额
-              item.money = [parseFloat(item.moneyTaskAdd) + parseFloat(item.moneyAgency)
-               + parseFloat(item.moneyActiveAdd) + parseFloat(item.moneyIns)]
-               - [parseFloat(item.moneyTaskLose) + parseFloat(item.moneyActiveLose)
-               + parseFloat(item.moneySubtract)];
+              item.money = parseFloat(item.moneyTaskAdd) + parseFloat(item.moneyAgency)
+               + parseFloat(item.moneyActiveAdd) + parseFloat(item.moneyIns)
+               + parseFloat(item.moneyTaskLose) + parseFloat(item.moneyActiveLose)
+               + parseFloat(item.moneySubtract);
 
            });
            this.total = api.getTotal(res);

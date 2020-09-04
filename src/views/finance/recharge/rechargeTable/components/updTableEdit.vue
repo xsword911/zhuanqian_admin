@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="700px"
+    width="950px"
     @close="close"
   >
     <el-form
@@ -168,7 +168,104 @@
             autocomplete="off"
           />
         </el-form-item>
+
+       <el-form-item
+         label=""
+         prop="desc"
+       >
+         <div style="color: #dc3b40;">备注是支付人姓名，微信号，支付宝号等</div>
+       </el-form-item>
+
       </div>
+
+      <div>
+        <el-form-item
+          label="用户名"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.account"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="手机号"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.tel"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="昵称"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.nick"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="金币"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.gold"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="余额"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.money"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="登录ip"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.ip"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="登录时间"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userInfo.loginTime"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="账号状态"
+          prop="bankUserName"
+        >
+          <el-input value="正常" autocomplete="off":disabled="true" v-if="userInfo.state == 0"/>
+          <el-input value="冻结" autocomplete="off":disabled="true" v-if="userInfo.state == 1"/>
+          <el-input value="管理员封号" autocomplete="off":disabled="true" v-if="userInfo.state == 2"/>
+        </el-form-item>
+      </div>
+
     </el-form>
     <div
       slot="footer"
@@ -212,21 +309,35 @@ export default {
       value: '',      //交易类型
       form: {
         id: '',
-        state: null,
         desc: '',
       },
       form2: {
         id: '',
-        state: null,
       },
       title: "",
       dialogFormVisible: false,
+      userInfo: null, //用户信息
     };
   },
   mounted() {
 
   },
   methods: {
+    //取用户数据
+    getUserInfo()
+    {
+      api.getUserByUid({uid: this.form.uid}, (res)=>{
+        let code = api.getCode(res);
+        if(code == 0){
+          this.userInfo = res.data;
+          console.log(this.userInfo);
+        }else{
+          let msg = api.getMsg(res);
+          this.$message.error(msg);
+        }
+      });
+    },
+
     showEdit(row) {
       if (!row) {
         this.title = "添加";
@@ -235,6 +346,7 @@ export default {
         this.form = Object.assign({}, row);
       }
       this.dialogFormVisible = true;
+      this.getUserInfo();  //获取用户信息
     },
     close() {
       this.$refs["form"].resetFields();
@@ -245,7 +357,7 @@ export default {
     submitUpd(){
       this.form2.admin = "admin1";
       this.form2.id = this.form.id;
-      this.form2.state = this.form.state;
+      this.form2.state  = this.form.state;
       if(!util.isEmpty(this.form.desc)) this.form2.desc = this.form.desc;
       api.updMoneyRecharge(this.form2, (res)=>{
         let code = api.getCode(res);
