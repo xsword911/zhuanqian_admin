@@ -485,6 +485,10 @@ const api = {
     httpUtil.post("money/getDrawUnknownSum", path, funSuccess);
   },
 
+  //查询用户绑定银行表
+  getDrawUnknownSum: function (path, funSuccess) {
+    httpUtil.post("user/getUserBank", path, funSuccess);
+  },
 };
 
 export default api;

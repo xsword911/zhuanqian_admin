@@ -81,6 +81,12 @@ export const asyncRoutes = [
         component: () => import("@/views/user/userLevel/index"),
         meta: { title: "等级设置" },
       },
+      {
+        path: "userBank",
+        name: "UserBank",
+        component: () => import("@/views/user/bankTable/index"),
+        meta: { title: "用户银行卡信息" },
+      }
     ],
   },
 
