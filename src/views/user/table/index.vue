@@ -92,6 +92,7 @@
       </el-table-column>
       <el-table-column prop="loginTime" label="最后登录时间"></el-table-column>
       <el-table-column prop="ip" label="最后登录ip"></el-table-column>
+      <el-table-column prop="loginNum" label="登录次数"></el-table-column>
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
           <el-button type="text" @click="handleEdit(scope.row)"

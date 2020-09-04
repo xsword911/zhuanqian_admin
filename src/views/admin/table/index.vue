@@ -60,6 +60,7 @@
       <el-table-column prop="nick" label="昵称"></el-table-column>
       <el-table-column prop="tel" label="手机号"></el-table-column> -->
       <el-table-column prop="otpSecret" label="口令密码"></el-table-column>
+
 <!--     <el-table-column label="头像">
         <template slot-scope="scope">
           <el-image
@@ -84,8 +85,9 @@
           </el-tooltip>
         </template>
       </el-table-column>
-<!--      <el-table-column prop="loginTime" label="最后一次登录时间"></el-table-column>
-      <el-table-column prop="ip" label="最后一次登录ip"></el-table-column> -->
+      <el-table-column prop="loginTime" label="最后一次登录时间"></el-table-column>
+     <el-table-column prop="loginTime" label="最后一次登录时间"></el-table-column>
+      <el-table-column prop="loginNum" label="登录次数"></el-table-column>
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
           <el-button type="text" @click="handleEdit(scope.row)"

@@ -21,10 +21,10 @@
              <el-input v-model.trim="form.title" autocomplete="off" :disabled="true"></el-input>
            </el-form-item>
           <el-form-item label="任务说明" prop="explain">
-              <el-input v-model.trim="form.explain" autocomplete="off" :disabled="true"></el-input>
+              <el-input v-model.trim="form.explain" autocomplete="off" :disabled="true" type="textarea"></el-input>
           </el-form-item>
           <el-form-item label="任务规则" prop="rule">
-             <el-input v-model.trim="form.rule" autocomplete="off" :disabled="true"></el-input>
+             <el-input v-model.trim="form.rule" autocomplete="off" :disabled="true" type="textarea"></el-input>
           </el-form-item>
           
           <el-form-item label="任务等级" prop="taskLv">
@@ -91,7 +91,7 @@
             </div>
          </el-form-item>
         <el-form-item label="宣传文本" prop="taskTxt">
-            <el-input v-model.trim="form.taskTxt" autocomplete="off" :disabled="true"></el-input>
+            <el-input v-model.trim="form.taskTxt" autocomplete="off" :disabled="true" type="textarea"></el-input>
           </el-form-item>
 
           <el-form-item label="宣传图片" prop="taskImg">
