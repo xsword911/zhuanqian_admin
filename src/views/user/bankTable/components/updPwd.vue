@@ -33,6 +33,7 @@
 <script>
 import { doEdit } from "@/api/table";
 import api from "@/api/api.js";
+import storage from "@/api/storage.js";
 export default {
   // name: "TableEdit",
   data() {
@@ -44,29 +45,28 @@ export default {
         pwd2: "",
       },
       submitForm: {
-        uid: "",
+        admin: "",
+        id: null,
         pwd: "",
-        pwdOld: "",
       },
       rules: {
         pwd1: [
-          { required: true, trigger: "blur", message: "请输入新密码" },
+          { required: true, trigger: "blur", message: "请输入新资金密码" },
           { min: 3, max: 12, message: "密码长度在 3 到 12 个字符", trigger: "blur" },
         ],
         pwd2: [
-          { required: true, trigger: "blur", message: "请确认密码" },
+          { required: true, trigger: "blur", message: "请确认资金密码" },
           { min: 3, max: 12, message: "密码长度在 3 到 12 个字符", trigger: "blur" },
         ],
       },
       title: "",
       dialogFormVisible: false,
-      imageList: [],  //图片预览
     };
   },
   created() {},
   methods: {
     showEdit(row) {
-        this.title = "修改密码";
+        this.title = "修改资金密码";
         this.form = Object.assign({}, row);
         this.dialogFormVisible = true;
     },
@@ -83,11 +83,10 @@ export default {
             this.$baseMessage("二次密码输入不一致", "error");
             return;
           }else{
-            this.submitForm.uid = this.form.uid;
-            this.submitForm.pwdOld = this.form.pwd;
+            this.submitForm.id = this.form.id;
             this.submitForm.pwd = this.form.pwd1;
-            console.log(this.submitForm);
-            api.setUser(this.submitForm, (res)=>{
+            this.submitForm.admin = storage.getUid();
+            api.updCashPwd(this.submitForm, (res)=>{
               let code = api.getCode(res);
               if(code == 0){
                 this.$baseMessage("修改成功", "success");

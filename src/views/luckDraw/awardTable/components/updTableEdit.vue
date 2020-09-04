@@ -15,7 +15,7 @@
       </el-form-item>
 
       <el-form-item label="奖励金额" prop="award">
-         <el-input v-model.trim="form.award" autocomplete="off"></el-input>
+         <el-input v-model.trim="form.award" autocomplete="off" type="number"></el-input>
        </el-form-item>
 
     <el-form-item label="图片url" prop="imgUrl">

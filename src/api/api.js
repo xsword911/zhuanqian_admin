@@ -491,8 +491,28 @@ const api = {
   },
 
   //查询用户绑定银行表
-  getDrawUnknownSum: function (path, funSuccess) {
+  getUserBank: function (path, funSuccess) {
     httpUtil.post("user/getUserBank", path, funSuccess);
+  },
+
+  //修改用户绑定银行表
+  updUserBank: function (path, funSuccess) {
+    httpUtil.post("user/updUserBank", path, funSuccess);
+  },
+
+  //添加用户绑定银行表
+  addUserBank: function (path, funSuccess) {
+    httpUtil.post("user/addUserBank", path, funSuccess);
+  },
+
+  //批量删除用户绑定银行
+  delUserBankArr: function (path, funSuccess) {
+    httpUtil.post("user/delUserBankArr", path, funSuccess);
+  },
+
+  //修改资金密码
+  updCashPwd: function (path, funSuccess) {
+    httpUtil.post("user/updCashPwd", path, funSuccess);
   },
 };
 

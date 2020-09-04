@@ -387,11 +387,41 @@ export default {
               case 4:
                 item.type = "充值";
                 break;
+              case 5:
+                item.type = "利息宝取出";
+                break;
+              case 6:
+                item.type = "任务奖励";
+                break;
+              case 7:
+                item.type = "幸运抽奖支出";
+                break;
+              case 10:
+                item.type = "加款";
+                break;
+              case 50:
+                item.type = "代理佣金";
+                break;
               case 100:
                 item.type = "提现";
                 break;
               case 101:
                 item.type = "余额转金币";
+                break;
+              case 102:
+                item.type = "升级";
+                break;
+              case 103:
+                item.type = "利息宝转入";
+                break;
+              case 104:
+                item.type = "扣款";
+                break;
+              case 105:
+                item.type = "发布任务";
+                break;
+              case 106:
+                item.type = "幸运抽奖支出";
                 break;
                default:
                  break;

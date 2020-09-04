@@ -86,17 +86,50 @@
         prop="moneyOld"
       />
       <el-table-column
-        label="增加金额"
-        prop="moneyAdd"
+        label="盈利"
+        prop="money"
+      />
+
+      <el-table-column
+        label="任务收入"
+        prop="moneyTaskAdd"
       />
       <el-table-column
-        label="减少金额"
-        prop="moneyLose"
+        label="发布支出"
+        prop="moneyTaskLose"
       />
+      <el-table-column
+        label="任务次数"
+        prop="taskSum"
+      />
+
+      <el-table-column
+        label="活动收入"
+        prop="moneyActiveAdd"
+      />
+      <el-table-column
+        label="活动支出"
+        prop="moneyActiveLose"
+      />
+
+      <el-table-column
+        label="充值次数"
+        prop="rechargeSum"
+      />
+      <el-table-column
+        label="充值金额"
+        prop="rechargeMoney"
+      />
+
       <el-table-column
         label="提现次数"
         prop="drawSum"
       />
+      <el-table-column
+        label="提现金额"
+        prop="drawMoney"
+      />
+
       <el-table-column
         label="加款"
         prop="moneyIns"
@@ -107,6 +140,11 @@
       />
 
       <el-table-column
+        label="代理佣金"
+        prop="moneyAgency"
+      />
+
+      <!-- <el-table-column
         label="前一天金币"
         prop="goldOld"
       />
@@ -117,11 +155,7 @@
       <el-table-column
         label="消耗金币"
         prop="goldLose"
-      />
-      <el-table-column
-        label="任务次数"
-        prop="taskSum"
-      />
+      /> -->
 
       <el-table-column
         label="备注"
@@ -148,6 +182,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <div style="color: #ff0000; text-align:center;">
+        盈利金额 = （任务收入 + 代理佣金 + 活动收入 + 加款）- （任务发布支出 - 活动支出 - 扣款）
+    </div>
     <el-pagination
       :background="background"
       :current-page="queryForm.page"
@@ -189,32 +226,6 @@ export default {
   },
   data() {
     return {
-      options: [{
-        label: '收入',
-        options: [{
-          value: 0,
-          label: '金币转余额'
-        },{
-          value: 1,
-          label: '提现审核失败'
-        },{
-          value: 2,
-          label: '签到奖励'
-        },{
-          value: 3,
-          label: '幸运抽奖获奖'
-        }]
-      },{
-        label: '支出',
-        options: [{
-          value: 100,
-          label: '提现'
-        },{
-          value: 101,
-          label: '余额转金币'
-        }]
-      }],
-      value: '',      //交易类型
       searchTime: '', //筛选的时间范围
       imgShow: true,
       list: [],
@@ -227,7 +238,7 @@ export default {
       elementLoadingText: "正在加载...",
       queryForm: {
         page: 1,
-        count: 20,
+        count: 10,
       },
     };
   },
@@ -303,6 +314,27 @@ export default {
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
+           data.forEach((item, index) =>{
+              //保留二位小数处理
+              item.moneyOld = parseFloat(item.moneyOld).toFixed(2);  //前一天余额
+
+              item.moneyAgency = parseFloat(item.moneyAgency).toFixed(2);  //代理佣金
+              item.moneyIns = parseFloat(item.moneyIns).toFixed(2);  //加款
+              item.moneyActiveAdd = parseFloat(item.moneyActiveAdd).toFixed(2);  //活动收入
+              item.moneyTaskAdd = parseFloat(item.moneyTaskAdd).toFixed(2);  //任务收入
+              item.rechargeMoney = parseFloat(item.rechargeMoney).toFixed(2);  //充值
+
+              item.moneyActiveLose = parseFloat(item.moneyActiveLose).toFixed(2);  //活动支出
+              item.moneyTaskLose = parseFloat(item.moneyTaskLose).toFixed(2);  //任务支出
+              item.moneySubtract = parseFloat(item.moneySubtract).toFixed(2);  //扣款
+
+              //计算盈利金额
+              item.money = [parseFloat(item.moneyTaskAdd) + parseFloat(item.moneyAgency)
+               + parseFloat(item.moneyActiveAdd) + parseFloat(item.moneyIns)]
+               - [parseFloat(item.moneyTaskLose) + parseFloat(item.moneyActiveLose)
+               + parseFloat(item.moneySubtract)];
+
+           });
            this.total = api.getTotal(res);
            this.list = data;
          }

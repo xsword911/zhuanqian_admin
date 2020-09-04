@@ -85,7 +85,7 @@ export const asyncRoutes = [
         path: "userBank",
         name: "UserBank",
         component: () => import("@/views/user/bankTable/index"),
-        meta: { title: "用户银行卡信息" },
+        meta: { title: "用户银行卡" },
       }
     ],
   },

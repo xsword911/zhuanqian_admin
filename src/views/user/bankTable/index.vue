@@ -2,10 +2,13 @@
   <div class="table-container">
     <vab-query-form style="display: flex;">
 
-      <vab-query-form-left-panel style="max-width:84px;">
+      <vab-query-form-left-panel style="max-width:168px;">
         <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
           >添加</el-button
         >
+        <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
+          >删除
+        </el-button>
       </vab-query-form-left-panel>
 
      <vab-query-form-right-panel style="flex: 1;">
@@ -16,23 +19,13 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.account" placeholder="用户名"  clearable/>
+            <el-input v-model="queryForm.uid" placeholder="uid"  clearable/>
           </el-form-item>
-<!--          <el-form-item>
-              <el-select v-model="value" placeholder="账号状态" clearable>
-                <el-option-group
-                  v-for="group in options"
-                  :key="group.label"
-                  :label="group.label">
-                  <el-option
-                    v-for="item in group.options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-option-group>
-              </el-select>
-          </el-form-item> -->
+
+          <el-form-item>
+            <el-input v-model="queryForm.bank" placeholder="银行"  clearable/>
+          </el-form-item>
+
           <el-form-item>
             <el-button
               icon="el-icon-search"
@@ -54,59 +47,41 @@
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
     >
-      <!-- <el-table-column type="selection" width="55"></el-table-column> -->
+      <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
       <el-table-column prop="uid" label="uid"></el-table-column>
-      <el-table-column prop="account" label="用户名"></el-table-column>
-      <el-table-column prop="deviceId" label="登录设备"></el-table-column>
-      <el-table-column prop="nick" label="昵称"></el-table-column>
-      <el-table-column prop="tel" label="手机号"></el-table-column>
-      <el-table-column prop="code" label="邀请码"></el-table-column>
+      <el-table-column prop="bank" label="银行"></el-table-column>
+      <el-table-column prop="bankBranch" label="开户支行"></el-table-column>
+      <el-table-column prop="bankCode" label="银行卡号"></el-table-column>
+      <el-table-column prop="addTime" label="绑定时间"></el-table-column>
+      <!-- <el-table-column prop="pwd" label="提现密码"></el-table-column> -->
+      <el-table-column prop="pwdError" label="密码错误次数"></el-table-column>
+      <el-table-column prop="desc" label="备注"></el-table-column>
 
-     <el-table-column label="状态">
-        <template slot-scope="scope">
-          <el-tooltip
-            :content="scope.row.status"
-            class="item"
-            effect="dark"
-            placement="top-start"
-          >
-            <el-tag :type="scope.row.status | statusFilter"
-              >{{ scope.row.stateTest }}
-            </el-tag>
-          </el-tooltip>
-        </template>
-      </el-table-column>
-      <el-table-column prop="loginTime" label="最后登录时间"></el-table-column>
-      <el-table-column prop="ip" label="最后登录ip"></el-table-column>
       <el-table-column label="操作" width="180px" fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
+          <el-button type="text" @click="handleEdit(scope.row, bank)"
             >编辑
           </el-button>
           <el-button type="text" @click="handleCheckEdit(scope.row)"
             >查看
           </el-button>
-          <el-button type="text" @click="handleUpdPwd(scope.row)"
+         <el-button type="text" @click="handleUpdPwd(scope.row)"
              >修改密码
            </el-button>
-<!--           <el-button type="text" v-if="scope.row.state != 0" @click="handleUpdState(scope.row)"
-              >解冻
-            </el-button> -->
-          <el-button style="padding:0;margin:0 0 0 10px;">
+<!--          <el-button style="padding:0;margin:0 0 0 10px;">
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">操作</span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item :command="beforeHandleCommand('解冻', 0 ,scope.row)">解冻</el-dropdown-item>
-                <!-- <el-dropdown-item command="冻结">冻结</el-dropdown-item> -->
                 <el-dropdown-item :command="beforeHandleCommand('禁用', 2 ,scope.row)">禁用</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-          </el-button>
+          </el-button> -->
 <!--            <el-button type="text" v-if="scope.row.state == 0" @click="handleUpdState(scope.row)"
                >冻结
              </el-button> -->
@@ -125,7 +100,6 @@
     <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
     <check-table-edit ref="checkEdit"></check-table-edit>
     <upd-pwd ref="updPwd" @refreshList="fetchData"></upd-pwd>
-    <upd-state ref="updState" @refreshList="fetchData"></upd-state>
     <add-table-edit ref="edit" @refreshList="fetchData"></add-table-edit>
   </div>
 </template>
@@ -135,7 +109,6 @@ import { getList, doDelete } from "@/api/table";
 import updTableEdit from "./components/updTableEdit";
 import checkTableEdit from "./components/checkTableEdit";
 import updPwd from "./components/updPwd";
-import updState from "./components/updState";
 import addTableEdit from "./components/addTableEdit";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
@@ -145,7 +118,6 @@ export default {
     checkTableEdit,
     updTableEdit,
     updPwd,
-    updState,
     addTableEdit
   },
   filters: {
@@ -173,6 +145,11 @@ export default {
         }]
       }],
       value: '',      //交易类型
+
+      bank: [{
+        bank:[]
+      }],   //银行列表
+
       imgShow: true,
       list: [],
       imageList: [],
@@ -184,22 +161,29 @@ export default {
       elementLoadingText: "正在加载...",
       queryForm: {
         page: 1,
-        count: 10,
-        type: 0,
-        account: "",
-        tel: "",
-        code: "",
-        upper: "",
-        stateTest: "",
+        count: 10
       },
     };
   },
   created() {
     this.fetchData();  //查询用户列表
+    this.getBank();  //获取银行列表
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //获取银行列表
+    getBank(){
+      api.getBank({page: 1, count: 20}, (res)=>{
+        let data = api.getData(res);
+        data.forEach((item,index) =>{
+          item.value = item.bankId;
+          item.label = item.bankName;
+        });
+        this.bank[0].bank = data;
+      });
+    },
+
     //封装下拉菜单传入参数
     beforeHandleCommand(test, stateCode, row){
       return {
@@ -244,8 +228,8 @@ export default {
     setSelectRows(val) {
       this.selectRows = val;
     },
-    handleEdit(row) {
-      this.$refs["updEdit"].showEdit(row);
+    handleEdit(row, bank) {
+      this.$refs["updEdit"].showEdit(row, bank);
     },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
@@ -253,28 +237,35 @@ export default {
     handleUpdPwd(row) {
       this.$refs["updPwd"].showEdit(row);
     },
-    handleUpdState(row) {
-      this.$refs["updState"].showEdit(row);
-    },
     handleDelete(row) {
-      if (row.id) {
-        this.$baseConfirm("你确定要删除当前项吗", null, async () => {
-          const { msg } = await doDelete({ ids: row.id });
-          this.$baseMessage(msg, "success");
-          this.fetchData();
+      if(util.isEmpty(this.selectRows)){
+        this.$baseMessage("未选中任何行", "error");
+        return false;
+      }else {
+        this.$baseConfirm("你确定要删除选中项吗", null, async () => {
+            let delById = [];
+            this.selectRows.forEach((item, index) =>{
+              let obj = {};
+              obj.id = item.id;
+              delById.push(obj);
+            });
+            let delArr = {
+              arr: delById
+            };
+            api.delUserBankArr(delArr, (res)=>{
+              let code = api.getCode(res);
+              if(code == 0){
+                this.$baseMessage("删除成功", "success");
+                this.$refs["form"].resetFields();
+                this.dialogFormVisible = false;
+                this.form = this.$options.data().form;
+                this.fetchData();
+              }else{
+                let msg = api.getMsg(res);
+                this.$message.error(msg);
+              }
+            });
         });
-      } else {
-        if (this.selectRows.length > 0) {
-          const ids = this.selectRows.map((item) => item.id).join();
-          this.$baseConfirm("你确定要删除选中项吗", null, async () => {
-            const { msg } = await doDelete({ ids: ids });
-            this.$baseMessage(msg, "success");
-            this.fetchData();
-          });
-        } else {
-          this.$baseMessage("未选中任何行", "error");
-          return false;
-        }
       }
     },
     handleSizeChange(val) {
@@ -299,7 +290,7 @@ export default {
     //查询用户列表
     fetchData() {
       this.listLoading = true;
-      api.getUser(this.queryForm, (res)=>{
+      api.getUserBank(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);

@@ -289,6 +289,7 @@
 import { doEdit } from "@/api/table";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
+import storage from "@/api/storage.js";
 export default {
   name: "TableEdit",
   data() {
@@ -415,6 +416,7 @@ export default {
         sort: null,
         admin: 'admin1',
         desc: '',
+        uid: '',
       },
       title: "",
       dialogFormVisible: false,
@@ -426,7 +428,6 @@ export default {
         level: [{ required: true, trigger: "blur", message: "请输入活动等级" }],
         // rule: [{ required: true, trigger: "blur", message: "请输入活动规则" }],
         cycle: [{ required: true, trigger: "blur", message: "请输入任务刷新周期" }],
-        imgUrl: [{ required: true, trigger: "blur", message: "请输入活动图片url" }],
         award: [{ required: true, trigger: "blur", message: "请输入活动奖励金币" }],
         sum: [{ required: true, trigger: "blur", message: "请输入活动数量" }],
         tip: [{ required: true, trigger: "blur", message: "请输入活动标记" }],
@@ -495,16 +496,12 @@ export default {
       this.$emit("fetchData");
     },
     save() {
-      if(util.isEmpty(this.form.imgUrl))
-      {
-        this.$message.error("填写信息不完整");
-        return;
-      };
       if(!util.isEmpty(this.form.award)) this.form.award = parseInt(this.form.award);
       this.$refs["form"].validate(async (valid) => {
         if (valid) {
           this.form.doneLong = parseInt(this.form.doneLong) * 60;   //任务限时分钟转为秒
           this.form.auditLong = parseInt(this.form.auditLong) * 60; //审核时长分钟转为秒
+          this.form.uid = storage.getUid();
           api.addTask(this.form, (res)=>{
             let code = api.getCode(res);
             if(code == 0){

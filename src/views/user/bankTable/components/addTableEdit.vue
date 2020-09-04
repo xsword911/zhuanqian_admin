@@ -7,20 +7,32 @@
   >
   <el-form ref="form" :model="form" label-width="80px" :rules="rules">
 
-      <el-form-item label="账号" prop="account">
-        <el-input v-model.trim="form.account" autocomplete="off"></el-input>
+      <el-form-item label="用户uid" prop="uid">
+        <el-input v-model.trim="form.uid" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="密码" prop="pwd">
+      <el-form-item label="银行" prop="bank">
+        <el-input v-model.trim="form.bank" autocomplete="off"></el-input>
+      </el-form-item>
+
+      <el-form-item label="开户支行" prop="bankBranch">
+        <el-input v-model.trim="form.bankBranch" autocomplete="off"></el-input>
+      </el-form-item>
+
+      <el-form-item label="银行卡号" prop="bankCode">
+        <el-input v-model.trim="form.bankCode" autocomplete="off"></el-input>
+      </el-form-item>
+
+      <el-form-item label="提现密码" prop="pwd">
         <el-input v-model.trim="form.pwd" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="确认密码" prop="pwd2">
+      <el-form-item label="再次输入提现密码" prop="pwd2">
         <el-input v-model.trim="form.pwd2" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="邀请码" prop="upperCode">
-        <el-input v-model.trim="form.upperCode" autocomplete="off"></el-input>
+      <el-form-item label="备注" prop="desc">
+        <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
       </el-form-item>
 
     </el-form>
@@ -46,20 +58,14 @@ export default {
         pwd2: "",
         upperCode: "",
       },
-      submitForm: {
-        account: "",
-        pwd: "",
-        upperCode: "",
-        type: 0,
-      },
       title: "",
       dialogFormVisible: false,
 
       rules: {
-        account: [
-          { required: true, message: "请输入账号", trigger: "blur" },
-          { min: 3, max: 12, message: "账号长度在 3 到 12 个字符", trigger: "blur" },
-        ],
+        uid: [{ required: true, message: "请输入用户id", trigger: "blur" }],
+        bank: [{ required: true, message: "请输入银行", trigger: "blur" }],
+        bankBranch: [{ required: true, message: "请输入开户支行", trigger: "blur" }],
+        bankCode: [{ required: true, message: "请输入银行卡号", trigger: "blur" }],
         pwd: [
           { required: true, message: "请输入密码", trigger: "blur" },
           { min: 3, max: 12, message: "密码长度在 3 到 12 个字符", trigger: "blur" },
@@ -94,11 +100,8 @@ export default {
           if(this.form.pwd2 != this.form.pwd){
             this.$baseMessage("二次密码输入不一致", "error");
             return;
-          }else{
-            this.submitForm.account = this.form.account;
-            this.submitForm.pwd = this.form.pwd;
-            if(!util.isEmpty(this.form.upperCode)) this.submitForm.upperCode = this.form.upperCode;
-            api.register(this.submitForm, (res)=>{
+          }
+            api.addUserBank(this.form, (res)=>{
                 let code = api.getCode(res);
                 if(code == 0){
                   this.$baseMessage("添加成功", "success");
@@ -112,7 +115,6 @@ export default {
                   this.$message.error(msg);
                 }
             });
-          }
         } else {
           this.$message.error("填写信息不完整");
           return false;

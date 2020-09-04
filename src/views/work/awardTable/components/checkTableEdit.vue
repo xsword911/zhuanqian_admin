@@ -7,6 +7,10 @@
   >
    <el-form ref="form" :model="form" label-width="80px" style="display: flex; justify-content: space-between;">
       <div>
+        <el-form-item label="发布者id" prop="uid">
+           <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
+         </el-form-item>
+        
         <el-form-item label="任务分类" prop="classify">
           <el-input value="抖音" autocomplete="off" :disabled="true" v-show="form.classify == 1"></el-input>
           <el-input value="快手" autocomplete="off" :disabled="true" v-show="form.classify == 2"></el-input>

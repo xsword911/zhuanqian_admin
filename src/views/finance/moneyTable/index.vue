@@ -321,6 +321,12 @@ export default {
               case 5:
                 item.type = "利息宝取出";
                 break;
+              case 6:
+                item.type = "任务奖励";
+                break;
+              case 7:
+                item.type = "幸运抽奖支出";
+                break;
               case 10:
                 item.type = "加款";
                 break;
@@ -341,6 +347,12 @@ export default {
                 break;
               case 104:
                 item.type = "扣款";
+                break;
+              case 105:
+                item.type = "发布任务";
+                break;
+              case 106:
+                item.type = "幸运抽奖支出";
                 break;
                default:
                  break;

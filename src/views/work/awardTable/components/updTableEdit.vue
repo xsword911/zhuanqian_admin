@@ -7,6 +7,10 @@
   >
    <el-form ref="form" :model="form" label-width="80px" style="display: flex; justify-content: space-between;">
      <div>
+       <el-form-item label="发布者id" prop="uid">
+          <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+
        <el-form-item label="任务分类" prop="classify">
          <el-select v-model="form.classify" placeholder="任务分类" clearable filterable allow-create>
            <el-option-group
@@ -133,7 +137,7 @@
       </el-form-item>
 
        <el-form-item label="奖励" prop="award">
-          <el-input v-model.trim="form.award" autocomplete="off" ></el-input>
+          <el-input v-model.trim="form.award" autocomplete="off" :controls="false" type="number"></el-input>
         </el-form-item>
 
         <el-form-item label="奖励类型" prop="awardType">
@@ -235,7 +239,7 @@
           </el-option-group>
         </el-select>
       </el-form-item>
-      
+
       <el-form-item label="任务审核(分钟)" prop="doneLong">
                 <el-input v-model.trim="form.doneLong" autocomplete="off" clearable type="number"></el-input>
             </el-form-item>

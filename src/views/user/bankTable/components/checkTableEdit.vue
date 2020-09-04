@@ -9,54 +9,29 @@
      <el-form-item label="uid" prop="uid">
         <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="设备id" prop="deviceId">
-         <el-input v-model.trim="form.deviceId" autocomplete="off" :disabled="true"></el-input>
+      <el-form-item label="银行" prop="bank">
+         <el-input v-model.trim="form.bank" autocomplete="off" :disabled="true"></el-input>
        </el-form-item>
-     <el-form-item label="用户名" prop="account">
-        <el-input v-model.trim="form.account" autocomplete="off" :disabled="true"></el-input>
+     <el-form-item label="开户支行" prop="bankBranch">
+        <el-input v-model.trim="form.bankBranch" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="手机号" prop="tel">
-        <el-input v-model.trim="form.tel" autocomplete="off" :disabled="true"></el-input>
+      <el-form-item label="银行卡号" prop="bankCode">
+        <el-input v-model.trim="form.bankCode" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="昵称" prop="nick">
-        <el-input v-model.trim="form.nick" autocomplete="off" :disabled="true"></el-input>
+      <el-form-item label="绑定时间" prop="addTime">
+        <el-input v-model.trim="form.addTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="邀请码" prop="code">
-        <el-input v-model.trim="form.code" autocomplete="off" :disabled="true"></el-input>
+<!--      <el-form-item label="提现密码" prop="pwd">
+        <el-input v-model.trim="form.pwd" autocomplete="off" :disabled="true"></el-input>
+      </el-form-item> -->
+
+      <el-form-item label="密码错误次数" prop="pwdError">
+        <el-input v-model.trim="form.pwdError" autocomplete="off" :disabled="true"></el-input>
+      </el-form-item>
+      <el-form-item label="备注" prop="desc">
+        <el-input v-model.trim="form.desc" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
 
-      <el-form-item label="头像" prop="imgUrl">
-         <div class="block" style="width: 80px; height: 80px;">
-              <el-image
-                :preview-src-list="[form.headUrl]"
-                :src="form.headUrl"
-              ></el-image>
-          </div>
-      </el-form-item>
-
-      <el-form-item label="金币" prop="gold">
-        <el-input v-model.trim="form.gold" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="余额" prop="money">
-        <el-input v-model.trim="form.money" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="直属上级" prop="upper">
-        <el-input v-model.trim="form.upper" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="注册时间" prop="regTime">
-        <el-input v-model.trim="form.regTime" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="最后一次登录时间" prop="loginTime">
-        <el-input v-model.trim="form.loginTime" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="最后一次登录ip" prop="ip">
-        <el-input v-model.trim="form.ip" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="账号状态" prop="state">
-        <el-input value="正常" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
-        <el-input value="冻结" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
-        <el-input value="管理员封号" autocomplete="off" :disabled="true" v-show="form.state == 2"></el-input>
-      </el-form-item>
     </el-form>
   </el-dialog>
 </template>
@@ -69,17 +44,7 @@ export default {
   data() {
     return {
       form: {
-        account: "",
-        tel: "",
-        nick: "",
-        code: "",
-        gold: "",
-        money: "",
-        upper: "",
-        regTime: "",
-        loginTime: "",
-        ip: "",
-        state: "",
+
       },
       rules: {
         title: [{ required: true, trigger: "blur", message: "请输入标题" }],

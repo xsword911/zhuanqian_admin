@@ -9,41 +9,44 @@
       <el-form-item label="uid" prop="uid">
         <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true" clearable></el-input>
       </el-form-item>
-      <el-form-item label="用户名" prop="account">
-        <el-input v-model.trim="form.account" autocomplete="off" :disabled="true" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="邀请码" prop="code">
-        <el-input v-model.trim="form.code" autocomplete="off" clearable></el-input>
-        <div><div style="color:#FF3A00; display:inline-block;">*</div>邀请码为六位数</div>
-      </el-form-item>
-      <el-form-item label="手机号" prop="tel">
-        <el-input v-model.trim="form.tel" autocomplete="off" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="昵称" prop="nick">
-        <el-input v-model.trim="form.nick" autocomplete="off" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="头像">
-          <div style="display: flex;">
-            <div class="block" style="width: 80px; height: 80px;">
-                 <el-image
-                   :src="form.headUrl"
-                 ></el-image>
-             </div>
 
-             <el-upload
-               class="avatar-uploader"
-               :action= "getPostFileUrl()"
-               :show-file-list="false"
-               :on-success="handleAvatarSuccess"
-               :before-upload="beforeAvatarUpload">
-               <img v-if="imgUrlNew" :src="imgUrlNew"  class="avatar">
-               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-             </el-upload>
-          </div>
-          <div><div style="color:#FF3A00; display:inline-block;">*</div>注意：上传图片大小建议200*200</div>
+      <el-form-item label="银行" prop="bank">
+        <el-input v-model.trim="form.bank" autocomplete="off" clearable></el-input>
       </el-form-item>
-      <el-form-item label="直属上级" prop="upper">
-        <el-input v-model.trim="form.upper" autocomplete="off" clearable></el-input>
+
+<!--      <el-form-item label="银行" prop="bank">
+        <el-select v-model="form.bank" placeholder="银行" clearable filterable allow-create>
+          <el-option-group
+            v-for="group in bank"
+            :key="group.label"
+            :label="group.label">
+            <el-option
+              v-for="item in group.bank"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-option-group>
+        </el-select>
+      </el-form-item> -->
+
+      <el-form-item label="开户支行" prop="bankBranch">
+        <el-input v-model.trim="form.bankBranch" autocomplete="off" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="银行卡号" prop="bankCode">
+        <el-input v-model.trim="form.bankCode" autocomplete="off" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="绑定时间" prop="addTime">
+        <el-input v-model.trim="form.addTime" autocomplete="off" clearable :disabled="true"></el-input>
+      </el-form-item>
+<!--      <el-form-item label="提现密码" prop="pwd">
+        <el-input v-model.trim="form.pwd" autocomplete="off" clearable></el-input>
+      </el-form-item> -->
+      <el-form-item label="密码错误次数" prop="pwdError">
+        <el-input v-model.trim="form.pwdError" autocomplete="off" clearable :disabled="true"></el-input>
+      </el-form-item>
+      <el-form-item label="备注" prop="desc">
+        <el-input v-model.trim="form.desc" autocomplete="off" clearable></el-input>
       </el-form-item>
 
     </el-form>
@@ -62,6 +65,7 @@ export default {
   // name: "TableEdit",
   data() {
     return {
+      bank:[],
       postFileUrl: '',  //文件上传地址
       options: [{
         options: [{
@@ -77,13 +81,7 @@ export default {
       }],
       value: '',      //交易类型
       form: {
-        tel: "",
-        nick: "",
-        account: "",
-        state: '',
-        upper: '',
-        headUrl: '',
-        uid: "",
+
       },
       title: "",
       dialogFormVisible: false,
@@ -91,7 +89,6 @@ export default {
       imgUrlNew: ''  ,//选择的图片
       imgServeUrl: '',  //图片的服务器地址
 
-      oldHeadImg: '',  //旧头像路径
     };
   },
   created() {
@@ -122,7 +119,7 @@ export default {
             return isJPG && isLt2M;
           },
 
-    showEdit(row) {
+    showEdit(row, bank) {
       if (!row) {
         this.title = "添加";
       } else {
@@ -131,6 +128,7 @@ export default {
       }
       this.dialogFormVisible = true;
       this.oldHeadImg = this.form.headUrl;
+      this.bank = bank;
     },
     close() {
       this.$refs["form"].resetFields();
@@ -139,30 +137,10 @@ export default {
       this.$emit("fetchData");
     },
     save() {
-        if(!util.isEmpty(this.form.nick)){
-        		if(this.form.nick.length > 8){
-              this.$message.error('昵称长度不能超过8位');
-        			return;
-        		}
-        }
-        if(!util.isEmpty(this.form.tel)){
-        		var re = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
-        		if (!re.test(this.form.tel)) {
-              this.$message.error('手机号格式错误');
-        			return;
-        		}
-        }
         this.submitUpd();
     },
     submitUpd(){
-      let data = {
-        uid: this.form.uid,
-        nick: this.form.nick,
-        tel: this.form.tel,
-        code: this.form.code
-      };
-      if(this.oldHeadImg != this.form.headUrl) data.headUrl = this.form.headUrl;
-      api.setUser(data, (res)=>{
+      api.updUserBank(this.form, (res)=>{
         let code = api.getCode(res);
         if(code == 0){
           this.$baseMessage("修改成功", "success");
