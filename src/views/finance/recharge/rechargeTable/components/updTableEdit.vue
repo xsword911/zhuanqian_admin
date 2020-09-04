@@ -2,48 +2,187 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="500px"
+    width="700px"
     @close="close"
   >
-    <el-form ref="form" :model="form" label-width="80px">
-          <!-- <el-input v-model.trim="form.id" autocomplete="off" :disabled="true" v-if="false"></el-input> -->
-    <el-form-item label="uid" prop="uid">
-        <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="账单号" prop="sn">
-        <el-input v-model.trim="form.sn" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="金额" prop="money">
-        <el-input v-model.trim="form.money" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="提交时间" prop="addTime">
-        <el-input v-model.trim="form.addTime" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
+    <el-form
+      ref="form"
+      :model="form"
+      label-width="90px"
+      style="display: flex; justify-content: space-between;"
+    >
+      <!-- <el-input v-model.trim="form.id" autocomplete="off" :disabled="true" v-if="false"></el-input> -->
+      <div>
+        <el-form-item
+          label="uid"
+          prop="uid"
+        >
+          <el-input
+            v-model.trim="form.uid"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
+          label="账单号"
+          prop="sn"
+        >
+          <el-input
+            v-model.trim="form.sn"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
+          label="金额"
+          prop="money"
+        >
+          <el-input
+            v-model.trim="form.money"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
 
-      <el-form-item label="状态" prop="state">
-        <el-select v-model="form.state" placeholder="状态">
-          <el-option-group
-            v-for="group in options"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
-        </el-select>
-      </el-form-item>
+        <el-form-item
+          label="银行"
+          prop="bank"
+        >
+          <el-input
+            v-model.trim="form.bank"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
 
-      <el-form-item label="备注" prop="desc">
-        <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
-      </el-form-item>
+        <el-form-item
+          label="开户支行"
+          prop="bankBranch"
+        >
+          <el-input
+            v-model.trim="form.bankBranch"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
 
+        <el-form-item
+          label="收款账号"
+          prop="account"
+        >
+          <el-input
+            v-model.trim="form.account"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="收款人姓名"
+          prop="owner"
+        >
+          <el-input
+            v-model.trim="form.owner"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+      </div>
+
+      <div>
+        <el-form-item label="二维码">
+          <div style="display: flex;">
+            <div
+              class="block"
+              style="width: 80px; height: 80px;"
+            >
+              <el-image
+                :src="form.imgUrl"
+              />
+            </div>
+          </div>
+        </el-form-item>
+
+        <el-form-item
+          label="提交时间"
+          prop="addTime"
+        >
+          <el-input
+            v-model.trim="form.addTime"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="审核人"
+          prop="admin"
+        >
+          <el-input
+            v-model.trim="form.admin"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="审核时间"
+          prop="updTime"
+        >
+          <el-input
+            v-model.trim="form.updTime"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="状态"
+          prop="state"
+        >
+          <el-select
+            v-model="form.state"
+            placeholder="状态"
+          >
+            <el-option-group
+              v-for="group in options"
+              :key="group.label"
+              :label="group.label"
+            >
+              <el-option
+                v-for="item in group.options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-option-group>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          label="备注"
+          prop="desc"
+        >
+          <el-input
+            v-model.trim="form.desc"
+            autocomplete="off"
+          />
+        </el-form-item>
+      </div>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="submitUpd">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button @click="close">
+        取 消
+      </el-button>
+      <el-button
+        type="primary"
+        @click="submitUpd"
+      >
+        确 定
+      </el-button>
     </div>
   </el-dialog>
 </template>
