@@ -52,6 +52,12 @@ const api = {
     httpUtil.post("user/register", path, funSuccess);
   },
 
+
+	//管理员注册用户
+	registerByAdmin: function(path, funSuccess) {
+    httpUtil.post('user/registerByAdmin', path, funSuccess);
+  },
+
   //查询全部用户详细信息
   getUser: function (path, funSuccess) {
     httpUtil.post("user/getUser", path, funSuccess);
@@ -508,6 +514,11 @@ const api = {
   //修改资金密码
   updCashPwd: function (path, funSuccess) {
     httpUtil.post("user/updCashPwd", path, funSuccess);
+  },
+
+  //修改直属上级
+  updUpper: function (path, funSuccess) {
+    httpUtil.post("user/updUpper", path, funSuccess);
   },
 };
 

@@ -70,10 +70,10 @@ module.exports = {
 	formatTime: formatTime,
 	formatLocation: formatLocation,
 	dateUtils: dateUtils,
-	
+
 	//页面跳转前,取传送的param参数数据
 	getTargetParam: function(e) {return e.currentTarget.dataset.param;},
-	
+
 	 //判断是否为空
 	isEmpty: function(val){
 		//判断是否为数组
@@ -84,7 +84,7 @@ module.exports = {
 	isArray: function(o){
 		return Object.prototype.toString.call(o)== '[object Array]';
 	},
-	
+
 	//修改标题
 	setBarTitle: function(val){
 		uni.setNavigationBarTitle({
@@ -98,16 +98,21 @@ module.exports = {
 		}
 		return false;
 	},
-	
+
 	//数据格式化
 	dataFormat(data){
 		if(this.isEmpty(data)) return "无";
 		if(this.isNum(data)){
 			if(data%1 == 0) return data;
-			
+
 			return data.toFixed(2);
 		}
-		
+
 		return data;
-	}
+	},
+
+  //克隆对象
+   copyObj(obj){
+      return Object.assign({}, obj);
+  }
 }

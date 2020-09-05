@@ -2,17 +2,25 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="1050px"
+    width="1100px"
     @close="close"
   >
-   <el-form ref="form" :model="form" label-width="80px" style="display: flex; justify-content: space-between;">
+   <el-form ref="form" :model="form" label-width="120px" style="display: flex; justify-content: space-between;">
       <div>
           <el-form-item label="发布者" prop="uid">
             <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
           </el-form-item>
+          <el-form-item label="发布者用户名" prop="uid">
+            <el-input v-model.trim="userName" autocomplete="off" :disabled="true"></el-input>
+          </el-form-item>
+
           <el-form-item label="完成者" prop="doneUid">
              <el-input v-model.trim="form.doneUid" autocomplete="off" :disabled="true"></el-input>
            </el-form-item>
+           <el-form-item label="完成者用户名" prop="uid">
+             <el-input v-model.trim="doneUidName" autocomplete="off" :disabled="true"></el-input>
+           </el-form-item>
+
            <el-form-item label="订单号" prop="sn">
               <el-input v-model.trim="form.sn" autocomplete="off" :disabled="true"></el-input>
             </el-form-item>
@@ -26,7 +34,7 @@
           <el-form-item label="任务规则" prop="rule">
              <el-input v-model.trim="form.rule" autocomplete="off" :disabled="true" type="textarea"></el-input>
           </el-form-item>
-          
+
           <el-form-item label="任务等级" prop="taskLv">
             <el-input value="全部" autocomplete="off" :disabled="true" v-show="form.taskLv == 0"></el-input>
             <el-input value="新人" autocomplete="off" :disabled="true" v-show="form.taskLv == 1"></el-input>
@@ -69,19 +77,19 @@
                 </el-option-group>
               </el-select>
           </el-form-item>
-
-          <el-form-item label="刷新周期" prop="cycle">
-            <el-input value="只能完成一次" autocomplete="off" :disabled="true" v-show="form.cycle == 0"></el-input>
-            <el-input value="每天可完成一次" autocomplete="off" :disabled="true" v-show="form.cycle == 1"></el-input>
-            <el-input :value="form.cycle + '天可做一次'" autocomplete="off" :disabled="true" v-show="form.cycle != 0 && form.cycle != 1"></el-input>
-          </el-form-item>
-
-          <el-form-item label="任务数量" prop="sum">
-              <el-input v-model.trim="form.sum" autocomplete="off" :disabled="true"></el-input>
-            </el-form-item>
       </div>
 
       <div>
+        <el-form-item label="刷新周期" prop="cycle">
+          <el-input value="只能完成一次" autocomplete="off" :disabled="true" v-show="form.cycle == 0"></el-input>
+          <el-input value="每天可完成一次" autocomplete="off" :disabled="true" v-show="form.cycle == 1"></el-input>
+          <el-input :value="form.cycle + '天可做一次'" autocomplete="off" :disabled="true" v-show="form.cycle != 0 && form.cycle != 1"></el-input>
+        </el-form-item>
+
+        <el-form-item label="任务数量" prop="sum">
+            <el-input v-model.trim="form.sum" autocomplete="off" :disabled="true"></el-input>
+          </el-form-item>
+
         <el-form-item label="任务图片" prop="imgUrl">
            <div class="block" style="width: 80px; height: 80px;">
                 <el-image
@@ -126,18 +134,18 @@
                 <el-input value="抖音" autocomplete="off" :disabled="true" v-show="form.taskApp == 2"></el-input>
                 <el-input value="快手" autocomplete="off" :disabled="true" v-show="form.taskApp == 3"></el-input>
               </el-form-item>
-
-          <el-form-item label="奖励" prop="award">
-             <el-input v-model.trim="form.award" autocomplete="off" :disabled="true"></el-input>
-           </el-form-item>
-
-          <el-form-item label="奖励类型" prop="awardType">
-            <el-input value="金币" autocomplete="off" :disabled="true" v-show="form.awardType == 0"></el-input>
-            <el-input value="现金" autocomplete="off" :disabled="true" v-show="form.awardType == 1"></el-input>
-          </el-form-item>
       </div>
 
       <div>
+        <el-form-item label="奖励" prop="award">
+           <el-input v-model.trim="form.award" autocomplete="off" :disabled="true"></el-input>
+         </el-form-item>
+
+        <el-form-item label="奖励类型" prop="awardType">
+          <el-input value="金币" autocomplete="off" :disabled="true" v-show="form.awardType == 0"></el-input>
+          <el-input value="现金" autocomplete="off" :disabled="true" v-show="form.awardType == 1"></el-input>
+        </el-form-item>
+
         <el-form-item label="任务限时(分钟)" prop="doneLong">
            <el-input v-model.trim="form.doneLong" autocomplete="off" :disabled="true"></el-input>
          </el-form-item>
@@ -214,6 +222,8 @@ export default {
       },
       title: "",
       dialogFormVisible: false,
+      userName: "",  //用户名
+      doneUidName: "", //完成者用户名
     };
   },
   mounted() {},
@@ -224,7 +234,35 @@ export default {
         this.dialogFormVisible = true;
         this.form.doneLong = (this.form.doneLong / 60).toFixed(2);
         this.form.auditLong = (this.form.auditLong / 60).toFixed(2);
+        this.getUserInfo();  //取用户数据
+        this.getDoneUserInfo();  //取完成者用户数据
     },
+    //取用户数据
+    getUserInfo(){
+      api.getUserByUid({uid: this.form.uid}, (res)=>{
+        let code = api.getCode(res);
+        if(code == 0){
+          this.userName = res.data.account;
+        }else{
+          let msg = api.getMsg(res);
+          this.$message.error(msg);
+        }
+      });
+    },
+
+    //取完成者用户数据
+    getDoneUserInfo(){
+      api.getUserByUid({uid: this.form.doneUid}, (res)=>{
+        let code = api.getCode(res);
+        if(code == 0){
+          this.doneUidName = res.data.account;
+        }else{
+          let msg = api.getMsg(res);
+          this.$message.error(msg);
+        }
+      });
+    },
+
     close() {
       this.$refs["form"].resetFields();
       this.form = this.$options.data().form;

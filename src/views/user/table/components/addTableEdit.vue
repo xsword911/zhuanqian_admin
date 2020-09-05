@@ -36,6 +36,7 @@
 import { doEdit } from "@/api/table";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
+import md5 from "@/api/md5.js";
 export default {
   name: "TableEdit",
   data() {
@@ -96,9 +97,9 @@ export default {
             return;
           }else{
             this.submitForm.account = this.form.account;
-            this.submitForm.pwd = this.form.pwd;
+            this.submitForm.pwd = md5(this.form.pwd);
             if(!util.isEmpty(this.form.upperCode)) this.submitForm.upperCode = this.form.upperCode;
-            api.register(this.submitForm, (res)=>{
+            api.registerByAdmin(this.submitForm, (res)=>{
                 let code = api.getCode(res);
                 if(code == 0){
                   this.$baseMessage("添加成功", "success");

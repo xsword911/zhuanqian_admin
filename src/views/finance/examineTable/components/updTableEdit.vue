@@ -318,6 +318,7 @@ export default {
         this.form = Object.assign({}, row);
       }
       this.dialogFormVisible = true;
+      console.log(1);
       this.getUserBank();//取用户银行卡
       this.getUserInfo();  //获取用户信息
     },

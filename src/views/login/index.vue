@@ -106,6 +106,8 @@ import { isPassword } from "@/utils/validate";
 import api from "@/api/api.js";
 import storage from "@/api/storage.js";
 import store from "@/store";
+import md5 from "@/api/md5.js";
+import util from "@/utils/util.js";
 import {
   getAccessToken,
   setAccessToken,
@@ -196,9 +198,11 @@ export default {
 
       this.$refs.loginForm.validate((valid) => {
         if(valid){
+          let form = util.copyObj(this.loginForm);
+          form.pwd = md5(form.pwd);
           this.loading = true;
 
-          api.login(this.loginForm, (res)=>{
+          api.login(form, (res)=>{
             let code = api.getCode(res);
             if(code == 0){
               let token = api.getToken(res);

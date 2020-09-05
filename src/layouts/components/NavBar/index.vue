@@ -97,6 +97,7 @@ export default {
             this.rechargePlay();   //播放充值语音
         }
         else this.rechargeUnknownSum = oldData;
+        if(parseInt(this.rechargeUnknownSum) > 99) this.rechargeUnknownSum = "99+";
       });
     },
     //获取未审核提现记录总数
@@ -109,6 +110,7 @@ export default {
           this.drawPlay();   //播放提现语音
         }
         else this.drawUnknownSum = oldData;
+        if(parseInt(this.drawUnknownSum) > 99) this.drawUnknownSum = "99+";
       });
     },
     //跳转到充值审核
