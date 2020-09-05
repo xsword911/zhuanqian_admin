@@ -2,61 +2,66 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="500px"
+    width="700px"
     @close="close"
   >
-   <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-     <el-form-item label="uid" prop="uid">
-        <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="设备id" prop="deviceId">
-         <el-input v-model.trim="form.deviceId" autocomplete="off" :disabled="true"></el-input>
-       </el-form-item>
-     <el-form-item label="用户名" prop="account">
-        <el-input v-model.trim="form.account" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="手机号" prop="tel">
-        <el-input v-model.trim="form.tel" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="昵称" prop="nick">
-        <el-input v-model.trim="form.nick" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="邀请码" prop="code">
-        <el-input v-model.trim="form.code" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
+   <el-form ref="form" :model="form" :rules="rules" label-width="80px" style="display: flex; justify-content: space-between;">
+      <div>
+        <el-form-item label="uid" prop="uid">
+           <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true" style="color: #000000;"></el-input>
+         </el-form-item>
+         <el-form-item label="设备id" prop="deviceId">
+            <el-input v-model.trim="form.deviceId" autocomplete="off" :disabled="true"></el-input>
+          </el-form-item>
+        <el-form-item label="用户名" prop="account">
+           <el-input v-model.trim="form.account" autocomplete="off" :disabled="true"></el-input>
+         </el-form-item>
+         <el-form-item label="手机号" prop="tel">
+           <el-input v-model.trim="form.tel" autocomplete="off" :disabled="true"></el-input>
+         </el-form-item>
+         <el-form-item label="昵称" prop="nick">
+           <el-input v-model.trim="form.nick" autocomplete="off" :disabled="true"></el-input>
+         </el-form-item>
+         <el-form-item label="邀请码" prop="code">
+           <el-input v-model.trim="form.code" autocomplete="off" :disabled="true"></el-input>
+         </el-form-item>
 
-      <el-form-item label="头像" prop="imgUrl">
-         <div class="block" style="width: 80px; height: 80px;">
-              <el-image
-                :preview-src-list="[form.headUrl]"
-                :src="form.headUrl"
-              ></el-image>
-          </div>
-      </el-form-item>
+         <el-form-item label="头像" prop="imgUrl">
+            <div class="block" style="width: 80px; height: 80px;">
+                 <el-image
+                   :preview-src-list="[form.headUrl]"
+                   :src="form.headUrl"
+                 ></el-image>
+             </div>
+         </el-form-item>
+      </div>
 
-      <el-form-item label="金币" prop="gold">
-        <el-input v-model.trim="form.gold" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="余额" prop="money">
-        <el-input v-model.trim="form.money" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="直属上级" prop="upper">
-        <el-input v-model.trim="form.upper" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="注册时间" prop="regTime">
-        <el-input v-model.trim="form.regTime" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="最后一次登录时间" prop="loginTime">
-        <el-input v-model.trim="form.loginTime" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="最后一次登录ip" prop="ip">
-        <el-input v-model.trim="form.ip" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="账号状态" prop="state">
-        <el-input value="正常" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
-        <el-input value="冻结" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
-        <el-input value="管理员封号" autocomplete="off" :disabled="true" v-show="form.state == 2"></el-input>
-      </el-form-item>
+      <div>
+        <el-form-item label="金币" prop="gold">
+          <el-input v-model.trim="form.gold" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="余额" prop="money">
+          <el-input v-model.trim="form.money" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="直属上级" prop="upper">
+          <el-input v-model.trim="form.upper" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="注册时间" prop="regTime">
+          <el-input v-model.trim="form.regTime" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="最后一次登录时间" prop="loginTime">
+          <el-input v-model.trim="form.loginTime" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="最后一次登录ip" prop="ip">
+          <el-input v-model.trim="form.ip" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="账号状态" prop="state">
+          <el-input value="正常" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
+          <el-input value="冻结" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
+          <el-input value="管理员封号" autocomplete="off" :disabled="true" v-show="form.state == 2"></el-input>
+        </el-form-item>
+      </div>
+
     </el-form>
   </el-dialog>
 </template>

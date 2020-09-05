@@ -94,7 +94,7 @@
           prop="bank"
         >
           <el-input
-            v-model.trim="userBank[0].bank"
+            v-model.trim="userBank.bank"
             autocomplete="off"
             :disabled="true"
           />
@@ -104,7 +104,7 @@
           prop="bankBranch"
         >
           <el-input
-            v-model.trim="userBank[0].bankBranch"
+            v-model.trim="userBank.bankBranch"
             autocomplete="off"
             :disabled="true"
           />
@@ -114,7 +114,7 @@
           prop="bankCode"
         >
           <el-input
-            v-model.trim="userBank[0].bankCode"
+            v-model.trim="userBank.bankCode"
             autocomplete="off"
             :disabled="true"
           />
@@ -124,7 +124,7 @@
           prop="bankUserName"
         >
           <el-input
-            v-model.trim="userBank[0].bankUserName"
+            v-model.trim="userBank.bankUserName"
             autocomplete="off"
             :disabled="true"
           />
@@ -266,8 +266,14 @@ export default {
       },
       title: "",
       dialogFormVisible: false,
-      userBank: null, //用户银行
-      userInfo: null, //用户信息
+      userBank: {
+        bank: "",
+      }, //用户银行
+      userInfo: {
+        tel: "",
+        nick: "",
+        account: "",
+      }, //用户信息
     };
   },
   mounted() {
@@ -280,7 +286,7 @@ export default {
       api.getUserBank({uid: this.form.uid}, (res)=>{
         let code = api.getCode(res);
         if(code == 0){
-          this.userBank = api.getData(res);
+          this.userBank = api.getData(res)[0];
           //console.log(this.userBank);
         }else{
           let msg = api.getMsg(res);

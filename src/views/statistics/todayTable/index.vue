@@ -369,7 +369,7 @@ export default {
                + parseFloat(item.moneyActiveAdd) + parseFloat(item.moneyIns)
                + parseFloat(item.moneyTaskLose) + parseFloat(item.moneyActiveLose)
                + parseFloat(item.moneySubtract);
-
+              item.money = item.money.toFixed(2);
            });
            this.total = api.getTotal(res);
            this.list = data;

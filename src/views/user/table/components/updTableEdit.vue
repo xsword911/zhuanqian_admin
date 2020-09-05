@@ -43,7 +43,7 @@
           <div><div style="color:#FF3A00; display:inline-block;">*</div>注意：上传图片大小建议200*200</div>
       </el-form-item>
       <el-form-item label="直属上级" prop="upper">
-        <el-input v-model.trim="form.upper" autocomplete="off" clearable></el-input>
+        <el-input v-model.trim="form.upper" autocomplete="off" clearable :disabled="true"></el-input>
       </el-form-item>
 
     </el-form>

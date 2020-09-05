@@ -195,11 +195,6 @@ const api = {
     httpUtil.post("money/updMoneyDraw", path, funSuccess);
   },
 
-  //查找用户银卡卡
-  getUserBank: function (path, funSuccess) {
-    httpUtil.post("user/getUserBank", path, funSuccess);
-  },
-
   //管理员查询玩家额度转换记录
   getMoneyTran: function (path, funSuccess) {
     httpUtil.post("money/getMoneyTran", path, funSuccess);

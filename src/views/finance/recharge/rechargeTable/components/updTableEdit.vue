@@ -66,7 +66,7 @@
           />
         </el-form-item>
 
-        <el-form-item
+       <el-form-item
           label="收款账号"
           prop="account"
         >
@@ -179,12 +179,12 @@
       </div>
 
       <div>
-        <el-form-item
+       <el-form-item
           label="用户名"
           prop="bankUserName"
         >
           <el-input
-            v-model.trim="userInfo.account"
+            v-model="userInfo.account"
             autocomplete="off"
             :disabled="true"
           />
@@ -195,7 +195,7 @@
           prop="bankUserName"
         >
           <el-input
-            v-model.trim="userInfo.tel"
+            v-model="userInfo.tel"
             autocomplete="off"
             :disabled="true"
           />
@@ -206,7 +206,7 @@
           prop="bankUserName"
         >
           <el-input
-            v-model.trim="userInfo.nick"
+            v-model="userInfo.nick"
             autocomplete="off"
             :disabled="true"
           />
@@ -217,7 +217,7 @@
           prop="bankUserName"
         >
           <el-input
-            v-model.trim="userInfo.gold"
+            v-model="userInfo.gold"
             autocomplete="off"
             :disabled="true"
           />
@@ -228,7 +228,7 @@
           prop="bankUserName"
         >
           <el-input
-            v-model.trim="userInfo.money"
+            v-model="userInfo.money"
             autocomplete="off"
             :disabled="true"
           />
@@ -239,7 +239,7 @@
           prop="bankUserName"
         >
           <el-input
-            v-model.trim="userInfo.ip"
+            v-model="userInfo.ip"
             autocomplete="off"
             :disabled="true"
           />
@@ -250,7 +250,7 @@
           prop="bankUserName"
         >
           <el-input
-            v-model.trim="userInfo.loginTime"
+            v-model="userInfo.loginTime"
             autocomplete="off"
             :disabled="true"
           />
@@ -316,13 +316,27 @@ export default {
       },
       title: "",
       dialogFormVisible: false,
-      userInfo: null, //用户信息
+      userInfo: {
+        tel: "",
+        nick: "",
+        account: "",
+      }, //用户信息
     };
   },
   mounted() {
 
   },
   methods: {
+    showEdit(row) {
+      if (!row) {
+        this.title = "添加";
+      } else {
+        this.title = "审核";
+        this.form = Object.assign({}, row);
+      }
+      this.dialogFormVisible = true;
+      this.getUserInfo();  //获取用户信息
+    },
     //取用户数据
     getUserInfo()
     {
@@ -336,17 +350,6 @@ export default {
           this.$message.error(msg);
         }
       });
-    },
-
-    showEdit(row) {
-      if (!row) {
-        this.title = "添加";
-      } else {
-        this.title = "审核";
-        this.form = Object.assign({}, row);
-      }
-      this.dialogFormVisible = true;
-      this.getUserInfo();  //获取用户信息
     },
     close() {
       this.$refs["form"].resetFields();
