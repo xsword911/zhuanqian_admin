@@ -18,7 +18,10 @@
           @submit.native.prevent
         >
           <el-form-item>
-             <el-input v-model="queryForm.uid" placeholder="uid"  clearable/>
+             <el-input v-model="queryForm.uid" placeholder="发布者uid"  clearable/>
+          </el-form-item>
+          <el-form-item>
+             <el-input v-model="queryForm.doneUid" placeholder="完成者uid"  clearable/>
            </el-form-item>
           <el-form-item>
             <el-input v-model="queryForm.title" placeholder="任务名称"  clearable/>

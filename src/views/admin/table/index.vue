@@ -94,18 +94,25 @@
             >编辑
           </el-button>
 
-          <el-button type="text" @click="handleCheckEdit(scope.row)"
+<!--          <el-button type="text" @click="handleCheckEdit(scope.row)"
             >查看
-          </el-button>
-          <el-button type="text" @click="handleUpdPwd(scope.row)"
+          </el-button> -->
+<!--          <el-button type="text" @click="handleUpdPwd(scope.row)"
              >修改密码
-           </el-button>
-           <el-button type="text" v-if="scope.row.state != 0" @click="handleUpdState(scope.row)"
-              >解冻
-            </el-button>
-            <el-button type="text" v-if="scope.row.state == 0" @click="handleUpdState(scope.row)"
-               >冻结
-             </el-button>
+           </el-button> -->
+          <el-button style="padding:0;margin:0 0 0 10px;border: none;">
+            <el-dropdown @command="handleCommand">
+              <span class="el-dropdown-link">操作</span>
+              <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item :command="beforeHandleCommand(2, scope.row)">查看</el-dropdown-item>
+                  <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '解冻', 0)">解冻</el-dropdown-item>
+                  <!-- <el-dropdown-item command="冻结">冻结</el-dropdown-item> -->
+                  <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '禁用', 2)">禁用</el-dropdown-item>
+                  <el-dropdown-item :command="beforeHandleCommand(1, scope.row)">修改密码</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-button>
+
         </template>
       </el-table-column>
     </el-table>
@@ -184,6 +191,48 @@ export default {
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //封装下拉菜单传入参数  type 0解冻封号操作 1修改密码操作
+    beforeHandleCommand(type, row, test, stateCode){
+        if(type == 0){
+          return {
+            'test': test,
+            'stateCode': stateCode,
+            'row': row,
+            'type': 0
+          }
+        }
+        else if(type == 1) return {'type': 1, 'row': row};
+        else if(type == 2) return {'type': 2, 'row': row};
+    },
+    //下拉菜单操作  command.type  0解冻封号操作 1修改密码操作
+    handleCommand(command){
+      if(command.type == 0)
+      {
+          this.$baseConfirm("你确定要" + command.test + "该账号？", null, async () => {
+            let data = {
+              id: command.row.id,
+              state: command.stateCode
+            };
+            api.userStopOrCommon(data, (res)=>{
+              let code = api.getCode(res);
+              if(code == 0){
+                this.$baseMessage(command.test + "成功", "success");
+                this.$refs["form"].resetFields();
+                this.dialogFormVisible = false;
+                this.form = this.$options.data().form;
+                this.fetchData();
+              }else{
+                let msg = api.getMsg(res);
+                this.$message.error(msg);
+              }
+            });
+          });
+      }
+      else if(command.type == 1)  this.handleUpdPwd(command.row);   //修改密码
+      else if(command.type == 2)  this.handleCheckEdit(command.row);   //查看
+    },
+
+
     handleAdd() {
       this.$refs["edit"].showEdit();
     },
@@ -323,3 +372,13 @@ export default {
   },
 };
 </script>
+
+<style>
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+</style>

@@ -75,12 +75,12 @@ export const asyncRoutes = [
         component: () => import("@/views/user/table/index"),
         meta: { title: "用户管理" },
       },
-      {
-        path: "agent",
-        name: "Agent",
-        component: () => import("@/views/user/agentTable/index"),
-        meta: { title: "代理管理" },
-      },
+      // {
+      //   path: "agentManagement",
+      //   name: "AgentManagement",
+      //   component: () => import("@/views/user/agentTable/index"),
+      //   meta: { title: "代理管理" },
+      // },
       {
         path: "userLevel",
         name: "UserLevel",

@@ -29,6 +29,14 @@
           </el-form-item>
 
           <el-form-item>
+            <el-input
+              v-model="queryForm.account"
+              placeholder="用户名"
+              clearable
+            />
+          </el-form-item>
+
+          <el-form-item>
                <el-select v-model="branchValue" placeholder="下级" clearable>
                  <el-option-group
                    v-for="group in branch"

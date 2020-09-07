@@ -423,8 +423,14 @@ export default {
 
       rules: {
         classify: [{ required: true, trigger: "blur", message: "请选择任务分类" }],
-        title: [{ required: true, trigger: "blur", message: "请输入活动标题" }],
-        explain: [{ required: true, trigger: "blur", message: "请输入活动说明" }],
+        title: [
+          { required: true, trigger: "blur", message: "请输入活动标题" },
+          { min: 2, max: 8, message: "活动标题在 2 到 8 个字符", trigger: "blur" },
+        ],
+        explain: [
+          { required: true, trigger: "blur", message: "请输入活动说明" },
+          { min: 2, max: 30, message: "活动说明在 2 到 30 个字符", trigger: "blur" },
+        ],
         level: [{ required: true, trigger: "blur", message: "请输入活动等级" }],
         // rule: [{ required: true, trigger: "blur", message: "请输入活动规则" }],
         cycle: [{ required: true, trigger: "blur", message: "请输入任务刷新周期" }],

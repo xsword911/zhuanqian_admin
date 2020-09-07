@@ -3,7 +3,6 @@
     <vab-query-form style="display: flex;">
       <vab-query-form-left-panel style="max-width:84px;">
         <el-button
-          v-if="showData"
           icon="el-icon-plus"
           type="primary"
           @click="handleAdd"

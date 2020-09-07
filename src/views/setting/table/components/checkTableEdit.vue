@@ -19,6 +19,7 @@
         <el-input value="代理" autocomplete="off" :disabled="true" v-show="form.type == 3"></el-input>
         <el-input value="注册配置" autocomplete="off" :disabled="true" v-show="form.type == 4"></el-input>
         <el-input value="平台配置" autocomplete="off" :disabled="true" v-show="form.type == 5"></el-input>
+        <el-input value="资金配置" autocomplete="off" :disabled="true" v-show="form.type == 6"></el-input>
       </el-form-item>
       <el-form-item label="添加时间" prop="addTime">
         <el-input v-model.trim="form.addTime" autocomplete="off" :disabled="true"></el-input>

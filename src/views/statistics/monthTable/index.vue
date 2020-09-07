@@ -29,6 +29,14 @@
           </el-form-item>
 
           <el-form-item>
+            <el-input
+              v-model="queryForm.account"
+              placeholder="用户名"
+              clearable
+            />
+          </el-form-item>
+
+          <el-form-item>
                <el-select v-model="branchValue" placeholder="下级" clearable>
                  <el-option-group
                    v-for="group in branch"
@@ -173,7 +181,7 @@
 
       <el-table-column
         label="操作"
-        width="180px"
+        width="120px"
         fixed="right"
       >
         <template slot-scope="scope">
