@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
     <vab-query-form style="display: flex;">
-     <vab-query-form-right-panel style="flex: 1;">
+      <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
           :model="queryForm"
@@ -9,7 +9,18 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.uid" placeholder="用户id" clearable />
+            <el-input
+              v-model="queryForm.uid"
+              placeholder="用户id"
+              clearable
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-input
+              v-model="queryForm.account"
+              placeholder="用户名"
+              clearable
+            />
           </el-form-item>
           <el-form-item>
             <el-button
@@ -17,204 +28,294 @@
               type="primary"
               native-type="submit"
               @click="getUserTable"
-              >查询
+            >
+              查询
             </el-button>
           </el-form-item>
         </el-form>
       </vab-query-form-right-panel>
     </vab-query-form>
 
-    <div class="userInfo" v-if="showData">
+    <div
+      v-if="showData && userEn != null"
+      class="userInfo"
+    >
       <div class="info_left">
         <div class="">
-            <div>用户头像：</div>
-            <el-avatar :size="60" src="" @error="errorHandler">
-              <img :src="userEn.headUrl"/>
-            </el-avatar>
+          <div>用户头像：</div>
+          <el-avatar
+            :size="60"
+            src=""
+            @error="errorHandler"
+          >
+            <img :src="userEn.headUrl">
+          </el-avatar>
         </div>
 
         <div class="">
-            <div>用户id：</div>
-            <div>{{queryForm.uid}}</div>
+          <div>用户id：</div>
+          <div>{{ queryForm.uid }}</div>
         </div>
 
         <div class="">
-            <div>用户名：</div>
-            <div>{{userEn.account}}</div>
+          <div>用户名：</div>
+          <div>{{ userEn.account }}</div>
         </div>
 
         <div class="">
-            <div>手机号：</div>
-            <div>{{userEn.tel}}</div>
+          <div>手机号：</div>
+          <div>{{ userEn.tel }}</div>
         </div>
 
         <div class="">
-            <div>昵称：</div>
-            <div>{{userEn.nick}}</div>
+          <div>昵称：</div>
+          <div>{{ userEn.nick }}</div>
         </div>
 
         <div class="">
-            <div>邀请码：</div>
-            <div>{{userEn.code}}</div>
+          <div>邀请码：</div>
+          <div>{{ userEn.code }}</div>
         </div>
 
         <div class="">
-            <div>账户类型：</div>
-            <div v-if="userEn.type == 0">普通用户</div>
-            <div v-if="userEn.type == 1">管理员</div>
+          <div>账户类型：</div>
+          <div v-if="userEn.type == 0">
+            普通用户
+          </div>
+          <div v-if="userEn.type == 1">
+            管理员
+          </div>
         </div>
 
         <div class="">
-            <div>金币：</div>
-            <div>{{userEn.gold}}</div>
+          <div>金币：</div>
+          <div>{{ userEn.gold }}</div>
         </div>
 
         <div class="">
-            <div>余额：</div>
-            <div>{{userEn.money}}</div>
+          <div>余额：</div>
+          <div>{{ userEn.money }}</div>
         </div>
-
       </div>
 
       <div class="info_right">
-
         <div class="">
-            <div>直属上级：</div>
-            <div>{{userEn.upper}}</div>
+          <div>直属上级：</div>
+          <div>{{ userEn.upper }}</div>
         </div>
 
         <div class="">
-            <div>所有上级：</div>
-            <div>{{userEn.allUpper}}</div>
+          <div>所有上级：</div>
+          <div>{{ userEn.allUpper }}</div>
         </div>
 
         <div class="">
-            <div>直属上级：</div>
-            <div>{{userEn.upper}}</div>
+          <div>直属上级：</div>
+          <div>{{ userEn.upper }}</div>
         </div>
 
         <div class="">
-            <div>注册时间：</div>
-            <div>{{userEn.regTime}}</div>
+          <div>注册时间：</div>
+          <div>{{ userEn.regTime }}</div>
         </div>
 
         <div class="">
-            <div style="width:33%;">最后一次登录时间：</div>
-            <div>{{userEn.loginTime}}</div>
+          <div style="width:33%;">
+            最后一次登录时间：
+          </div>
+          <div>{{ userEn.loginTime }}</div>
         </div>
 
         <div class="">
-            <div style="width:33%;">最后一次登录时间ip：</div>
-            <div>{{userEn.ip}}</div>
+          <div style="width:33%;">
+            最后一次登录时间ip：
+          </div>
+          <div>{{ userEn.ip }}</div>
         </div>
 
         <div class="">
-            <div>密码错误次数：</div>
-            <div>{{userEn.pwdError}}</div>
+          <div>密码错误次数：</div>
+          <div>{{ userEn.pwdError }}</div>
         </div>
 
         <div class="">
-            <div>账号冻结次数：</div>
-            <div>{{userEn.reezeNum}}</div>
+          <div>账号冻结次数：</div>
+          <div>{{ userEn.reezeNum }}</div>
         </div>
 
         <div class="">
-            <div>账号状态：</div>
-            <div v-if="userEn.state == 0">正常</div>
-            <div v-if="userEn.state == 1">冻结</div>
-            <div v-if="userEn.state == 2">管理员封号</div>
+          <div>账号状态：</div>
+          <div v-if="userEn.state == 0">
+            正常
+          </div>
+          <div v-if="userEn.state == 1">
+            冻结
+          </div>
+          <div v-if="userEn.state == 2">
+            管理员封号
+          </div>
         </div>
 
         <div class="">
-            <div>登录次数：</div>
-            <div>{{userEn.loginNum}}</div>
+          <div>登录次数：</div>
+          <div>{{ userEn.loginNum }}</div>
         </div>
-
       </div>
     </div>
 
-    <div class="table_title" v-if="showData">
+    <div
+      v-if="showData"
+      class="table_title"
+    >
       <div>账变明细</div>
-      <div class="title_tips">(显示最近十条记录)</div>
+      <div class="title_tips">
+        (显示最近十条记录)
+      </div>
     </div>
     <el-table
+      v-if="showData"
       ref="tableSort"
       v-loading="listLoading"
       :data="list"
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
-      v-if="showData"
     >
-      <el-table-column prop="uid" label="用户id"></el-table-column>
-      <el-table-column label="交易订单号" prop="sn"></el-table-column>
-      <el-table-column label="关联订单号" prop="snExt"></el-table-column>
-      <el-table-column label="交易时间" prop="addTime"></el-table-column>
-      <el-table-column label="交易金额" prop="money"></el-table-column>
+      <el-table-column
+        prop="uid"
+        label="用户id"
+      />
+      <el-table-column
+        label="交易订单号"
+        prop="sn"
+      />
+      <el-table-column
+        label="关联订单号"
+        prop="snExt"
+      />
+      <el-table-column
+        label="交易时间"
+        prop="addTime"
+      />
+      <el-table-column
+        label="交易金额"
+        prop="money"
+      />
 
-      <el-table-column label="交易类别" prop="sortType"></el-table-column>
-      <el-table-column label="交易类型" prop="type"></el-table-column>
-      <el-table-column label="备注" prop="desc"></el-table-column>
+      <el-table-column
+        label="交易类别"
+        prop="sortType"
+      />
+      <el-table-column
+        label="交易类型"
+        prop="type"
+      />
+      <el-table-column
+        label="备注"
+        prop="desc"
+      />
 
-    <el-table-column label="操作" width="180px" fixed="right">
+      <el-table-column
+        label="操作"
+        width="180px"
+        fixed="right"
+      >
         <template slot-scope="scope">
-          <el-button type="text" @click="handleCheckEdit(scope.row)"
-            >查看
+          <el-button
+            type="text"
+            @click="handleCheckEdit(scope.row)"
+          >
+            查看
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <check-table-edit ref="checkEdit"></check-table-edit>
+    <check-table-edit ref="checkEdit" />
 
 
 
 
 
-    <div class="table_title" v-if="showData">
+    <div
+      v-if="showData"
+      class="table_title"
+    >
       <div>提现记录</div>
-      <div class="title_tips">(显示最近十条记录)</div>
+      <div class="title_tips">
+        (显示最近十条记录)
+      </div>
     </div>
     <el-table
-          ref="tableSort"
-          v-loading="listLoading"
-          :data="goldList"
-          :element-loading-text="elementLoadingText"
-          @selection-change="setSelectRows"
-          @sort-change="tableSortChange"
-          v-if="showData"
-        >
-        <el-table-column prop="uid" label="uid"></el-table-column>
-        <el-table-column prop="sn" label="账单号"></el-table-column>
-        <el-table-column prop="money" label="金额"></el-table-column>
-        <el-table-column prop="addTime" label="申请时间"></el-table-column>
+      v-if="showData"
+      ref="tableSort"
+      v-loading="listLoading"
+      :data="goldList"
+      :element-loading-text="elementLoadingText"
+      @selection-change="setSelectRows"
+      @sort-change="tableSortChange"
+    >
+      <el-table-column
+        prop="uid"
+        label="uid"
+      />
+      <el-table-column
+        prop="sn"
+        label="账单号"
+      />
+      <el-table-column
+        prop="money"
+        label="金额"
+      />
+      <el-table-column
+        prop="addTime"
+        label="申请时间"
+      />
 
-       <el-table-column label="申请状态">
-          <template slot-scope="scope">
-            <el-tooltip
-              :content="scope.row.status"
-              class="item"
-              effect="dark"
-              placement="top-start"
+      <el-table-column label="申请状态">
+        <template slot-scope="scope">
+          <el-tooltip
+            :content="scope.row.status"
+            class="item"
+            effect="dark"
+            placement="top-start"
+          >
+            <el-tag
+              :type="scope.row.status | statusFilter"
             >
-              <el-tag :type="scope.row.status | statusFilter"
-                >{{ scope.row.stateTest }}
-              </el-tag>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column prop="admin" label="审核人"></el-table-column>
-        <el-table-column prop="updTime" label="审核时间"></el-table-column>
-        <el-table-column prop="desc" label="备注"></el-table-column>
+              {{ scope.row.stateTest }}
+            </el-tag>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="admin"
+        label="审核人"
+      />
+      <el-table-column
+        prop="updTime"
+        label="审核时间"
+      />
+      <el-table-column
+        prop="desc"
+        label="备注"
+      />
 
-        <el-table-column label="操作" width="180px" fixed="right">
-            <template slot-scope="scope">
-              <el-button type="text" @click="handleCheckMoneyEdit(scope.row)"
-                >查看
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <check-money-table-edit ref="checkMoneyEdit"></check-money-table-edit>
+      <el-table-column
+        label="操作"
+        width="180px"
+        fixed="right"
+      >
+        <template slot-scope="scope">
+          <el-button
+            type="text"
+            @click="handleCheckMoneyEdit(scope.row)"
+          >
+            查看
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <check-money-table-edit ref="checkMoneyEdit" />
   </div>
 </template>
 
@@ -271,7 +372,7 @@ export default {
       imgShow: true,
       list: [],  //账变明细列表
       goldList: [],  //提现明细列表
-      userEn: [],  //用户信息
+      userEn: null,  //用户信息
       listLoading: true,
       layout: "total, sizes, prev, pager, next, jumper",
       total: 0,
@@ -349,6 +450,7 @@ export default {
     },
     //查询个人报表
     getUserTable(){
+      this.listLoading = true;
       this.fetchData();
       this.getUserInfo();
       this.showData = true;
@@ -363,8 +465,8 @@ export default {
         }
       });
     },
+
     async fetchData() {
-      this.listLoading = true;
       //获取账变列表
       api.getMoney(this.queryForm, (res)=>{
          let code = api.getCode(res);
@@ -434,6 +536,7 @@ export default {
       });
       //获取提现列表
       api.getMoneyDraw(this.queryForm, (res)=>{
+        //this.listLoading = false;
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
