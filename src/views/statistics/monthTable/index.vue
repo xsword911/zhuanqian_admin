@@ -137,6 +137,11 @@
         label="充值金额"
         prop="rechargeMoney"
       />
+      
+      <el-table-column
+        label="首充金额"
+        prop="firstRechargeMoney"
+      />
 
       <el-table-column
         label="提现次数"
@@ -160,6 +165,11 @@
         label="代理佣金"
         prop="moneyAgency"
       />
+      
+      <el-table-column
+        label="当天注册"
+        prop="isRegisterTodayTip"
+      />
 
       <!-- <el-table-column
         label="前一天金币"
@@ -181,7 +191,7 @@
 
       <el-table-column
         label="操作"
-        width="120px"
+        width="100px"
         fixed="right"
       >
         <template slot-scope="scope">
@@ -396,6 +406,9 @@ export default {
                + parseFloat(item.moneyTaskLose) + parseFloat(item.moneyActiveLose)
                + parseFloat(item.moneySubtract);
               item.money = item.money.toFixed(2);
+
+              if(item.isRegisterToday == 0) item.isRegisterTodayTip = "否";
+              if(item.isRegisterToday == 1) item.isRegisterTodayTip = "是";
            });
            this.total = api.getTotal(res);
            this.list = data;

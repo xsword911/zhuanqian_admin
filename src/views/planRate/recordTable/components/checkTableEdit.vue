@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-   <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+   <el-form ref="form" :model="form" :rules="rules" label-width="110px">
      <el-form-item label="编号" prop="sn">
         <el-input v-model.trim="form.sn" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>

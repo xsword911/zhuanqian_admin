@@ -114,7 +114,7 @@
 
       <el-table-column prop="desc" label="备注"></el-table-column>
 
-      <el-table-column label="操作" width="180px" fixed="right">
+      <el-table-column label="操作" width="80px" fixed="right">
         <template slot-scope="scope">
 <!--          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑

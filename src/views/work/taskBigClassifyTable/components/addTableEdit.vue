@@ -9,10 +9,10 @@
     <el-form-item label="排序" prop="order">
        <el-input v-model.trim="form.order" autocomplete="off"></el-input>
      </el-form-item>
-     <el-form-item label="任务大类id" prop="bigClassifyId">
+     <el-form-item label="大类id" prop="bigClassifyId">
         <el-input v-model.trim="form.bigClassifyId" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="任务大类名称" prop="name">
+      <el-form-item label="大类名称" prop="name">
          <el-input v-model.trim="form.name" autocomplete="off"></el-input>
        </el-form-item>
 

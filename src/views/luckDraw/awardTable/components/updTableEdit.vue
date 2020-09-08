@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-  <el-form ref="form" :model="form" label-width="80px" :rules="rules">
+  <el-form ref="form" :model="form" label-width="110px" :rules="rules">
     <el-form-item label="排序" prop="order">
         <el-input v-model="form.order" placeholder="排序"/>
      </el-form-item>

@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-   <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+   <el-form ref="form" :model="form" :rules="rules" label-width="100px">
      <el-form-item label="排序" prop="order">
         <el-input v-model.trim="form.order" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
@@ -29,6 +29,7 @@
       <el-form-item label="备注" prop="desc">
         <el-input v-model.trim="form.desc" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
+      <div style="color: #ff0000;">注: 存款利率和服务费请按照正确格式填写如：1% 填写100</div>
     </el-form>
   </el-dialog>
 </template>

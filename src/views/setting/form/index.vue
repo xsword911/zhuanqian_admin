@@ -71,6 +71,9 @@ export default {
         },{
           value: 5,
           label: '平台配置'
+        },{
+          value: 6,
+          label: '资金配置'
         }]
       }],
       typeValue: '',      //选中的配置类型

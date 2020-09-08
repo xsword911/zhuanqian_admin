@@ -5,27 +5,28 @@
     width="500px"
     @close="close"
   >
-   <el-form ref="form" :model="form" label-width="80px">
-     <el-form-item label="排序id" prop="sort">
-        <el-input v-model.trim="form.sort" autocomplete="off" :disabled="true"></el-input>
+   <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+     <el-form-item label="uid" prop="uid">
+        <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="标题" prop="title">
-        <el-input v-model.trim="form.title" autocomplete="off" :disabled="true" type="textarea"></el-input>
+      <el-form-item label="账单号" prop="sn">
+        <el-input v-model.trim="form.sn" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="内容" prop="content">
-        <el-input v-model.trim="form.content" autocomplete="off" :disabled="true" type="textarea"></el-input>
+      <el-form-item label="金额" prop="money">
+        <el-input v-model.trim="form.money" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="状态" prop="state">
-        <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
-        <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
-      </el-form-item>
-      <el-form-item label="操作者" prop="admin">
-        <el-input v-model.trim="form.admin" autocomplete="off" :disabled="true"></el-input>
-      </el-form-item>
-      <el-form-item label="添加时间" prop="addTime">
+      <el-form-item label="提交时间" prop="addTime">
         <el-input v-model.trim="form.addTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="修改时间" prop="updTime">
+      <el-form-item label="状态" prop="state">
+        <el-input value="未审核" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
+        <el-input value="审核成功" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
+        <el-input value="审核未通过" autocomplete="off" :disabled="true" v-show="form.state == 2"></el-input>
+      </el-form-item>
+      <el-form-item label="审核人" prop="admin">
+        <el-input v-model.trim="form.admin" autocomplete="off" :disabled="true"></el-input>
+      </el-form-item>
+      <el-form-item label="审核时间" prop="updTime">
         <el-input v-model.trim="form.updTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="备注" prop="desc">
@@ -43,12 +44,21 @@ export default {
   data() {
     return {
       form: {
-        day: null,
-        awardType: null,
-        award: '',
-        state: null,
-        stateTest: '',
-        awardTypeTest: '',
+        account: "",
+        tel: "",
+        nick: "",
+        code: "",
+        gold: "",
+        money: "",
+        upper: "",
+        regTime: "",
+        loginTime: "",
+        ip: "",
+        state: "",
+      },
+      rules: {
+        title: [{ required: true, trigger: "blur", message: "请输入标题" }],
+        author: [{ required: true, trigger: "blur", message: "请输入作者" }],
       },
       title: "",
       dialogFormVisible: false,

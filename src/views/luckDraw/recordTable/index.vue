@@ -102,7 +102,7 @@
       <el-table-column prop="stateTest" label="状态"></el-table-column>
       <el-table-column prop="finishTime" label="兑换时间"></el-table-column>
 
-      <el-table-column label="操作" width="180px" fixed="right">
+      <el-table-column label="操作" width="80px" fixed="right">
         <template slot-scope="scope">
 <!--          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑

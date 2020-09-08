@@ -11,7 +11,12 @@
       </el-form-item>
 
       <el-form-item label="标题" prop="title">
-         <el-input v-model.trim="form.title" autocomplete="off"></el-input>
+         <el-input
+           type="textarea"
+           :rows="3"
+           placeholder="请输入内容"
+           v-model="form.title">
+         </el-input>
       </el-form-item>
 
       <el-form-item label="内容" prop="content">

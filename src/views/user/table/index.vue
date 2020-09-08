@@ -21,7 +21,7 @@
           <el-form-item>
             <el-input v-model="queryForm.uid" placeholder="用户uid"  clearable/>
           </el-form-item>
-          
+
           <el-form-item>
             <el-input
               v-model="queryForm.upper"
@@ -130,14 +130,14 @@
       <el-table-column prop="loginTime" label="最后登录时间"></el-table-column>
       <el-table-column prop="ip" label="最后登录ip"></el-table-column>
       <el-table-column prop="loginNum" label="登录次数"></el-table-column>
-      <el-table-column label="操作" width="180px" fixed="right">
+      <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
+<!--          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
-          </el-button>
-<!--          <el-button type="text" @click="handleCheckEdit(scope.row)"
-            >查看
           </el-button> -->
+         <el-button type="text" @click="handleCheckEdit(scope.row)"
+            >查看
+          </el-button>
 <!--          <el-button type="text" @click="handleUpdPwd(scope.row)">
             修改密码
           </el-button> -->
@@ -145,7 +145,7 @@
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">操作</span>
               <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item :command="beforeHandleCommand(3, scope.row)">查看</el-dropdown-item>
+                  <el-dropdown-item :command="beforeHandleCommand(3, scope.row)">编辑</el-dropdown-item>
                   <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '解冻', 0)">解冻</el-dropdown-item>
                   <!-- <el-dropdown-item command="冻结">冻结</el-dropdown-item> -->
                   <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '禁用', 2)">禁用</el-dropdown-item>
@@ -312,7 +312,7 @@ export default {
       }
       else if(command.type == 1)  this.handleUpdPwd(command.row);   //修改密码
       else if(command.type == 2)  this.handleUpdUpper(command.row)   //修改上级
-      else if(command.type == 3)  this.handleCheckEdit(command.row)   //查看
+      else if(command.type == 3)  this.handleEdit(command.row)   //编辑
     },
     //添加用户
     handleAdd() {

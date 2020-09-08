@@ -88,15 +88,14 @@
       <el-table-column prop="loginTime" label="最后一次登录时间"></el-table-column>
      <el-table-column prop="ip" label="最后一次ip时间"></el-table-column>
       <el-table-column prop="loginNum" label="登录次数"></el-table-column>
-      <el-table-column label="操作" width="180px" fixed="right">
+      <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
+<!--          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
-          </el-button>
-
-<!--          <el-button type="text" @click="handleCheckEdit(scope.row)"
-            >查看
           </el-button> -->
+         <el-button type="text" @click="handleCheckEdit(scope.row)"
+            >查看
+          </el-button>
 <!--          <el-button type="text" @click="handleUpdPwd(scope.row)"
              >修改密码
            </el-button> -->
@@ -104,7 +103,7 @@
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">操作</span>
               <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item :command="beforeHandleCommand(2, scope.row)">查看</el-dropdown-item>
+                  <el-dropdown-item :command="beforeHandleCommand(2, scope.row)">编辑</el-dropdown-item>
                   <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '解冻', 0)">解冻</el-dropdown-item>
                   <!-- <el-dropdown-item command="冻结">冻结</el-dropdown-item> -->
                   <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '禁用', 2)">禁用</el-dropdown-item>
@@ -191,7 +190,7 @@ export default {
   beforeDestroy() {},
   mounted() {},
   methods: {
-    //封装下拉菜单传入参数  type 0解冻封号操作 1修改密码操作
+    //封装下拉菜单传入参数  type 0解冻封号操作 1修改密码操作 2编辑
     beforeHandleCommand(type, row, test, stateCode){
         if(type == 0){
           return {
@@ -204,7 +203,7 @@ export default {
         else if(type == 1) return {'type': 1, 'row': row};
         else if(type == 2) return {'type': 2, 'row': row};
     },
-    //下拉菜单操作  command.type  0解冻封号操作 1修改密码操作
+    //下拉菜单操作  command.type  0解冻封号操作 1修改密码操作 2编辑
     handleCommand(command){
       if(command.type == 0)
       {
@@ -229,7 +228,7 @@ export default {
           });
       }
       else if(command.type == 1)  this.handleUpdPwd(command.row);   //修改密码
-      else if(command.type == 2)  this.handleCheckEdit(command.row);   //查看
+      else if(command.type == 2)  this.handleEdit(command.row);   //编辑
     },
 
 

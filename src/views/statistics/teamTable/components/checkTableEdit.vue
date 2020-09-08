@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-   <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+   <el-form ref="form" :model="form" :rules="rules" label-width="80px">
      <el-form-item label="uid" prop="uid">
         <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
@@ -18,8 +18,8 @@
       <el-form-item label="交易时间" prop="addTime">
         <el-input v-model.trim="form.addTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="交易金币" prop="gold">
-        <el-input v-model.trim="form.gold" autocomplete="off" :disabled="true"></el-input>
+      <el-form-item label="交易金额" prop="money">
+        <el-input v-model.trim="form.money" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="交易类别" prop="sort">
         <el-input value="收入" autocomplete="off" :disabled="true" v-show="form.sort == 0"></el-input>

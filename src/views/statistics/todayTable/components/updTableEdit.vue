@@ -8,7 +8,7 @@
     <el-form
       ref="form"
       :model="form"
-      label-width="80px"
+      label-width="100px"
       style="display: flex; justify-content: space-between;"
     >
      <div>
@@ -83,7 +83,7 @@
            :disabled="true"
          />
        </el-form-item>
-       
+
        <el-form-item
          label="活动收入"
          prop="moneyActiveAdd"
@@ -123,6 +123,17 @@
        >
          <el-input
            v-model.trim="form.rechargeMoney"
+           autocomplete="off"
+           :disabled="true"
+         />
+       </el-form-item>
+
+       <el-form-item
+         label="首充金额"
+         prop="firstRechargeMoney"
+       >
+         <el-input
+           v-model.trim="form.firstRechargeMoney"
            autocomplete="off"
            :disabled="true"
          />
@@ -181,7 +192,18 @@
            :disabled="true"
          />
        </el-form-item>
-       
+
+       <el-form-item
+         label="当天注册"
+         prop="isRegisterTodayTip"
+       >
+         <el-input
+           v-model.trim="form.isRegisterTodayTip"
+           autocomplete="off"
+           :disabled="true"
+         />
+       </el-form-item>
+
        <el-form-item
          label="备注"
          prop="desc"

@@ -330,6 +330,12 @@ export const asyncRoutes = [
         meta: { title: "个人概览" },
       },
       {
+        path: "teamStatisticsTable",
+        name: "TeamStatisticsTable",
+        component: () => import("@/views/statistics/teamTable/index"),
+        meta: { title: "团队总览" },
+      },
+      {
         path: "dayStatisticsTable",
         name: "DayStatisticsTable",
         component: () => import("@/views/statistics/todayTable/index"),

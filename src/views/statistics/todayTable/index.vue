@@ -147,6 +147,11 @@
       />
 
       <el-table-column
+        label="首充金额"
+        prop="firstRechargeMoney"
+      />
+
+      <el-table-column
         label="提现次数"
         prop="drawSum"
       />
@@ -169,6 +174,11 @@
         prop="moneyAgency"
       />
 
+      <el-table-column
+        label="当天注册"
+        prop="isRegisterTodayTip"
+      />
+
       <!-- <el-table-column
         label="前一天金币"
         prop="goldOld"
@@ -188,21 +198,21 @@
       />
       <el-table-column
         label="操作"
-        width="180px"
+        width="100px"
         fixed="right"
       >
         <template slot-scope="scope">
           <el-button
             type="text"
-            @click="handleEdit(scope.row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            type="text"
             @click="handleCheckEdit(scope.row)"
           >
             查看
+          </el-button>
+          <el-button
+            type="text"
+            @click="handleEdit(scope.row)"
+          >
+            编辑
           </el-button>
         </template>
       </el-table-column>
@@ -378,6 +388,9 @@ export default {
                + parseFloat(item.moneyTaskLose) + parseFloat(item.moneyActiveLose)
                + parseFloat(item.moneySubtract);
               item.money = item.money.toFixed(2);
+
+              if(item.isRegisterToday == 0) item.isRegisterTodayTip = "否";
+              if(item.isRegisterToday == 1) item.isRegisterTodayTip = "是";
            });
            this.total = api.getTotal(res);
            this.list = data;

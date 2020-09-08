@@ -22,8 +22,8 @@
             <el-input v-model="queryForm.key" placeholder="配置名" clearable />
           </el-form-item>
 
-<!--          <el-form-item>
-               <el-select v-model="typeValue" placeholder="配置类型" clearable filterable allow-create>
+         <el-form-item>
+               <el-select v-model="queryForm.type" placeholder="配置类型" clearable filterable allow-create>
                  <el-option-group
                    v-for="group in type"
                    :key="group.label"
@@ -36,7 +36,7 @@
                    </el-option>
                  </el-option-group>
                </el-select>
-          </el-form-item> -->
+          </el-form-item>
 
 <!--          <el-form-item>
               <el-date-picker
@@ -89,17 +89,17 @@
       <el-table-column prop="updTime" label="修改时间"></el-table-column>
       <el-table-column prop="desc" label="备注"></el-table-column>
 
-      <el-table-column label="操作" width="180px" fixed="right">
+      <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
+          <el-button type="text" @click="handleCheckEdit(scope.row)"
+            >查看
+          </el-button>
           <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
           </el-button>
 <!--         <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
-          <el-button type="text" @click="handleCheckEdit(scope.row)"
-            >查看
-          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -181,13 +181,7 @@ export default {
       queryForm: {
         page: 1,
         count: 10,
-        type: null,
-        id: null,
-        key: '',
-        value: '',
-        addTime: '',
-        updTime: '',
-        desc: '',
+        type: null
       },
     };
   },
@@ -287,12 +281,16 @@ export default {
     //搜索关键字
     handleQuery() {
       this.queryForm.page = 1;
+      //配置类型为空时删除type属性
+      if(util.isEmpty(this.queryForm.type)) delete this.queryForm.type;
+      //配置key为空时删除type属性
+      if(util.isEmpty(this.queryForm.key)) delete this.queryForm.key;
       this.fetchData();
     },
     async fetchData() {
 
       this.listLoading = true;
-      api.getConfig(this.queryForm, (res)=>{
+      api.getConfigByInfo(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);

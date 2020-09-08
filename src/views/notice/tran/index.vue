@@ -27,7 +27,7 @@
           @submit.native.prevent
         >
         <el-form-item>
-            <el-input v-model="queryForm.title" placeholder="标题"  clearable/>
+            <el-input v-model="queryForm.title" placeholder="标题" clearable/>
         </el-form-item>
 
           <el-form-item>
@@ -114,17 +114,17 @@
       <el-table-column prop="updTime" label="修改时间"></el-table-column>
       <el-table-column prop="desc" label="备注"></el-table-column>
 
-      <el-table-column label="操作" width="180px" fixed="right">
+      <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
+          <el-button type="text" @click="handleCheckEdit(scope.row)"
+            >查看
+          </el-button>
           <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
           </el-button>
 <!--          <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
-          <el-button type="text" @click="handleCheckEdit(scope.row)"
-            >查看
-          </el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -9,7 +9,7 @@
       ref="form"
       :model="form"
       :rules="rules"
-      label-width="80px"
+      label-width="100px"
       style="display: flex; justify-content: space-between;"
     >
       <div>
@@ -128,6 +128,17 @@
             :disabled="true"
           />
         </el-form-item>
+        
+        <el-form-item
+          label="首充金额"
+          prop="firstRechargeMoney"
+        >
+          <el-input
+            v-model.trim="form.firstRechargeMoney"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
 
         <el-form-item
           label="提现次数"
@@ -178,6 +189,17 @@
         >
           <el-input
             v-model.trim="form.moneyAgency"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        
+        <el-form-item
+          label="当天注册"
+          prop="isRegisterTodayTip"
+        >
+          <el-input
+            v-model.trim="form.isRegisterTodayTip"
             autocomplete="off"
             :disabled="true"
           />

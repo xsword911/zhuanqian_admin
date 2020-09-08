@@ -2,10 +2,10 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="700px"
+    width="800px"
     @close="close"
   >
-    <el-form ref="form" :model="form" label-width="80px" :rules="rules" style="display: flex; justify-content: space-between;">
+    <el-form ref="form" :model="form" label-width="110px" :rules="rules" style="display: flex; justify-content: space-between;">
    <div>
      <el-form-item label="排序" prop="order">
         <el-input v-model.trim="form.order" autocomplete="off"

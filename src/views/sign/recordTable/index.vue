@@ -89,7 +89,7 @@
       <el-table-column prop="awardTypeTest" label="奖励类型"></el-table-column>
       <el-table-column prop="award" label="奖励内容"></el-table-column>
 
-      <el-table-column label="操作" width="180px" fixed="right">
+      <el-table-column label="操作" width="80px" fixed="right">
         <template slot-scope="scope">
 <!--          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑

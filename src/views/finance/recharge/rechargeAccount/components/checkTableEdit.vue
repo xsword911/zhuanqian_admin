@@ -5,7 +5,7 @@
     width="700px"
     @close="close"
   >
-   <el-form ref="form" :model="form" :rules="rules" label-width="80px" style="display: flex; justify-content: space-between;">
+   <el-form ref="form" :model="form" :rules="rules" label-width="90px" style="display: flex; justify-content: space-between;">
       <div>
         <el-form-item label="序号" prop="order">
           <el-input v-model.trim="form.order" autocomplete="off" :disabled="true"></el-input>
@@ -22,7 +22,7 @@
         <el-form-item label="渠道名" prop="wayName">
           <el-input v-model.trim="form.wayName" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
-        
+
         <el-form-item label="收款平台" prop="platform">
           <el-input v-model.trim="form.platform" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
@@ -41,7 +41,7 @@
         <el-form-item label="开户支行" prop="bankBranch">
           <el-input v-model.trim="form.bankBranch" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
-        
+
         <el-form-item label="二维码" prop="imgUrl">
            <div class="block" style="width: 80px; height: 80px;">
                 <el-image
@@ -67,7 +67,7 @@
         <el-form-item label="自动到账渠道规则" prop="autoRule">
           <el-input v-model.trim="form.autoRule" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
-        
+
         <el-form-item label="充值上限" prop="moneyMax">
           <el-input v-model.trim="form.moneyMax" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
@@ -83,12 +83,12 @@
         <el-form-item label="修改时间" prop="updTime">
           <el-input v-model.trim="form.updTime" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
-        
+
         <el-form-item label="备注" prop="desc">
           <el-input v-model.trim="form.desc" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
       </div>
-      
+
     </el-form>
   </el-dialog>
 </template>

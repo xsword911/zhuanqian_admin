@@ -520,6 +520,16 @@ const api = {
   updUpper: function (path, funSuccess) {
     httpUtil.post("user/updUpper", path, funSuccess);
   },
+  
+  //后台查询系统配置
+  getConfigByInfo: function (path, funSuccess) {
+    httpUtil.post("system/getConfigByInfo", path, funSuccess);
+  },
+  
+  //团队总览
+  getStatisticsMonthGroup: function (path, funSuccess) {
+    httpUtil.post("statistics/getStatisticsMonthGroup", path, funSuccess);
+  },
 };
 
 export default api;

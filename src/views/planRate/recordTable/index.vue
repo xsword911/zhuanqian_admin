@@ -15,25 +15,9 @@
           :inline="true"
           @submit.native.prevent
         >
-          <el-form-item>
-            <el-input v-model="queryForm.key" placeholder="配置名" clearable />
-          </el-form-item>
-
-<!--          <el-form-item>
-               <el-select v-model="typeValue" placeholder="配置类型" clearable filterable allow-create>
-                 <el-option-group
-                   v-for="group in type"
-                   :key="group.label"
-                   :label="group.label">
-                   <el-option
-                     v-for="item in group.type"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value">
-                   </el-option>
-                 </el-option-group>
-               </el-select>
-          </el-form-item> -->
+        <el-form-item>
+          <el-input v-model="queryForm.uid" placeholder="用户uid"  clearable/>
+        </el-form-item>
 
 <!--          <el-form-item>
               <el-date-picker
@@ -88,7 +72,7 @@
       <el-table-column prop="finishTime" label="计划结束时间"></el-table-column>
       <el-table-column prop="outTime" label="取出时间"></el-table-column>
 
-      <el-table-column label="操作" width="180px" fixed="right">
+      <el-table-column label="操作" width="80px" fixed="right">
         <template slot-scope="scope">
 <!--          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
@@ -143,16 +127,16 @@ export default {
   },
   data() {
     return {
-      type: [{
-        type: [{
+      state: [{
+        state: [{
           value: 0,
-          label: '登录配置'
+          label: '关闭'
         },{
           value: 1,
-          label: '客服'
+          label: '开启'
         }]
       }],
-      typeValue: '',      //选中的配置类型
+
       imgShow: true,
       list: [],
       imageList: [],
@@ -280,18 +264,6 @@ export default {
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
-           data.forEach((item, index) =>{
-              switch (item.type){
-                case 0:
-                item.typeTest = '登录配置'
-                  break;
-                case 1:
-                item.typeTest = '客服'
-                  break;
-                default:
-                  break;
-              }
-           });
            this.total = api.getTotal(res);
            this.list = data;
          }
