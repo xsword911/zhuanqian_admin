@@ -24,33 +24,38 @@
           </el-form-item>
 
           <el-form-item>
-               <el-select v-model="branchValue" placeholder="下级" clearable>
-                 <el-option-group
-                   v-for="group in branch"
-                   :key="group.label"
-                   :label="group.label">
-                   <el-option
-                     v-for="item in group.branch"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value">
-                   </el-option>
-                 </el-option-group>
-               </el-select>
-           </el-form-item>
+            <el-select
+              v-model="branchValue"
+              placeholder="下级"
+              clearable
+            >
+              <el-option-group
+                v-for="group in branch"
+                :key="group.label"
+                :label="group.label"
+              >
+                <el-option
+                  v-for="item in group.branch"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-option-group>
+            </el-select>
+          </el-form-item>
 
-           <el-form-item>
-             <div class="block">
-               <el-date-picker
-                 v-model="searchTime"
-                 value-format="yyyy-MM-dd HH:mm:ss"
-                 type="datetimerange"
-                 start-placeholder="开始日期"
-                 end-placeholder="结束日期"
-                 :default-time="['00:00:00', '23:59:59']"
-               />
-             </div>
-           </el-form-item>
+          <el-form-item>
+            <div class="block">
+              <el-date-picker
+                v-model="searchTime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                type="datetimerange"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :default-time="['00:00:00', '23:59:59']"
+              />
+            </div>
+          </el-form-item>
 
           <el-form-item>
             <el-button
@@ -71,7 +76,7 @@
       class="userInfo"
     >
       <div class="info_left">
-<!--        <div class="">
+        <!--        <div class="">
           <div>用户头像：</div>
           <el-avatar
             :size="60"
@@ -84,7 +89,7 @@
 
         <div class="">
           <div>用户id：</div>
-          <div>{{ queryForm.uid }}</div>
+          <div>{{ userEn.uid }}</div>
         </div>
 
         <div class="">
@@ -205,10 +210,10 @@ import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
   //name: "ComprehensiveTable",
-  components: {
-    checkTableEdit,
-    checkMoneyTableEdit
-  },
+  // components: {
+  //   checkTableEdit,
+  //   checkMoneyTableEdit
+  // },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -348,7 +353,7 @@ export default {
 
     async fetchData() {
       //获取个人信息
-      api.getUserByUid({uid: this.queryForm.uid}, (res)=>{
+      api.getUserByUid({uid: this.queryForm.uid, account: this.queryForm.account}, (res)=>{
         this.userEn = res.data;
         //console.log(this.userEn);
       });
