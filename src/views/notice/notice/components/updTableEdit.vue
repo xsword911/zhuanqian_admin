@@ -100,7 +100,7 @@ export default {
       dialogFormVisible: false,
 
       rules: {
-        toUrl: [{ required: true, trigger: "blur", message: "请输入跳转地址" }],
+        // toUrl: [{ required: true, trigger: "blur", message: "请输入跳转地址" }],
         title: [{ required: true, trigger: "blur", message: "请输入标题" }],
         content: [{ required: true, trigger: "blur", message: "请输入内容" }],
         state: [{ required: true, trigger: "blur", message: "请选择状态" }],

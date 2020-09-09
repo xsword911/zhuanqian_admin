@@ -30,6 +30,22 @@
             <el-input v-model="queryForm.level" placeholder="等级"  clearable/>
         </el-form-item>
 
+        <el-form-item>
+             <el-select v-model="stateValue" placeholder="状态" clearable>
+               <el-option-group
+                 v-for="group in state"
+                 :key="group.label"
+                 :label="group.label">
+                 <el-option
+                   v-for="item in group.state"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value">
+                 </el-option>
+               </el-option-group>
+             </el-select>
+        </el-form-item>
+
           <el-form-item>
             <el-button
               icon="el-icon-search"
@@ -69,6 +85,21 @@
       <el-table-column prop="rechargeMin" label="充值最小金额"></el-table-column>
       <el-table-column prop="rechargeMax" label="充值最大金额"></el-table-column>
       <el-table-column prop="updTime" label="更新时间"></el-table-column>
+      
+      <el-table-column label="状态">
+         <template slot-scope="scope">
+           <el-tooltip
+             :content="scope.row.stateTest"
+             class="item"
+             effect="dark"
+             placement="top-start"
+           >
+             <el-tag :type="scope.row.state | statusFilter"
+               >{{ scope.row.stateTest }}
+             </el-tag>
+           </el-tooltip>
+         </template>
+       </el-table-column>
 
       <el-table-column prop="desc" label="备注"></el-table-column>
 
@@ -115,8 +146,29 @@ export default {
     updTableEdit,
     addTableEdit
   },
+  filters: {
+    statusFilter(status) {
+      if(status == 0) return "danger";
+      if(status == 1) return "success";
+      if(status == 2) return "gray";
+    }
+  },
   data() {
     return {
+      state: [{
+        state: [{
+          value: 0,
+          label: '关闭'
+        },{
+          value: 1,
+          label: '开启'
+        },{
+          value: 2,
+          label: '开发中'
+        }]
+      }],
+      stateValue: '',      //选中的任务状态
+
       imgShow: true,
       list: [],
       listLoading: true,
@@ -198,6 +250,12 @@ export default {
     //搜索关键字
     handleQuery() {
       this.queryForm.page = 1;
+      //状态类型筛选不为空时添加状态类型属性
+      if(!util.isEmpty(this.stateValue)){
+        this.queryForm.state = this.stateValue;
+      }else{   //状态类型筛选为空时删除状态类型属性
+        delete this.queryForm.state;
+      };
       this.fetchData();
     },
     async fetchData() {
@@ -206,6 +264,20 @@ export default {
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
+           data.forEach((item, index) =>{
+              switch (item.state){
+                case 0:
+                  item.stateTest = "关闭";
+                  break;
+                case 1:
+                  item.stateTest = "开启";
+                  break;
+                case 2:
+                  item.stateTest = "开发中"
+                default:
+                  break;
+              };
+           });
            this.total = api.getTotal(res);
            this.list = data;
          }

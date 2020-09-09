@@ -22,12 +22,47 @@
               clearable
             />
           </el-form-item>
+
+<!--          <el-form-item>
+            <el-select
+              v-model="branchValue"
+              placeholder="下级"
+              clearable
+            >
+              <el-option-group
+                v-for="group in branch"
+                :key="group.label"
+                :label="group.label"
+              >
+                <el-option
+                  v-for="item in group.branch"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-option-group>
+            </el-select>
+          </el-form-item> -->
+
+          <el-form-item>
+            <div class="block">
+              <el-date-picker
+                v-model="searchTime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                type="datetimerange"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :default-time="['00:00:00', '23:59:59']"
+              />
+            </div>
+          </el-form-item>
+
           <el-form-item>
             <el-button
               icon="el-icon-search"
               type="primary"
               native-type="submit"
-              @click="getUserTable"
+              @click="handleQuery"
             >
               查询
             </el-button>
@@ -37,11 +72,11 @@
     </vab-query-form>
 
     <div
-      v-if="showData && userEn != null"
+      v-if="userEn != null && list != null"
       class="userInfo"
     >
       <div class="info_left">
-        <div class="">
+        <!--        <div class="">
           <div>用户头像：</div>
           <el-avatar
             :size="60"
@@ -50,11 +85,11 @@
           >
             <img :src="userEn.headUrl">
           </el-avatar>
-        </div>
+        </div> -->
 
         <div class="">
           <div>用户id：</div>
-          <div>{{ queryForm.uid }}</div>
+          <div>{{ userEn.uid }}</div>
         </div>
 
         <div class="">
@@ -63,259 +98,107 @@
         </div>
 
         <div class="">
-          <div>手机号：</div>
-          <div>{{ userEn.tel }}</div>
-        </div>
-
-        <div class="">
           <div>昵称：</div>
           <div>{{ userEn.nick }}</div>
         </div>
 
         <div class="">
-          <div>邀请码：</div>
-          <div>{{ userEn.code }}</div>
+          <div>手机号：</div>
+          <div>{{ userEn.tel }}</div>
         </div>
 
         <div class="">
-          <div>账户类型：</div>
-          <div v-if="userEn.type == 0">
-            普通用户
-          </div>
-          <div v-if="userEn.type == 1">
-            管理员
-          </div>
+          <div>任务收入：</div>
+          <div>￥{{ list.moneyTaskAdd }}</div>
         </div>
 
         <div class="">
-          <div>金币：</div>
-          <div>{{ userEn.gold }}</div>
+          <div>发布支出：</div>
+          <div>￥{{ list.moneyTaskLose }}</div>
         </div>
 
         <div class="">
-          <div>余额：</div>
-          <div>{{ userEn.money }}</div>
+          <div>任务次数：</div>
+          <div>{{ list.taskSum }}</div>
+        </div>
+
+        <div class="">
+          <div>活动收入：</div>
+          <div>￥{{ list.moneyActiveAdd }}</div>
+        </div>
+
+        <div class="">
+          <div>活动支出：</div>
+          <div>￥{{ list.moneyActiveLose }}</div>
+        </div>
+
+        <div class="">
+          <div>充值次数：</div>
+          <div>{{ list.rechargeSum }}</div>
+        </div>
+
+        <div class="">
+          <div>充值金额：</div>
+          <div>￥{{ list.rechargeMoney }}</div>
         </div>
       </div>
 
       <div class="info_right">
         <div class="">
-          <div>直属上级：</div>
-          <div>{{ userEn.upper }}</div>
+          <div>首充金额：</div>
+          <div>￥{{ list.firstRechargeMoney }}</div>
         </div>
 
         <div class="">
-          <div>所有上级：</div>
-          <div>{{ userEn.allUpper }}</div>
+          <div>提现次数：</div>
+          <div>{{ list.drawSum }}</div>
         </div>
 
         <div class="">
-          <div>直属上级：</div>
-          <div>{{ userEn.upper }}</div>
+          <div>提现金额：</div>
+          <div>￥{{ list.drawMoney }}</div>
         </div>
 
         <div class="">
-          <div>注册时间：</div>
-          <div>{{ userEn.regTime }}</div>
+          <div>加款：</div>
+          <div>￥{{ list.moneyIns }}</div>
         </div>
 
         <div class="">
-          <div style="width:33%;">
-            最后一次登录时间：
+          <div>
+            扣款：
           </div>
-          <div>{{ userEn.loginTime }}</div>
+          <div>￥{{ list.moneySubtract }}</div>
         </div>
 
         <div class="">
-          <div style="width:33%;">
-            最后一次登录时间ip：
+          <div>
+            代理佣金：
           </div>
-          <div>{{ userEn.ip }}</div>
+          <div>￥{{ list.moneyAgency }}</div>
         </div>
 
         <div class="">
-          <div>密码错误次数：</div>
-          <div>{{ userEn.pwdError }}</div>
+          <div>盈利：</div>
+          <div>￥{{ list.money }}</div>
         </div>
 
         <div class="">
-          <div>账号冻结次数：</div>
-          <div>{{ userEn.reezeNum }}</div>
+          <div>子属下级：</div>
+          <div>{{ userEn.subSum }}</div>
         </div>
 
         <div class="">
-          <div>账号状态：</div>
-          <div v-if="userEn.state == 0">
-            正常
-          </div>
-          <div v-if="userEn.state == 1">
-            冻结
-          </div>
-          <div v-if="userEn.state == 2">
-            管理员封号
-          </div>
+          <div>所有下级：</div>
+          <div>{{ userEn.allSubSum }}</div>
         </div>
 
         <div class="">
-          <div>登录次数：</div>
-          <div>{{ userEn.loginNum }}</div>
+          <div>注册人数：</div>
+          <div>{{ list.isRegisterToday }}</div>
         </div>
       </div>
     </div>
-
-    <div
-      v-if="showData"
-      class="table_title"
-    >
-      <div>账变明细</div>
-      <div class="title_tips">
-        (显示最近十条记录)
-      </div>
-    </div>
-    <el-table
-      v-if="showData"
-      ref="tableSort"
-      v-loading="listLoading"
-      :data="list"
-      :element-loading-text="elementLoadingText"
-      @selection-change="setSelectRows"
-      @sort-change="tableSortChange"
-    >
-      <el-table-column
-        prop="uid"
-        label="用户id"
-      />
-      <el-table-column
-        label="交易订单号"
-        prop="sn"
-      />
-      <el-table-column
-        label="关联订单号"
-        prop="snExt"
-      />
-      <el-table-column
-        label="交易时间"
-        prop="addTime"
-      />
-      <el-table-column
-        label="交易金额"
-        prop="money"
-      />
-
-      <el-table-column
-        label="交易类别"
-        prop="sortType"
-      />
-      <el-table-column
-        label="交易类型"
-        prop="type"
-      />
-      <el-table-column
-        label="备注"
-        prop="desc"
-      />
-
-      <el-table-column
-        label="操作"
-        width="180px"
-        fixed="right"
-      >
-        <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="handleCheckEdit(scope.row)"
-          >
-            查看
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <check-table-edit ref="checkEdit" />
-
-
-
-
-
-    <div
-      v-if="showData"
-      class="table_title"
-    >
-      <div>提现记录</div>
-      <div class="title_tips">
-        (显示最近十条记录)
-      </div>
-    </div>
-    <el-table
-      v-if="showData"
-      ref="tableSort"
-      v-loading="listLoading"
-      :data="goldList"
-      :element-loading-text="elementLoadingText"
-      @selection-change="setSelectRows"
-      @sort-change="tableSortChange"
-    >
-      <el-table-column
-        prop="uid"
-        label="uid"
-      />
-      <el-table-column
-        prop="sn"
-        label="账单号"
-      />
-      <el-table-column
-        prop="money"
-        label="金额"
-      />
-      <el-table-column
-        prop="addTime"
-        label="申请时间"
-      />
-
-      <el-table-column label="申请状态">
-        <template slot-scope="scope">
-          <el-tooltip
-            :content="scope.row.status"
-            class="item"
-            effect="dark"
-            placement="top-start"
-          >
-            <el-tag
-              :type="scope.row.status | statusFilter"
-            >
-              {{ scope.row.stateTest }}
-            </el-tag>
-          </el-tooltip>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="admin"
-        label="审核人"
-      />
-      <el-table-column
-        prop="updTime"
-        label="审核时间"
-      />
-      <el-table-column
-        prop="desc"
-        label="备注"
-      />
-
-      <el-table-column
-        label="操作"
-        width="180px"
-        fixed="right"
-      >
-        <template slot-scope="scope">
-          <el-button
-            type="text"
-            @click="handleCheckMoneyEdit(scope.row)"
-          >
-            查看
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <check-money-table-edit ref="checkMoneyEdit" />
   </div>
 </template>
 
@@ -327,10 +210,10 @@ import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
   //name: "ComprehensiveTable",
-  components: {
-    checkTableEdit,
-    checkMoneyTableEdit
-  },
+  // components: {
+  //   checkTableEdit,
+  //   checkMoneyTableEdit
+  // },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -343,35 +226,19 @@ export default {
   },
   data() {
     return {
-      options: [{
-        label: '收入',
-        options: [{
-          value: 0,
-          label: '金币转余额'
+      branch:[{
+        branch:[{
+          label: "直系下属",
+          value: 1
         },{
-          value: 1,
-          label: '提现审核失败'
-        },{
-          value: 2,
-          label: '签到奖励'
-        },{
-          value: 3,
-          label: '幸运抽奖获奖'
-        }]
-      },{
-        label: '支出',
-        options: [{
-          value: 100,
-          label: '提现'
-        },{
-          value: 101,
-          label: '余额转金币'
-        }]
+          label: "所有下属",
+          value: 2
+        },]
       }],
-      value: '',      //交易类型
+      branchValue: 1,
+
       imgShow: true,
-      list: [],  //账变明细列表
-      goldList: [],  //提现明细列表
+      list: null, //团队总览
       userEn: null,  //用户信息
       listLoading: true,
       layout: "total, sizes, prev, pager, next, jumper",
@@ -385,10 +252,12 @@ export default {
         uid: '',
       },
       showData: false,  //数据是否显示
+
+      searchTime: '', //筛选的时间范围
     };
   },
   created() {
-    // this.fetchData();
+    //this.fetchData();
     // this.getUserInfo();
   },
   beforeDestroy() {},
@@ -446,14 +315,30 @@ export default {
       this.fetchData();
     },
     handleQuery() {
-      this.fetchData();
-    },
-    //查询个人报表
-    getUserTable(){
       this.listLoading = true;
+      this.queryForm.page = 1;
+      //查询下级
+      // if(this.branchValue == 1) this.queryForm.isSubAll = false;
+      // if(this.branchValue == 2) this.queryForm.isSubAll = true;
+
+      //时间筛选不为空时添加时间属性
+      if(!util.isEmpty(this.searchTime)){
+        this.queryForm.begFinishTime = this.searchTime[0];
+        this.queryForm.endFinishTime = this.searchTime[1];
+      }else{   //时间筛选为空时删除时间属性
+        delete this.queryForm.begFinishTime;
+        delete this.queryForm.endFinishTime;
+      };
+
       this.fetchData();
-      this.getUserInfo();
-      this.showData = true;
+      setTimeout(() => {
+        this.listLoading = false;
+      }, 500);
+    },
+    //查
+    getUserTable(){
+
+
     },
     //获取用户信息
     getUserInfo(){
@@ -467,103 +352,31 @@ export default {
     },
 
     async fetchData() {
-      //获取账变列表
-      api.getMoney(this.queryForm, (res)=>{
-         let code = api.getCode(res);
-         if(code == 0){
-           let data = api.getData(res);
-           data.forEach((item,index) =>{
-             switch (item.type){
-              case 0:
-                 item.type = "金币转余额";
-                 break;
-              case 1:
-                item.type = "提现审核失败";
-                break;
-              case 2:
-                item.type = "签到奖励";
-                break;
-              case 3:
-                item.type = "幸运抽奖获奖";
-                break;
-              case 4:
-                item.type = "充值";
-                break;
-              case 5:
-                item.type = "利息宝取出";
-                break;
-              case 6:
-                item.type = "任务奖励";
-                break;
-              case 7:
-                item.type = "幸运抽奖支出";
-                break;
-              case 10:
-                item.type = "加款";
-                break;
-              case 50:
-                item.type = "代理佣金";
-                break;
-              case 100:
-                item.type = "提现";
-                break;
-              case 101:
-                item.type = "余额转金币";
-                break;
-              case 102:
-                item.type = "升级";
-                break;
-              case 103:
-                item.type = "利息宝转入";
-                break;
-              case 104:
-                item.type = "扣款";
-                break;
-              case 105:
-                item.type = "发布任务";
-                break;
-              case 106:
-                item.type = "幸运抽奖支出";
-                break;
-               default:
-                 break;
-             }
-             if(item.sort == 0) item.sortType = "收入"
-             else if(item.sort == 1) item.sortType = "支出"
-           });
-           this.list = data;
-         }
+      //获取个人信息
+      api.getUserByUid({uid: this.queryForm.uid, account: this.queryForm.account}, (res)=>{
+        this.userEn = res.data;
+        //console.log(this.userEn);
       });
-      //获取提现列表
-      api.getMoneyDraw(this.queryForm, (res)=>{
+
+      //获取团队总览
+      api.getStatisticsMonth(this.queryForm, (res)=>{
         //this.listLoading = false;
          let code = api.getCode(res);
          if(code == 0){
-           let data = api.getData(res);
-           data.forEach((item, index) =>{
-              switch (item.state){
-                case 0:
-                  item.status = 'frozen';
-                  item.stateTest = "未审核";
-                  break;
-                case 1:
-                  item.status = 'normal';
-                  item.stateTest = "审核通过";
-                  break;
-                case 2:
-                  item.status = 'ban';
-                  item.stateTest = "审核未通过";
-                  break;
-                default:
-                  break;
-              }
-           });
-           this.goldList = data;
+          let data = api.getData(res)[0];
+          this.list = data;
+          if(data == null) return;
+          //计算盈利金额
+          data.money = parseFloat(data.moneyTaskAdd) + parseFloat(data.moneyAgency)
+          + parseFloat(data.moneyActiveAdd) + parseFloat(data.moneyIns)
+          + parseFloat(data.moneyTaskLose) + parseFloat(data.moneyActiveLose)
+          + parseFloat(data.moneySubtract);
+          data.money = data.money.toFixed(2);
+
+           this.list = data;
+           this.showData = true;
          }
       });
-      setTimeout(() => {
-        this.listLoading = false;
-      }, 500);
     },
     testMessage() {
       this.$baseMessage("test1", "success");
@@ -598,9 +411,10 @@ export default {
 
 <style>
   .userInfo{
-    width:100%;
+    width:90%;
     display: flex;
     flex-direction: row;
+    margin:auto;
   }
   .info_left, .info_right{
     width:50%;

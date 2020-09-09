@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="700px"
+    width="740px"
     @close="close"
   >
     <el-form
@@ -21,7 +21,6 @@
             v-model.trim="form.uid"
             autocomplete="off"
             :disabled="true"
-            style="color: #000000;"
           />
         </el-form-item>
         <el-form-item
@@ -89,30 +88,16 @@
             />
           </div>
         </el-form-item>
-      </div>
 
-      <div>
-        <el-form-item
-          label="直属下级"
-          prop="subSum"
-        >
-          <el-input
-            v-model.trim="form.subSum"
-            autocomplete="off"
-            :disabled="true"
-          />
+        <el-form-item label="等级" prop="level">
+          <el-input value="新人" autocomplete="off" :disabled="true" v-show="form.level == 1"></el-input>
+          <el-input value="白银会员" autocomplete="off" :disabled="true" v-show="form.level == 2"></el-input>
+          <el-input value="黄金会员" autocomplete="off" :disabled="true" v-show="form.level == 3"></el-input>
+          <el-input value="铂金会员" autocomplete="off" :disabled="true" v-show="form.level == 4"></el-input>
+          <el-input value="钻石会员" autocomplete="off" :disabled="true" v-show="form.level == 5"></el-input>
+          <el-input value="至尊会员" autocomplete="off" :disabled="true" v-show="form.level == 6"></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="所有下级"
-          prop="allSubSum"
-        >
-          <el-input
-            v-model.trim="form.allSubSum"
-            autocomplete="off"
-            :disabled="true"
-          />
-        </el-form-item>
         <el-form-item
           label="金币"
           prop="gold"
@@ -134,6 +119,29 @@
           />
         </el-form-item>
         <el-form-item
+          label="充值总金额"
+          prop="rechargeSum"
+        >
+          <el-input
+            v-model.trim="form.rechargeSum"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
+          label="提现总金额"
+          prop="drawSum"
+        >
+          <el-input
+            v-model.trim="form.drawSum"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+      </div>
+
+      <div>
+        <el-form-item
           label="直属上级"
           prop="upper"
         >
@@ -144,11 +152,42 @@
           />
         </el-form-item>
         <el-form-item
+          label="所有上级"
+          prop="allUpper"
+        >
+          <el-input
+            v-model.trim="form.allUpper"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
           label="注册时间"
           prop="regTime"
         >
           <el-input
             v-model.trim="form.regTime"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
+          label="直属下级"
+          prop="subSum"
+        >
+          <el-input
+            v-model.trim="form.subSum"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="所有下级"
+          prop="allSubSum"
+        >
+          <el-input
+            v-model.trim="form.allSubSum"
             autocomplete="off"
             :disabled="true"
           />
@@ -174,6 +213,36 @@
           />
         </el-form-item>
         <el-form-item
+          label="密码错误次数"
+          prop="pwdError"
+        >
+          <el-input
+            v-model.trim="form.pwdError"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
+          label="冻结时间"
+          prop="freezeTime"
+        >
+          <el-input
+            v-model.trim="form.freezeTime"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
+          label="冻结次数"
+          prop="freezeNum"
+        >
+          <el-input
+            v-model.trim="form.freezeNum"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
           label="账号状态"
           prop="state"
         >
@@ -192,6 +261,16 @@
           <el-input
             v-show="form.state == 2"
             value="管理员封号"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
+          label="登录次数"
+          prop="loginNum"
+        >
+          <el-input
+            v-model.trim="form.loginNum"
             autocomplete="off"
             :disabled="true"
           />

@@ -47,6 +47,22 @@
         <el-form-item label="充值最大金额" prop="rechargeMax">
           <el-input v-model.trim="form.rechargeMax" autocomplete="off"></el-input>
         </el-form-item>
+        
+        <el-form-item label="状态" prop="state">
+          <el-select v-model="form.state" placeholder="状态">
+            <el-option-group
+              v-for="group in state"
+              :key="group.label"
+              :label="group.label">
+              <el-option
+                v-for="item in group.state"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-option-group>
+          </el-select>
+        </el-form-item>
 
         <el-form-item label="备注" prop="desc">
            <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
@@ -71,6 +87,20 @@ export default {
   name: "TableEdit",
   data() {
     return {
+      state: [{
+        state: [{
+          value: 0,
+          label: '关闭'
+        },{
+          value: 1,
+          label: '开启'
+        },{
+          value: 2,
+          label: '开发中'
+        }]
+      }],
+      stateValue: '',      //选中的任务状态
+      
       form: {
         id: null,
       },

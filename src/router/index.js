@@ -326,7 +326,7 @@ export const asyncRoutes = [
       {
         path: "roleManagement",
         name: "RoleManagement",
-        component: () => import("@/views/statistics/userTable/index"),
+        component: () => import("@/views/statistics/userOverviewTable/index"),
         meta: { title: "个人概览" },
       },
       {
@@ -334,6 +334,12 @@ export const asyncRoutes = [
         name: "TeamStatisticsTable",
         component: () => import("@/views/statistics/teamTable/index"),
         meta: { title: "团队总览" },
+      },
+      {
+        path: "userStatisticsTable",
+        name: "UserStatisticsTable",
+        component: () => import("@/views/statistics/userTable/index"),
+        meta: { title: "个人总览" },
       },
       {
         path: "dayStatisticsTable",

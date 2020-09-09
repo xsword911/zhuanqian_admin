@@ -530,6 +530,11 @@ const api = {
   getStatisticsMonthGroup: function (path, funSuccess) {
     httpUtil.post("statistics/getStatisticsMonthGroup", path, funSuccess);
   },
+  
+  //团队总览
+  getStatisticsMonth: function (path, funSuccess) {
+    httpUtil.post("statistics/getStatisticsMonth", path, funSuccess);
+  },
 };
 
 export default api;
