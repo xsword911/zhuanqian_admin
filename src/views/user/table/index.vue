@@ -147,8 +147,9 @@
               <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item :command="beforeHandleCommand(3, scope.row)">编辑</el-dropdown-item>
                   <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '解冻', 0)">解冻</el-dropdown-item>
-                  <!-- <el-dropdown-item command="冻结">冻结</el-dropdown-item> -->
                   <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '禁用', 2)">禁用</el-dropdown-item>
+                  <el-dropdown-item :command="beforeHandleCommand(4, scope.row, '解冻', 0)">批量解冻</el-dropdown-item>
+                  <el-dropdown-item :command="beforeHandleCommand(4, scope.row, '禁用', 2)">批量禁用</el-dropdown-item>
                   <el-dropdown-item :command="beforeHandleCommand(1, scope.row)">修改密码</el-dropdown-item>
                   <el-dropdown-item :command="beforeHandleCommand(2, scope.row)">修改上级</el-dropdown-item>
               </el-dropdown-menu>
@@ -285,6 +286,14 @@ export default {
         else if(type == 1) return {'type': 1, 'row': row};
         else if(type == 2) return {'type': 2, 'row': row,};
         else if(type == 3) return {'type': 3, 'row': row,};
+        if(type == 4){
+          return {
+            'test': test,
+            'stateCode': stateCode,
+            'row': row,
+            'type': 4
+          }
+        }
     },
     //下拉菜单操作  command.type  0解冻封号操作 1修改密码操作 2修改上级操作 3查看
     handleCommand(command){
@@ -310,9 +319,33 @@ export default {
             });
           });
       }
+
       else if(command.type == 1)  this.handleUpdPwd(command.row);   //修改密码
       else if(command.type == 2)  this.handleUpdUpper(command.row)   //修改上级
       else if(command.type == 3)  this.handleEdit(command.row)   //编辑
+
+      if(command.type == 4)
+      {
+          this.$baseConfirm("你确定要" + command.test + "该账号以及其下属账号？", null, async () => {
+            let data = {
+              upper: command.row.uid,
+              state: command.stateCode
+            };
+            api.userStopOrCommonByUpper(data, (res)=>{
+              let code = api.getCode(res);
+              if(code == 0){
+                this.$baseMessage(command.test + "成功", "success");
+                this.$refs["form"].resetFields();
+                this.dialogFormVisible = false;
+                this.form = this.$options.data().form;
+                this.fetchData();
+              }else{
+                let msg = api.getMsg(res);
+                this.$message.error(msg);
+              }
+            });
+          });
+      }
     },
     //添加用户
     handleAdd() {

@@ -540,15 +540,25 @@ const api = {
   getStatisticsMonth: function (path, funSuccess) {
     httpUtil.post("statistics/getStatisticsMonth", path, funSuccess);
   },
-  
+
   //查询未审核充值记录最大id
   getRechargeUnknownIdMax: function (path, funSuccess) {
     httpUtil.post("money/getRechargeUnknownIdMax", path, funSuccess);
   },
-  
+
   //查找未审核现现记录的最大id
   getDrawUnknownIdMax: function (path, funSuccess) {
     httpUtil.post("money/getDrawUnknownIdMax", path, funSuccess);
+  },
+
+  //批量审核任务记录
+  auditTaskDetailsArr: function (path, funSuccess) {
+    httpUtil.post("activity/auditTaskDetailsArr", path, funSuccess);
+  },
+  
+  //禁用，解冻用户及其所有下级账户
+  userStopOrCommonByUpper: function (path, funSuccess) {
+    httpUtil.post("user/userStopOrCommonByUpper", path, funSuccess);
   },
 };
 

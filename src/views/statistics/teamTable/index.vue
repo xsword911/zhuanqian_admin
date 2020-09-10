@@ -150,6 +150,11 @@
         </div>
 
         <div class="">
+          <div>首充人数：</div>
+          <div>{{ list.firstRechargeMoneyNum }}</div>
+        </div>
+
+        <div class="">
           <div>提现次数：</div>
           <div>{{ list.drawSum }}</div>
         </div>

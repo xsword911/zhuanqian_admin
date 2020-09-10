@@ -120,6 +120,17 @@
             :disabled="true"
           />
         </el-form-item>
+        
+        <el-form-item
+          label="首充人数"
+          prop="firstRechargeMoneyNum"
+        >
+          <el-input
+            v-model.trim="form.firstRechargeMoneyNum"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
 
         <el-form-item
           label="提现次数"

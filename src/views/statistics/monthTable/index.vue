@@ -137,10 +137,15 @@
         label="充值金额"
         prop="rechargeMoney"
       />
-      
+
       <el-table-column
         label="首充金额"
         prop="firstRechargeMoney"
+      />
+
+      <el-table-column
+        label="首充人数"
+        prop="firstRechargeMoneyNum"
       />
 
       <el-table-column
@@ -165,7 +170,7 @@
         label="代理佣金"
         prop="moneyAgency"
       />
-      
+
       <el-table-column
         label="当天注册"
         prop="isRegisterTodayTip"

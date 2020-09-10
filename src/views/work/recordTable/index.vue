@@ -1,10 +1,13 @@
 <template>
   <div class="table-container">
     <vab-query-form style="display: flex;">
-      <vab-query-form-left-panel style="max-width:84px;">
+      <vab-query-form-left-panel style="max-width:200px;">
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
           >删除
         </el-button>
+        <el-button icon="el-icon-edit-outline" type="primary" @click="handleExamine"
+          >批量审核</el-button
+        >
       </vab-query-form-left-panel>
      <vab-query-form-right-panel style="flex: 1;">
 <!--       <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
@@ -130,7 +133,7 @@
       <el-table-column prop="stateTest" label="状态"></el-table-column>
 <!--      <el-table-column prop="updTime" label="审核时间"></el-table-column>
       <el-table-column prop="auditName" label="审核人"></el-table-column> -->
-      <el-table-column prop="auditTime" label="备注"></el-table-column>
+      <el-table-column prop="desc" label="备注"></el-table-column>
 
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
@@ -157,6 +160,7 @@
     ></el-pagination>
     <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
     <check-table-edit ref="checkEdit"></check-table-edit>
+    <audit-upd-state ref="auditUpdState" @refreshList="fetchData"></audit-upd-state>
   </div>
 </template>
 
@@ -164,13 +168,15 @@
 import { getList, doDelete } from "@/api/table";
 import updTableEdit from "./components/updTableEdit";
 import checkTableEdit from "./components/checkTableEdit";
+import auditUpdState from "./components/auditUpdState"
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 export default {
   // name: "ComprehensiveTable",
   components: {
     checkTableEdit,
-    updTableEdit
+    updTableEdit,
+    auditUpdState
   },
   filters: {
     statusFilter(status) {
@@ -283,6 +289,23 @@ export default {
     },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
+    },
+    handleExamine(row){
+      if(util.isEmpty(this.selectRows)){
+        this.$baseMessage("未选中任何行", "error");
+        return false;
+      }else{
+        let delById = [];
+        this.selectRows.forEach((item, index) =>{
+          let obj = {};
+          obj.id = item.id;
+          delById.push(obj);
+        });
+        let delArr = {
+          arr: delById
+        };
+        this.$refs["auditUpdState"].showEdit(delArr);
+      }
     },
     handleDelete(row) {
       if(util.isEmpty(this.selectRows)){

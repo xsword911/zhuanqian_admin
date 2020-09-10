@@ -193,6 +193,7 @@
 import { doEdit } from "@/api/table";
 import util from "@/utils/util.js";
 import api from "@/api/api.js";
+import storage from "@/api/storage.js";
 export default {
   // name: "TableEdit",
   data() {
@@ -224,6 +225,8 @@ export default {
       dialogFormVisible: false,
       userName: "",  //用户名
       doneUidName: "", //完成者用户名
+      
+      uid: "",  //uid
     };
   },
   mounted() {},
@@ -236,6 +239,7 @@ export default {
         this.form.auditLong = (this.form.auditLong / 60).toFixed(2);
         this.getUserInfo();  //取用户数据
         this.getDoneUserInfo();  //取完成者用户数据
+        this.uid = storage.getUid();  //获取uid
     },
     //取用户数据
     getUserInfo(){
@@ -273,9 +277,10 @@ export default {
       let data = {
           id: this.form.id,
           state: this.form.state,
+          adminUid: this.uid
       };
       if(!util.isEmpty(this.form.desc)) data.desc = this.form.desc;
-      api.auditTaskDetails(this.form, (res)=>{
+      api.auditTaskDetails(data, (res)=>{
         let code = api.getCode(res);
         if(code == 0){
           this.$baseMessage("审核成功", "success");
