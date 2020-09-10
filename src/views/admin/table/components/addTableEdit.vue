@@ -97,9 +97,11 @@ export default {
             return;
           }else{
             this.submitForm.account = this.form.account;
-            this.submitForm.pwd = md5(this.form.pwd);
+            this.submitForm.pwd = this.form.pwd;
             if(!util.isEmpty(this.form.upperCode)) this.submitForm.upperCode = this.form.upperCode;
-            api.registerByAdmin(this.submitForm, (res)=>{
+            let data = Object.assign({}, this.submitForm);  //克隆数据
+            data.pwd = md5(data.pwd);
+            api.registerByAdmin(data, (res)=>{
                 let code = api.getCode(res);
                 if(code == 0){
                   this.$baseMessage("添加成功", "success");

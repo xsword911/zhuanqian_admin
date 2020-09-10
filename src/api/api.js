@@ -520,20 +520,35 @@ const api = {
   updUpper: function (path, funSuccess) {
     httpUtil.post("user/updUpper", path, funSuccess);
   },
-  
+
   //后台查询系统配置
   getConfigByInfo: function (path, funSuccess) {
     httpUtil.post("system/getConfigByInfo", path, funSuccess);
   },
-  
+
   //团队总览
   getStatisticsMonthGroup: function (path, funSuccess) {
     httpUtil.post("statistics/getStatisticsMonthGroup", path, funSuccess);
   },
-  
+
   //团队总览
   getStatisticsMonth: function (path, funSuccess) {
     httpUtil.post("statistics/getStatisticsMonth", path, funSuccess);
+  },
+
+  //团队总览
+  getStatisticsMonth: function (path, funSuccess) {
+    httpUtil.post("statistics/getStatisticsMonth", path, funSuccess);
+  },
+  
+  //查询未审核充值记录最大id
+  getRechargeUnknownIdMax: function (path, funSuccess) {
+    httpUtil.post("money/getRechargeUnknownIdMax", path, funSuccess);
+  },
+  
+  //查找未审核现现记录的最大id
+  getDrawUnknownIdMax: function (path, funSuccess) {
+    httpUtil.post("money/getDrawUnknownIdMax", path, funSuccess);
   },
 };
 

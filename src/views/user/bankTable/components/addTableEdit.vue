@@ -48,6 +48,7 @@
 import { doEdit } from "@/api/table";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
+import md5 from "@/api/md5.js";
 export default {
   name: "TableEdit",
   data() {
@@ -101,7 +102,9 @@ export default {
             this.$baseMessage("二次密码输入不一致", "error");
             return;
           }
-            api.addUserBank(this.form, (res)=>{
+          let data = Object.assign({}, this.form);  //克隆数据
+          data.pwd = md5(data.pwd);
+            api.addUserBank(data, (res)=>{
                 let code = api.getCode(res);
                 if(code == 0){
                   this.$baseMessage("添加成功", "success");

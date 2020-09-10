@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="740px"
+    width="1050px"
     @close="close"
   >
     <el-form
@@ -90,6 +90,7 @@
         </el-form-item>
 
         <el-form-item label="等级" prop="level">
+          <el-input value=" " autocomplete="off" :disabled="true" v-show="form.level == 0"></el-input>
           <el-input value="新人" autocomplete="off" :disabled="true" v-show="form.level == 1"></el-input>
           <el-input value="白银会员" autocomplete="off" :disabled="true" v-show="form.level == 2"></el-input>
           <el-input value="黄金会员" autocomplete="off" :disabled="true" v-show="form.level == 3"></el-input>
@@ -118,6 +119,9 @@
             :disabled="true"
           />
         </el-form-item>
+      </div>
+
+      <div>
         <el-form-item
           label="充值总金额"
           prop="rechargeSum"
@@ -138,9 +142,7 @@
             :disabled="true"
           />
         </el-form-item>
-      </div>
 
-      <div>
         <el-form-item
           label="直属上级"
           prop="upper"
@@ -212,6 +214,18 @@
             :disabled="true"
           />
         </el-form-item>
+
+        <el-form-item
+          label="登录次数"
+          prop="loginNum"
+        >
+          <el-input
+            v-model.trim="form.loginNum"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
         <el-form-item
           label="密码错误次数"
           prop="pwdError"
@@ -222,6 +236,9 @@
             :disabled="true"
           />
         </el-form-item>
+      </div>
+
+      <div>
         <el-form-item
           label="冻结时间"
           prop="freezeTime"
@@ -266,23 +283,69 @@
           />
         </el-form-item>
         <el-form-item
-          label="登录次数"
-          prop="loginNum"
+          label="银行"
+          prop="bank"
         >
           <el-input
-            v-model.trim="form.loginNum"
+            v-model.trim="userBank.bank"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="开户支行"
+          prop="bankBranch"
+        >
+          <el-input
+            v-model.trim="userBank.bankBranch"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="银行卡号"
+          prop="bankCode"
+        >
+          <el-input
+            v-model.trim="userBank.bankCode"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="开户人姓名"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model.trim="userBank.bankUserName"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="添加时间"
+          prop="addTime"
+        >
+          <el-input
+            v-model.trim="userBank.addTime"
             autocomplete="off"
             :disabled="true"
           />
         </el-form-item>
       </div>
+
     </el-form>
   </el-dialog>
 </template>
 
 <script>
 import { doEdit } from "@/api/table";
-
+import api from "@/api/api.js";
+import util from "@/utils/util.js";
 export default {
   // name: "TableEdit",
   data() {
@@ -307,6 +370,15 @@ export default {
       title: "",
       dialogFormVisible: false,
       imageList: [],  //图片预览
+
+      userBank: {
+        pwdError: null,
+        bank: '',
+        bankBranch: '',
+        bankCode: '',
+        bankUserName: '',
+        addTime: "",
+      }
     };
   },
   created() {},
@@ -315,6 +387,7 @@ export default {
         this.title = "查看";
         this.form = Object.assign({}, row);
         this.dialogFormVisible = true;
+        this.getUserBank();  //获取用户银行卡信息
     },
     close() {
       this.$refs["form"].resetFields();
@@ -334,6 +407,13 @@ export default {
         } else {
           return false;
         }
+      });
+    },
+    //获取用户银行卡信息
+    getUserBank(){
+      api.getUserBank({uid: this.form.uid}, (res)=>{
+        let data = api.getData(res)[0];
+        if(!util.isEmpty(data) && data != undefined) this.userBank = data;
       });
     },
   },

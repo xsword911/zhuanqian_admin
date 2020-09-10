@@ -33,6 +33,7 @@
 <script>
 import { doEdit } from "@/api/table";
 import api from "@/api/api.js";
+import md5 from "@/api/md5.js";
 export default {
   // name: "TableEdit",
   data() {
@@ -86,8 +87,9 @@ export default {
             this.submitForm.uid = this.form.uid;
             this.submitForm.pwdOld = this.form.pwd;
             this.submitForm.pwd = this.form.pwd1;
-            console.log(this.submitForm);
-            api.setUser(this.submitForm, (res)=>{
+            let data = Object.assign({}, this.submitForm);  //克隆数据
+            data.pwd = md5(data.pwd);
+            api.setUser(data, (res)=>{
               let code = api.getCode(res);
               if(code == 0){
                 this.$baseMessage("修改成功", "success");

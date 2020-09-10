@@ -34,6 +34,7 @@
 import { doEdit } from "@/api/table";
 import api from "@/api/api.js";
 import storage from "@/api/storage.js";
+import md5 from "@/api/md5.js";
 export default {
   // name: "TableEdit",
   data() {
@@ -86,7 +87,10 @@ export default {
             this.submitForm.id = this.form.id;
             this.submitForm.pwd = this.form.pwd1;
             this.submitForm.admin = storage.getUid();
-            api.updCashPwd(this.submitForm, (res)=>{
+            let data = Object.assign({}, this.submitForm);  //克隆数据
+            data.pwd = md5(data.pwd);
+            console.log(data);
+            api.updCashPwd(data, (res)=>{
               let code = api.getCode(res);
               if(code == 0){
                 this.$baseMessage("修改成功", "success");

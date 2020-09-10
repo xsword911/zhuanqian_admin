@@ -79,7 +79,7 @@ export default {
   },
   mounted() {
     this.refresh();
-    this.intervalId = setInterval(this.refresh, 3000);  //开启定时刷新计时器
+    this.intervalId = setInterval(this.refresh, 15000);  //开启定时刷新计时器
   },
   destroyed() {
     if(util.isEmpty(this.intervalId)) return;
@@ -87,6 +87,26 @@ export default {
     this.intervalId = null;
   },
   methods: {
+    //查询未审核充值记录最大id
+    getRechargeUnknownIdMax(){
+      api.getRechargeUnknownIdMax({}, (res)=>{
+        let oldData = storage.getRechargeUnknownIdMax(); //获取本地未审核充值记录最大id
+        if(oldData < res.data){
+            storage.setRechargeUnknownIdMax(res.data);  //保存最新未审核充值记录最大id
+            this.rechargePlay();   //播放充值语音
+        }
+      });
+    },
+    //查找未审核提现记录的最大id
+    getDrawUnknownIdMax(){
+      api.getDrawUnknownIdMax({}, (res)=>{
+        let oldData = storage.getDrawUnknownIdMax();  //获取本地未审核提现记录最大id
+        if(oldData < res.data){
+          storage.setDrawUnknownIdMax(res.data);    //保存最新未审核提现记录最大id
+          this.drawPlay()   //播放提现语音
+        }
+      });
+    },
     //获取未审核充值记录总数
     getRechargeUnknownSum(){
       api.getRechargeUnknownSum({}, (res)=>{
@@ -94,7 +114,6 @@ export default {
         if(oldData != res.data){
             storage.setRechargeUnknownSum(res.data);  //保存最新未审核充值记录总数
             this.rechargeUnknownSum = res.data;
-            this.rechargePlay();   //播放充值语音
         }
         else this.rechargeUnknownSum = oldData;
         if(parseInt(this.rechargeUnknownSum) > 99) this.rechargeUnknownSum = "99+";
@@ -107,7 +126,6 @@ export default {
         if(oldData != res.data){
           storage.setDrawUnknownSum(res.data);  //保存最新未审核提现记录总数
           this.drawUnknownSum = res.data;
-          this.drawPlay();   //播放提现语音
         }
         else this.drawUnknownSum = oldData;
         if(parseInt(this.drawUnknownSum) > 99) this.drawUnknownSum = "99+";
@@ -132,6 +150,8 @@ export default {
     refresh(){
         this.getRechargeUnknownSum();  //获取未审核充值记录总数
         this.getDrawUnknownSum();  //获取未审核提现记录总数
+        this.getRechargeUnknownIdMax(); //查询未审核充值记录最大id
+        this.getDrawUnknownIdMax();  //查询未审核提现记录最大id
     },
     //播放提现语音
     drawPlay(){
