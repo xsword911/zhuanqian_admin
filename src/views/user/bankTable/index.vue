@@ -57,6 +57,7 @@
       <el-table-column prop="bank" label="银行"></el-table-column>
       <el-table-column prop="bankBranch" label="开户支行"></el-table-column>
       <el-table-column prop="bankCode" label="银行卡号"></el-table-column>
+      <el-table-column prop="bankUserName" label="开户人姓名"></el-table-column>
       <el-table-column prop="addTime" label="绑定时间"></el-table-column>
       <!-- <el-table-column prop="pwd" label="提现密码"></el-table-column> -->
       <el-table-column prop="pwdError" label="密码错误次数"></el-table-column>

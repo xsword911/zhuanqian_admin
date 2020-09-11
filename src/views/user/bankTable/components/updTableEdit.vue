@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-    <el-form ref="form" :model="form" label-width="80px">
+    <el-form ref="form" :model="form" label-width="94px" :rules="rules">
       <el-form-item label="uid" prop="uid">
         <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true" clearable></el-input>
       </el-form-item>
@@ -32,6 +32,9 @@
 
       <el-form-item label="开户支行" prop="bankBranch">
         <el-input v-model.trim="form.bankBranch" autocomplete="off" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="开户人姓名" prop="bankUserName">
+        <el-input v-model.trim="form.bankUserName" autocomplete="off" clearable></el-input>
       </el-form-item>
       <el-form-item label="银行卡号" prop="bankCode">
         <el-input v-model.trim="form.bankCode" autocomplete="off" clearable></el-input>
@@ -88,6 +91,22 @@ export default {
       imgUrlOld: "",
       imgUrlNew: ''  ,//选择的图片
       imgServeUrl: '',  //图片的服务器地址
+
+      rules: {
+        uid: [{ required: true, message: "请输入用户id", trigger: "blur" }],
+        bank: [{ required: true, message: "请输入银行", trigger: "blur" }],
+        bankUserName: [{ required: true, message: "请输入开户人姓名", trigger: "blur" }],
+        bankBranch: [{ required: true, message: "请输入开户支行", trigger: "blur" }],
+        bankCode: [{ required: true, message: "请输入银行卡号", trigger: "blur" }],
+        pwd: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 3, max: 12, message: "密码长度在 3 到 12 个字符", trigger: "blur" },
+        ],
+        pwd2: [
+          { required: true, message: "请确认密码", trigger: "blur" },
+          { min: 3, max: 12, message: "密码长度在 3 到 12 个字符", trigger: "blur" },
+        ],
+      },
 
     };
   },

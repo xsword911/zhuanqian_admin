@@ -320,6 +320,7 @@ export default {
         tel: "",
         nick: "",
         account: "",
+        state: 0,
       }, //用户信息
     };
   },
@@ -343,6 +344,7 @@ export default {
       api.getUserByUid({uid: this.form.uid}, (res)=>{
         let code = api.getCode(res);
         if(code == 0){
+          if(res.data == null) return;
           this.userInfo = res.data;
           console.log(this.userInfo);
         }else{

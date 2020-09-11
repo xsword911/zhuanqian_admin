@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-   <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+   <el-form ref="form" :model="form" :rules="rules" label-width="94px">
      <el-form-item label="uid" prop="uid">
         <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
@@ -15,6 +15,9 @@
      <el-form-item label="开户支行" prop="bankBranch">
         <el-input v-model.trim="form.bankBranch" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
+      <el-form-item label="开户人姓名" prop="bankUserName">
+         <el-input v-model.trim="form.bankUserName" autocomplete="off" :disabled="true"></el-input>
+       </el-form-item>
       <el-form-item label="银行卡号" prop="bankCode">
         <el-input v-model.trim="form.bankCode" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>

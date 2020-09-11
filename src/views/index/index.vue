@@ -105,14 +105,7 @@ export default {
           //   "全年目标值",
           // ],
           data: [
-            "2020-7-10",
-            "2020-7-11",
-            "2020-7-12",
-            "2020-7-13",
-            "2020-7-14",
-            "2020-7-15",
-            "2020-7-16",
-            "2020-7-17",
+
           ],
           // data: this.timeList,
           axisLine: {
@@ -198,7 +191,7 @@ export default {
               color: "rgba(5,140,255, 0.2)",
             },
             // data: [4.2, 3.8, 4.8, 3.5, 2.9, 2.8, 3, 5],
-            data: [1, 1, 1, 1, 2, 3, 3, 5],
+            data: [],
           },
           // {
           //   name: "活跃用户数",
@@ -661,7 +654,7 @@ export default {
     };
   },
   mounted() {
-    this.getUserStatistics();
+    this.getUserStatistics();  //获取用户活跃统计
   },
   methods: {
     //获取用户活跃统计
@@ -674,6 +667,7 @@ export default {
         this.chart1.xAxis.data = []; //清空x轴数据
         this.chart1.series[0].data = []; //清空y轴数据
         data.forEach((item, index) =>{
+          console.log(data);
           this.chart1.xAxis.data.push(item.addTime);
           this.chart1.series[0].data.push(item.liveSum);
         });

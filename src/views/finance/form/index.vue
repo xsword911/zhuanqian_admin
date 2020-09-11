@@ -9,8 +9,12 @@
           label-width="100px"
           class="demo-ruleForm"
         >
-          <el-form-item label="uid" prop="uid">
+          <el-form-item label="用户id" prop="uid">
             <el-input v-model="ruleForm.uid" clearable placeholder="请输入用户id"></el-input>
+          </el-form-item>
+
+          <el-form-item label="用户名" prop="account">
+            <el-input v-model="ruleForm.account" clearable placeholder="请输入用户名"></el-input>
           </el-form-item>
 
           <el-form-item label="金额" prop="money">
@@ -77,7 +81,7 @@ export default {
         admin: ''
       },
       rules: {
-        uid: [{ required: true, message: "请输入用户id", trigger: "blur" },],
+        // uid: [{ required: true, message: "请输入用户id", trigger: "blur" },],
         money: [{ required: true, message: "请输入金额",  trigger: "blur" },],
         type: [{ required: true, message: "请选择操作类型", trigger: "blur" },],
       },

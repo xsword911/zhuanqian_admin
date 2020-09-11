@@ -22,6 +22,10 @@
       <el-form-item label="跳转地址" prop="toUrl">
          <el-input v-model.trim="form.toUrl" autocomplete="off" placeholder="跳转地址为空时不跳转"></el-input>
       </el-form-item>
+      
+      <el-form-item label="" prop="" style="color:#ff0000;">
+        *跳转地址必须以http为开头
+      </el-form-item>
 
       <el-form-item label="开始时间" prop="begTime">
           <el-date-picker

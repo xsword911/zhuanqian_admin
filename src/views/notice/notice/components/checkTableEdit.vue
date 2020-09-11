@@ -12,19 +12,23 @@
       <el-form-item label="内容" prop="content">
         <el-input v-model.trim="form.content" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      
-      
+
+
       <el-form-item label="跳转地址" prop="toUrl">
          <el-input v-model.trim="form.toUrl" autocomplete="off" :disabled="true"></el-input>
-       </el-form-item>
-      
+      </el-form-item>
+
+      <el-form-item label="" prop="" style="color:#ff0000;">
+        *跳转地址必须以http为开头，为空时不跳转
+      </el-form-item>
+
       <el-form-item label="开始时间" prop="begTime">
         <el-input v-model.trim="form.begTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="结束时间" prop="endTime">
         <el-input v-model.trim="form.endTime" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      
+
       <el-form-item label="状态" prop="state">
         <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
         <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>

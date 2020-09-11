@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-  <el-form ref="form" :model="form" label-width="80px" :rules="rules">
+  <el-form ref="form" :model="form" label-width="94px" :rules="rules">
 
       <el-form-item label="用户uid" prop="uid">
         <el-input v-model.trim="form.uid" autocomplete="off"></el-input>
@@ -17,6 +17,10 @@
 
       <el-form-item label="开户支行" prop="bankBranch">
         <el-input v-model.trim="form.bankBranch" autocomplete="off"></el-input>
+      </el-form-item>
+
+      <el-form-item label="开户人姓名" prop="bankUserName">
+        <el-input v-model.trim="form.bankUserName" autocomplete="off"></el-input>
       </el-form-item>
 
       <el-form-item label="银行卡号" prop="bankCode">
@@ -65,6 +69,7 @@ export default {
       rules: {
         uid: [{ required: true, message: "请输入用户id", trigger: "blur" }],
         bank: [{ required: true, message: "请输入银行", trigger: "blur" }],
+        bankUserName: [{ required: true, message: "请输入开户人姓名", trigger: "blur" }],
         bankBranch: [{ required: true, message: "请输入开户支行", trigger: "blur" }],
         bankCode: [{ required: true, message: "请输入银行卡号", trigger: "blur" }],
         pwd: [

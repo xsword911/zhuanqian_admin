@@ -62,6 +62,11 @@ const api = {
   getUser: function (path, funSuccess) {
     httpUtil.post("user/getUser", path, funSuccess);
   },
+  
+  //管理员查询全部用户详细信息
+  getUserByAdmin: function(path, funSuccess, state = false) {
+    httpUtil.post('user/getUserByAdmin', path, funSuccess, state);
+  },
 
   //根据uid查询某个用户详细信息
   getUserByUid: function(path, funSuccess) {httpUtil.post('user/getUserByUid', path, funSuccess);},
