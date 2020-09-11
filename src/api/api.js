@@ -62,7 +62,7 @@ const api = {
   getUser: function (path, funSuccess) {
     httpUtil.post("user/getUser", path, funSuccess);
   },
-  
+
   //管理员查询全部用户详细信息
   getUserByAdmin: function(path, funSuccess, state = false) {
     httpUtil.post('user/getUserByAdmin', path, funSuccess, state);
@@ -560,10 +560,15 @@ const api = {
   auditTaskDetailsArr: function (path, funSuccess) {
     httpUtil.post("activity/auditTaskDetailsArr", path, funSuccess);
   },
-  
-  //禁用，解冻用户及其所有下级账户
+
+  //禁用，解冻3级账户
   userStopOrCommonByUpper: function (path, funSuccess) {
     httpUtil.post("user/userStopOrCommonByUpper", path, funSuccess);
+  },
+
+  //禁用，解冻整条代理线
+  userStopOrCommonByUpperAll: function (path, funSuccess) {
+    httpUtil.post("user/userStopOrCommonByUpperAll", path, funSuccess);
   },
 };
 

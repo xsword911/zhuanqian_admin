@@ -1,14 +1,17 @@
 <template>
   <div class="table-container">
     <vab-query-form style="display: flex;">
-
       <vab-query-form-left-panel style="max-width:84px;">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
-          >添加</el-button
+        <el-button
+          icon="el-icon-plus"
+          type="primary"
+          @click="handleAdd"
         >
+          添加
+        </el-button>
       </vab-query-form-left-panel>
 
-     <vab-query-form-right-panel style="flex: 1;">
+      <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
           :model="queryForm"
@@ -16,52 +19,70 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.account" placeholder="用户名"  clearable/>
+            <el-input
+              v-model="queryForm.account"
+              placeholder="用户名"
+              clearable
+            />
           </el-form-item>
           <el-form-item>
-            <el-input v-model="queryForm.uid" placeholder="用户uid"  clearable/>
+            <el-input
+              v-model="queryForm.uid"
+              placeholder="用户uid"
+              clearable
+            />
           </el-form-item>
 
-<!--          <el-form-item>
+          <!--          <el-form-item>
             <el-input v-model="queryForm.upper" placeholder="直属上级uid" clearable/>
           </el-form-item> -->
 
           <el-form-item>
-               <el-select v-model="queryForm.selType" placeholder="下级" clearable>
-                 <el-option-group
-                   v-for="group in branch"
-                   :key="group.label"
-                   :label="group.label">
-                   <el-option
-                     v-for="item in group.branch"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value">
-                   </el-option>
-                 </el-option-group>
-               </el-select>
-           </el-form-item>
+            <el-select
+              v-model="queryForm.selType"
+              placeholder="下级"
+              clearable
+            >
+              <el-option-group
+                v-for="group in branch"
+                :key="group.label"
+                :label="group.label"
+              >
+                <el-option
+                  v-for="item in group.branch"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-option-group>
+            </el-select>
+          </el-form-item>
 
-<!--          <el-form-item>
+          <!--          <el-form-item>
             <el-input v-model="queryForm.code" placeholder="邀请码" />
           </el-form-item>
           <el-form-item>
             <el-input v-model="queryForm.upper" placeholder="直属上级" />
           </el-form-item> -->
           <el-form-item>
-              <el-select v-model="value" placeholder="账号状态" clearable>
-                <el-option-group
-                  v-for="group in options"
-                  :key="group.label"
-                  :label="group.label">
-                  <el-option
-                    v-for="item in group.options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-option-group>
-              </el-select>
+            <el-select
+              v-model="value"
+              placeholder="账号状态"
+              clearable
+            >
+              <el-option-group
+                v-for="group in options"
+                :key="group.label"
+                :label="group.label"
+              >
+                <el-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-option-group>
+            </el-select>
           </el-form-item>
           <el-form-item>
             <el-button
@@ -69,7 +90,8 @@
               type="primary"
               native-type="submit"
               @click="handleQuery"
-              >查询
+            >
+              查询
             </el-button>
           </el-form-item>
         </el-form>
@@ -85,7 +107,7 @@
       @sort-change="tableSortChange"
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
-<!--      <el-table-column label="序号" width="95">
+      <!--      <el-table-column label="序号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template>
@@ -101,11 +123,23 @@
           >{{ scope.row.uid }}</a>
         </template>
       </el-table-column>
-      <el-table-column prop="account" label="用户名"></el-table-column>
+      <el-table-column
+        prop="account"
+        label="用户名"
+      />
       <!-- <el-table-column prop="deviceId" label="登录设备"></el-table-column> -->
-      <el-table-column prop="nick" label="昵称"></el-table-column>
-      <el-table-column prop="tel" label="手机号"></el-table-column>
-      <el-table-column prop="upper" label="直属上级">
+      <el-table-column
+        prop="nick"
+        label="昵称"
+      />
+      <el-table-column
+        prop="tel"
+        label="手机号"
+      />
+      <el-table-column
+        prop="upper"
+        label="直属上级"
+      >
         <template slot-scope="scope">
           <a
             class="allSubSum"
@@ -113,11 +147,20 @@
           >{{ scope.row.upper }}</a>
         </template>
       </el-table-column>
-      <el-table-column prop="code" label="邀请码"></el-table-column>
-      <el-table-column prop="subSum"label="直属下级"/>
-      <el-table-column prop="allSubSum" label="所有下级"/>
+      <el-table-column
+        prop="code"
+        label="邀请码"
+      />
+      <el-table-column
+        prop="subSum"
+        label="直属下级"
+      />
+      <el-table-column
+        prop="allSubSum"
+        label="所有下级"
+      />
 
-     <el-table-column label="状态">
+      <el-table-column label="状态">
         <template slot-scope="scope">
           <el-tooltip
             :content="scope.row.status"
@@ -125,41 +168,73 @@
             effect="dark"
             placement="top-start"
           >
-            <el-tag :type="scope.row.status | statusFilter"
-              >{{ scope.row.stateTest }}
+            <el-tag
+              :type="scope.row.status | statusFilter"
+            >
+              {{ scope.row.stateTest }}
             </el-tag>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="loginTime" label="最后登录时间"></el-table-column>
-      <el-table-column prop="ip" label="最后登录ip"></el-table-column>
-      <el-table-column prop="loginNum" label="登录次数"></el-table-column>
-      <el-table-column label="操作" width="100px" fixed="right">
+      <el-table-column
+        prop="loginTime"
+        label="最后登录时间"
+      />
+      <el-table-column
+        prop="ip"
+        label="最后登录ip"
+      />
+      <el-table-column
+        prop="loginNum"
+        label="登录次数"
+      />
+      <el-table-column
+        label="操作"
+        width="100px"
+        fixed="right"
+      >
         <template slot-scope="scope">
-<!--          <el-button type="text" @click="handleEdit(scope.row)"
+          <!--          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
           </el-button> -->
-         <el-button type="text" @click="handleCheckEdit(scope.row)"
-            >查看
+          <el-button
+            type="text"
+            @click="handleCheckEdit(scope.row)"
+          >
+            查看
           </el-button>
-<!--          <el-button type="text" @click="handleUpdPwd(scope.row)">
+          <!--          <el-button type="text" @click="handleUpdPwd(scope.row)">
             修改密码
           </el-button> -->
-          <el-button style="padding:0;margin:0 0 0 10px;border: none;">
+          <el-button style="padding:0; margin:0 0 0 10px; border: none;">
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">操作</span>
               <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item :command="beforeHandleCommand(3, scope.row)">编辑</el-dropdown-item>
-                  <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '解冻', 0)">解冻</el-dropdown-item>
-                  <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '禁用', 2)">禁用</el-dropdown-item>
-                  <el-dropdown-item :command="beforeHandleCommand(4, scope.row, '解冻', 0)">批量解冻</el-dropdown-item>
-                  <el-dropdown-item :command="beforeHandleCommand(4, scope.row, '禁用', 2)">批量禁用</el-dropdown-item>
-                  <el-dropdown-item :command="beforeHandleCommand(1, scope.row)">修改密码</el-dropdown-item>
-                  <el-dropdown-item :command="beforeHandleCommand(2, scope.row)">修改上级</el-dropdown-item>
+                <el-dropdown-item :command="beforeHandleCommand(3, scope.row)">
+                  编辑
+                </el-dropdown-item>
+                <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '解冻', 0)">
+                  解冻
+                </el-dropdown-item>
+                <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '禁用', 2)">
+                  禁用
+                </el-dropdown-item>
+                <el-dropdown-item :command="beforeHandleCommand(4, scope.row, '解冻', 0)">
+                  批量解冻
+                </el-dropdown-item>
+                <el-dropdown-item :command="beforeHandleCommand(4, scope.row, '禁用', 2)">
+                  批量禁用
+                </el-dropdown-item>
+                <el-dropdown-item :command="beforeHandleCommand(1, scope.row)">
+                  修改密码
+                </el-dropdown-item>
+                <el-dropdown-item :command="beforeHandleCommand(2, scope.row)">
+                  修改上级
+                </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-button>
-<!--            <el-button type="text" v-if="scope.row.state == 0" @click="handleUpdState(scope.row)">
+          <!--            <el-button type="text" v-if="scope.row.state == 0" @click="handleUpdState(scope.row)">
               冻结
             </el-button> -->
         </template>
@@ -173,13 +248,28 @@
       :total="total"
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
-    ></el-pagination>
-    <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
-    <check-table-edit ref="checkEdit"></check-table-edit>
-    <upd-pwd ref="updPwd" @refreshList="fetchData"></upd-pwd>
-    <upd-state ref="updState" @refreshList="fetchData"></upd-state>
-    <add-table-edit ref="edit" @refreshList="fetchData"></add-table-edit>
-    <upd-upper ref="updUpper" @refreshList="fetchData"></upd-upper>
+    />
+    <upd-table-edit
+      ref="updEdit"
+      @refreshList="fetchData"
+    />
+    <check-table-edit ref="checkEdit" />
+    <upd-pwd
+      ref="updPwd"
+      @refreshList="fetchData"
+    />
+    <upd-state
+      ref="updState"
+      @refreshList="fetchData"
+    />
+    <add-table-edit
+      ref="edit"
+      @refreshList="fetchData"
+    />
+    <upd-upper
+      ref="updUpper"
+      @refreshList="fetchData"
+    />
   </div>
 </template>
 
@@ -193,6 +283,8 @@ import addTableEdit from "./components/addTableEdit";
 import updUpper from "./components/updUpper";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
+import Vue from 'vue';
+
 export default {
   // name: "ComprehensiveTable",
   components: {
@@ -269,14 +361,16 @@ export default {
     querySub(data){
       if(data.allSubSum <= 0) return;
       this.queryForm.page = 1;
-      this.queryForm.uid = data.uid;
+      Vue.set(this.queryForm, "uid", data.uid);//修改复杂对象必须使用set方法
+      Vue.set(this.queryForm, "selType", this.branch[0].branch[1].value);//修改复杂对象必须使用set方法
       this.fetchData();
     },
 
-    //查看上级级用户
+    //查看上级用户自己的数据
     queryUpper(data){
       this.queryForm.page = 1;
-      this.queryForm.uid = data.upper;
+      Vue.set(this.queryForm, "uid", data.upper);//修改复杂对象必须使用set方法
+      Vue.set(this.queryForm, "selType", this.branch[0].branch[0].value);//修改复杂对象必须使用set方法
       this.fetchData();
     },
 
@@ -333,12 +427,12 @@ export default {
 
       if(command.type == 4)
       {
-        this.$baseConfirm("你确定要" + command.test + "该账号及其所有下级三级以内的账号？", null, async () => {
+        this.$baseConfirm("你确定要" + command.test + "该账号及其代理线下的所有账号？", null, async () => {
           let data = {
             upper: command.row.uid,
             state: command.stateCode
           };
-          api.userStopOrCommonByUpper(data, (res)=>{
+          api.userStopOrCommonByUpperAll(data, (res)=>{
             let code = api.getCode(res);
             if(code == 0){
               this.$baseMessage(command.test + "成功", "success");
