@@ -667,7 +667,7 @@ export default {
         this.chart1.xAxis.data = []; //清空x轴数据
         this.chart1.series[0].data = []; //清空y轴数据
         data.forEach((item, index) =>{
-          console.log(data);
+          // console.log(data);
           this.chart1.xAxis.data.push(item.addTime);
           this.chart1.series[0].data.push(item.liveSum);
         });

@@ -14,9 +14,10 @@
 <!--         <el-form-item>
             <el-input v-model="queryForm.sn" placeholder="订单号"  clearable/>
           </el-form-item> -->
-        <el-form-item>
-            <el-input v-model="queryForm.admin" placeholder="审核人" clearable/>
+          <el-form-item>
+              <el-input v-model="queryForm.admin" placeholder="审核人" clearable/>
           </el-form-item>
+          
           <el-form-item>
               <el-select v-model="value" placeholder="审核状态" clearable>
                 <el-option-group
