@@ -86,6 +86,30 @@
             autocomplete="off"
           />
         </el-form-item>
+
+        <el-form-item
+          label="账号状态"
+          prop="bankUserName"
+        >
+          <el-input
+            v-if="userInfo.state == 0"
+            value="正常"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-if="userInfo.state == 1"
+            value="冻结"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-if="userInfo.state == 2"
+            value="管理员封号"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
       </div>
 
       <div>
@@ -199,6 +223,17 @@
         </el-form-item>
 
         <el-form-item
+          label="注册时间"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model="userInfo.regTime"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
           label="登录时间"
           prop="bankUserName"
         >
@@ -207,15 +242,6 @@
             autocomplete="off"
             :disabled="true"
           />
-        </el-form-item>
-
-        <el-form-item
-          label="账号状态"
-          prop="bankUserName"
-        >
-          <el-input value="正常" autocomplete="off":disabled="true" v-if="userInfo.state == 0"/>
-          <el-input value="冻结" autocomplete="off":disabled="true" v-if="userInfo.state == 1"/>
-          <el-input value="管理员封号" autocomplete="off":disabled="true" v-if="userInfo.state == 2"/>
         </el-form-item>
       </div>
     </el-form>

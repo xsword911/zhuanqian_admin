@@ -66,7 +66,7 @@
           />
         </el-form-item>
 
-       <el-form-item
+        <el-form-item
           label="收款账号"
           prop="account"
         >
@@ -83,6 +83,30 @@
         >
           <el-input
             v-model="form.owner"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="账号状态"
+          prop="bankUserName"
+        >
+          <el-input
+            v-if="userInfo.state == 0"
+            value="正常"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-if="userInfo.state == 1"
+            value="冻结"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-if="userInfo.state == 2"
+            value="管理员封号"
             autocomplete="off"
             :disabled="true"
           />
@@ -113,6 +137,18 @@
             :disabled="true"
           />
         </el-form-item>
+
+        <el-form-item
+          label="审核人"
+          prop="admin"
+        >
+          <el-input
+            v-model.trim="form.admin"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        
         <el-form-item
           label="状态"
           prop="state"
@@ -142,16 +178,7 @@
             :disabled="true"
           />
         </el-form-item>
-        <el-form-item
-          label="审核人"
-          prop="admin"
-        >
-          <el-input
-            v-model.trim="form.admin"
-            autocomplete="off"
-            :disabled="true"
-          />
-        </el-form-item>
+
         <el-form-item
           label="审核时间"
           prop="updTime"
@@ -177,12 +204,14 @@
           label=""
           prop="desc"
         >
-          <div style="color: #dc3b40;">备注是支付人姓名，微信号，支付宝号等</div>
+          <div style="color: #dc3b40;">
+            备注是支付人姓名，微信号，支付宝号等
+          </div>
         </el-form-item>
       </div>
 
       <div>
-       <el-form-item
+        <el-form-item
           label="用户名"
           prop="bankUserName"
         >
@@ -249,6 +278,17 @@
         </el-form-item>
 
         <el-form-item
+          label="注册时间"
+          prop="bankUserName"
+        >
+          <el-input
+            v-model="userInfo.regTime"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+
+        <el-form-item
           label="登录时间"
           prop="bankUserName"
         >
@@ -258,17 +298,7 @@
             :disabled="true"
           />
         </el-form-item>
-
-        <el-form-item
-          label="账号状态"
-          prop="bankUserName"
-        >
-          <el-input value="正常" autocomplete="off":disabled="true" v-if="userInfo.state == 0"/>
-          <el-input value="冻结" autocomplete="off":disabled="true" v-if="userInfo.state == 1"/>
-          <el-input value="管理员封号" autocomplete="off":disabled="true" v-if="userInfo.state == 2"/>
-        </el-form-item>
       </div>
-
     </el-form>
   </el-dialog>
 </template>
