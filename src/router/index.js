@@ -352,6 +352,18 @@ export const asyncRoutes = [
         name: "MonthStatisticsTable",
         component: () => import("@/views/statistics/monthTable/index"),
         meta: { title: "月报表" },
+      },
+      {
+        path: "userStatistics",
+        name: "UserStatistics",
+        component: () => import("@/views/statistics/userStatistics/index"),
+        meta: { title: "用户统计" },
+      },
+      {
+        path: "moneyStatistics",
+        name: "MoneyStatistics",
+        component: () => import("@/views/statistics/moneyStatistics/index"),
+        meta: { title: "金额统计" },
       }
     ],
   },

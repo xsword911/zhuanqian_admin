@@ -86,7 +86,8 @@
                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                </el-upload>
             </div>
-            <div><div style="color:#FF3A00; display:inline-block;">*</div>注意：上传图片大小建议200*200</div>
+            <div><div style="color: #FF3A00;
+             display: inline-block;">*</div>注意：上传图片大小建议200*200</div>
           </el-form-item>
 
           <el-form-item label="宣传文本" prop="taskTxt">
@@ -239,11 +240,11 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="任务审核(分钟)" prop="doneLong">
+      <el-form-item label="任务限时(分钟)" prop="doneLong">
                 <el-input v-model.trim="form.doneLong" autocomplete="off" clearable type="number"></el-input>
             </el-form-item>
 
-            <el-form-item label="任务审核(分钟)" prop="auditLong">
+            <el-form-item label="审核时长(分钟)" prop="auditLong">
                 <el-input v-model.trim="form.auditLong" autocomplete="off" clearable type="number"></el-input>
             </el-form-item>
 
@@ -506,11 +507,12 @@ export default {
         this.$message.error('任务说明不能为空');
         return;
       };
-      this.form.doneLong = parseInt(this.form.doneLong) * 60;   //任务限时分钟转为秒
-      this.form.auditLong = parseInt(this.form.auditLong) * 60; //审核时长分钟转为秒
-        api.updTask(this.form, (res)=>{
+      let data = Object.assign({}, this.form);
+      data.doneLong = parseInt(data.doneLong) * 60;   //任务限时分钟转为秒
+      data.auditLong = parseInt(data.auditLong) * 60; //审核时长分钟转为秒
+        api.updTask(data, (res)=>{
           let code = api.getCode(res);
-          if(code == 0){
+          if(code === 0){
             this.$baseMessage("修改成功", "success");
             this.$refs["form"].resetFields();
             this.dialogFormVisible = false;

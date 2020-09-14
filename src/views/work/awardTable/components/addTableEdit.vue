@@ -505,12 +505,14 @@ export default {
       if(!util.isEmpty(this.form.award)) this.form.award = parseInt(this.form.award);
       this.$refs["form"].validate(async (valid) => {
         if (valid) {
-          this.form.doneLong = parseInt(this.form.doneLong) * 60;   //任务限时分钟转为秒
-          this.form.auditLong = parseInt(this.form.auditLong) * 60; //审核时长分钟转为秒
-          this.form.uid = storage.getUid();
-          api.addTask(this.form, (res)=>{
+          this.form.uid = storage.getUid();  //获取uid
+          let data = Object.assign({}, this.form);
+          data.doneLong = parseInt(data.doneLong) * 60;   //任务限时分钟转为秒
+          data.auditLong = parseInt(data.auditLong) * 60; //审核时长分钟转为秒
+
+          api.addTask(data, (res)=>{
             let code = api.getCode(res);
-            if(code == 0){
+            if(code === 0){
               this.$baseMessage("添加成功", "success");
               this.$refs["form"].resetFields();
               this.dialogFormVisible = false;

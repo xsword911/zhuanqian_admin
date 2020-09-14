@@ -77,6 +77,16 @@
           />
         </el-form-item>
         <el-form-item
+          label="备注"
+          prop="desc"
+        >
+          <el-input
+            v-model.trim="form.desc"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
           label="审核人"
           prop="admin"
         >
@@ -87,6 +97,11 @@
           />
         </el-form-item>
 
+      </div>
+
+
+
+      <div>
         <el-form-item
           label="账号状态"
           prop="bankUserName"
@@ -110,11 +125,6 @@
             :disabled="true"
           />
         </el-form-item>
-      </div>
-
-
-
-      <div>
         <el-form-item
           label="银行"
           prop="bank"
@@ -167,19 +177,6 @@
           />
         </el-form-item>
         <el-form-item
-          label="备注"
-          prop="desc"
-        >
-          <el-input
-            v-model.trim="form.desc"
-            autocomplete="off"
-            :disabled="true"
-          />
-        </el-form-item>
-      </div>
-
-      <div>
-        <el-form-item
           label="用户名"
           prop="bankUserName"
         >
@@ -189,7 +186,9 @@
             :disabled="true"
           />
         </el-form-item>
+      </div>
 
+      <div>
         <el-form-item
           label="手机号"
           prop="bankUserName"

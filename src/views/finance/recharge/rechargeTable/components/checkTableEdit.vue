@@ -121,6 +121,7 @@
               style="width: 80px; height: 80px;"
             >
               <el-image
+                :preview-src-list="[form.imgUrl]"
                 :src="form.imgUrl"
               />
             </div>
@@ -136,6 +137,20 @@
             autocomplete="off"
             :disabled="true"
           />
+        </el-form-item>
+
+        <el-form-item label="完成截图">
+          <div style="display: flex;">
+            <div
+              class="block"
+              style="width: 80px; height: 80px;"
+            >
+              <el-image
+                :src="form.finishUrl"
+                :preview-src-list="[form.finishUrl]"
+              />
+            </div>
+          </div>
         </el-form-item>
 
         <el-form-item
@@ -202,12 +217,11 @@
 
         <el-form-item
           label=""
-          prop="desc"
+          prop=""
         >
-          <div style="color: #dc3b40;">
-            备注是支付人姓名，微信号，支付宝号等
-          </div>
+          备注是支付人姓名，微信号，支付宝号等
         </el-form-item>
+
       </div>
 
       <div>

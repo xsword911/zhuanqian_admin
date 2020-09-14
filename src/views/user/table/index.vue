@@ -20,6 +20,14 @@
         >
           <el-form-item>
             <el-input
+              v-model="queryForm.bankUserName"
+              placeholder="开户人姓名"
+              clearable
+            />
+          </el-form-item>
+
+          <el-form-item>
+            <el-input
               v-model="queryForm.account"
               placeholder="用户名"
               clearable

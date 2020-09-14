@@ -560,6 +560,11 @@ const api = {
   userStopOrCommonByUpperAll: function (path, funSuccess) {
     httpUtil.post("user/userStopOrCommonByUpperAll", path, funSuccess);
   },
+
+  //平台走势图
+  getStatisticsMonthMap: function (path, funSuccess) {
+    httpUtil.post("statistics/getStatisticsMonthMap", path, funSuccess);
+  },
 };
 
 export default api;

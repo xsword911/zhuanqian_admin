@@ -134,8 +134,8 @@ export default {
     //跳转到充值审核
     toRecharge(){
       this.$router.push({
-        name: 'RechargeExamine',
-        // params: {
+        name: 'rechargeExamine',
+        // query: {
         //   state: 0
         // }
       });

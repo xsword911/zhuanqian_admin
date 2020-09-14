@@ -122,6 +122,7 @@
             >
               <el-image
                 :src="form.imgUrl"
+                :preview-src-list="[form.imgUrl]"
               />
             </div>
           </div>
@@ -136,6 +137,20 @@
             autocomplete="off"
             :disabled="true"
           />
+        </el-form-item>
+
+        <el-form-item label="完成截图">
+          <div style="display: flex;">
+            <div
+              class="block"
+              style="width: 80px; height: 80px;"
+            >
+              <el-image
+                :src="form.finishUrl"
+                :preview-src-list="[form.finishUrl]"
+              />
+            </div>
+          </div>
         </el-form-item>
 
         <el-form-item
