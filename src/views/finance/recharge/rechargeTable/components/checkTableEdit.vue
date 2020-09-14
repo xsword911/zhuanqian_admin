@@ -139,7 +139,7 @@
           />
         </el-form-item>
 
-        <el-form-item label="完成截图">
+        <el-form-item label="充值截图">
           <div style="display: flex;">
             <div
               class="block"
@@ -221,7 +221,6 @@
         >
           备注是支付人姓名，微信号，支付宝号等
         </el-form-item>
-
       </div>
 
       <div>

@@ -1,34 +1,71 @@
 <template>
   <div class="nav-bar-container">
     <el-row :gutter="15">
-      <el-col :xs="4" :sm="12" :md="12" :lg="12" :xl="12">
+      <el-col
+        :xs="4"
+        :sm="12"
+        :md="12"
+        :lg="12"
+        :xl="12"
+      >
         <div class="left-panel">
           <i
             :class="collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
             :title="collapse ? '展开' : '收起'"
             class="fold-unfold"
             @click="handleCollapse"
-          ></i>
+          />
           <breadcrumb class="hidden-xs-only" />
         </div>
       </el-col>
-      <el-col :xs="20" :sm="12" :md="12" :lg="12" :xl="12">
+      <el-col
+        :xs="20"
+        :sm="12"
+        :md="12"
+        :lg="12"
+        :xl="12"
+      >
         <div class="right-panel">
-         <audio controls="controls" hidden :src="require('@/assets/up.mp3')" ref="upAudio"></audio>
-          <audio controls="controls" hidden :src="require('@/assets/down.mp3')" ref="downAudio"></audio>
-          <div class="record" @click="toRecharge">未审核充值记录（<div class="record_sum"> {{rechargeUnknownSum}} </div>）</div>
-          <div class="record" @click="toExamine" style="margin-right:10px;">未审核提现记录（<div class="record_sum"> {{drawUnknownSum}} </div>）</div>
+          <audio
+            ref="upAudio"
+            controls="controls"
+            hidden
+            :src="require('@/assets/up.mp3')"
+          />
+          <audio
+            ref="downAudio"
+            controls="controls"
+            hidden
+            :src="require('@/assets/down.mp3')"
+          />
+          <div
+            class="record"
+            @click="toRecharge"
+          >
+            未审核充值记录（<div class="record_sum">
+              {{ rechargeUnknownSum }}
+            </div>）
+          </div>
+          <div
+            class="record"
+            style="margin-right:10px;"
+            @click="toExamine"
+          >
+            未审核提现记录（<div class="record_sum">
+              {{ drawUnknownSum }}
+            </div>）
+          </div>
           <!-- <error-log></error-log> -->
-          <full-screen-bar @refresh="refreshRoute"></full-screen-bar>
+          <full-screen-bar @refresh="refreshRoute" />
           <!-- <theme-bar></theme-bar>-->
           <vab-icon
             title="重载所有路由"
             :pulse="pulse"
             :icon="['fas', 'redo']"
             @click="refreshRoute"
-          ></vab-icon>
-          <avatar></avatar>
-<!--           <vab-icon
+          />
+          <avatar />
+          <!--           <vab-icon
             title="退出系统"
             :icon="['fas', 'sign-out-alt']"
             @click="logout"
@@ -57,9 +94,7 @@ export default {
   components: {
     Avatar,
     Breadcrumb,
-    ErrorLog,
     FullScreenBar,
-    ThemeBar,
   },
   data() {
     return {
@@ -134,10 +169,7 @@ export default {
     //跳转到充值审核
     toRecharge(){
       this.$router.push({
-        name: 'rechargeExamine',
-        // query: {
-        //   state: 0
-        // }
+        name: 'RechargeExamine',
       });
     },
     //跳转到提现审核
