@@ -388,11 +388,11 @@
 
         //时间筛选不为空时添加时间属性
         if(!util.isEmpty(this.searchTime)){
-          this.queryForm.begAddTime = this.searchTime[0];
-          this.queryForm.endAddTime = this.searchTime[1];
+          this.queryForm.begFinishTime = this.searchTime[0];
+          this.queryForm.endFinishTime = this.searchTime[1];
         }else{   //时间筛选为空时删除时间属性
-          delete this.queryForm.begAddTime;
-          delete this.queryForm.endAddTime;
+          delete this.queryForm.begFinishTime;
+          delete this.queryForm.endFinishTime;
         }
         this.getStatisticsMonthMap();
       },
