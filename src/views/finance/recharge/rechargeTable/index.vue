@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
     <vab-query-form style="display: flex;">
-     <vab-query-form-right-panel style="flex: 1;">
+      <vab-query-form-right-panel style="flex: 1;">
         <el-form
           ref="form"
           :model="queryForm"
@@ -9,42 +9,55 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.uid" placeholder="uid"  clearable/>
+            <el-input
+              v-model="queryForm.uid"
+              placeholder="uid"
+              clearable
+            />
           </el-form-item>
-<!--         <el-form-item>
+          <!--         <el-form-item>
             <el-input v-model="queryForm.sn" placeholder="订单号"  clearable/>
           </el-form-item> -->
           <el-form-item>
-              <el-input v-model="queryForm.admin" placeholder="审核人" clearable/>
+            <el-input
+              v-model="queryForm.admin"
+              placeholder="审核人"
+              clearable
+            />
           </el-form-item>
 
           <el-form-item>
-              <el-select v-model="queryForm.state" placeholder="审核状态" clearable>
-                <el-option-group
-                  v-for="group in options"
-                  :key="group.label"
-                  :label="group.label">
-                  <el-option
-                    v-for="item in group.options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-option-group>
-              </el-select>
+            <el-select
+              v-model="queryForm.state"
+              placeholder="审核状态"
+              clearable
+            >
+              <el-option-group
+                v-for="group in options"
+                :key="group.label"
+                :label="group.label"
+              >
+                <el-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-option-group>
+            </el-select>
           </el-form-item>
 
           <el-form-item>
-                <div class="block">
-                  <el-date-picker
-                    v-model="searchTime"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    type="datetimerange"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    :default-time="['00:00:00', '23:59:59']">
-                  </el-date-picker>
-                </div>
+            <div class="block">
+              <el-date-picker
+                v-model="searchTime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                type="datetimerange"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :default-time="['00:00:00', '23:59:59']"
+              />
+            </div>
           </el-form-item>
 
           <el-form-item>
@@ -53,7 +66,8 @@
               type="primary"
               native-type="submit"
               @click="handleQuery"
-              >查询
+            >
+              查询
             </el-button>
           </el-form-item>
         </el-form>
@@ -69,17 +83,29 @@
       @sort-change="tableSortChange"
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
-<!--      <el-table-column label="序号" width="95">
+      <!--      <el-table-column label="序号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="uid"></el-table-column>
-      <el-table-column prop="sn" label="账单号"></el-table-column>
-      <el-table-column prop="money" label="金额"></el-table-column>
-      <el-table-column prop="addTime" label="申请时间"></el-table-column>
+      <el-table-column
+        prop="uid"
+        label="uid"
+      />
+      <el-table-column
+        prop="sn"
+        label="账单号"
+      />
+      <el-table-column
+        prop="money"
+        label="金额"
+      />
+      <el-table-column
+        prop="addTime"
+        label="申请时间"
+      />
 
-     <el-table-column label="申请状态">
+      <el-table-column label="申请状态">
         <template slot-scope="scope">
           <el-tooltip
             :content="scope.row.status"
@@ -87,25 +113,46 @@
             effect="dark"
             placement="top-start"
           >
-           <el-tag :type="scope.row.status | statusFilter"
-              >{{ scope.row.stateTest }}
+            <el-tag
+              :type="scope.row.status | statusFilter"
+            >
+              {{ scope.row.stateTest }}
             </el-tag>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="admin" label="审核人"></el-table-column>
-      <el-table-column prop="updTime" label="审核时间"></el-table-column>
-      <el-table-column prop="desc" label="备注"></el-table-column>
-      <el-table-column label="操作" width="100px" fixed="right">
+      <el-table-column
+        prop="admin"
+        label="审核人"
+      />
+      <el-table-column
+        prop="updTime"
+        label="审核时间"
+      />
+      <el-table-column
+        prop="desc"
+        label="备注"
+      />
+      <el-table-column
+        label="操作"
+        width="100px"
+        fixed="right"
+      >
         <template slot-scope="scope">
-<!--          <el-button type="text" @click="handleDelete(scope.row)"
+          <!--          <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
-          <el-button type="text" @click="handleCheckEdit(scope.row)"
-            >查看
+          <el-button
+            type="text"
+            @click="handleCheckEdit(scope.row)"
+          >
+            查看
           </el-button>
-          <el-button type="text" @click="handleEdit(scope.row)"
-            >审核
+          <el-button
+            type="text"
+            @click="handleEdit(scope.row)"
+          >
+            审核
           </el-button>
         </template>
       </el-table-column>
@@ -118,9 +165,12 @@
       :total="total"
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
-    ></el-pagination>
-    <upd-table-edit ref="updEdit" @refreshList="fetchData"></upd-table-edit>
-    <check-table-edit ref="checkEdit"></check-table-edit>
+    />
+    <upd-table-edit
+      ref="updEdit"
+      @refreshList="fetchData"
+    />
+    <check-table-edit ref="checkEdit" />
   </div>
 </template>
 
@@ -130,6 +180,8 @@ import checkTableEdit from "./components/checkTableEdit";
 import updTableEdit from "./components/updTableEdit";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
+import Vue from 'vue';
+
 export default {
   // name: "ComprehensiveTable",
   components: {
@@ -191,7 +243,9 @@ export default {
   beforeDestroy() {},
   mounted() {
     if(!util.isEmpty(this.$route.query.state) && this.$route.query.state != undefined)
-      this.$set(this.queryForm, "state", this.$route.query.state);   //设置查询状态为未审核
+      Vue.set(this.queryForm, "state", this.$route.query.state);   //设置查询状态为未审核
+
+    console.log(this.$route.query.state);
     this.fetchData();
   },
   methods: {
@@ -252,11 +306,13 @@ export default {
         delete this.queryForm.endAddTime;
       };
       //奖励类型筛选不为空时添加奖励类型属性
-      if(!util.isEmpty(this.value)){
-        this.queryForm.state = this.value;
-      }else{   //奖励类型筛选为空时删除奖励类型属性
+      // if(!util.isEmpty(this.value)){
+      //   this.queryForm.state = this.value;
+      // }else{   //奖励类型筛选为空时删除奖励类型属性
+      //   delete this.queryForm.state;
+      // };
+      if (util.isEmpty(this.queryForm.state))
         delete this.queryForm.state;
-      };
       this.fetchData();
     },
     async fetchData() {
