@@ -88,6 +88,7 @@ import * as echarts from "echarts";
 import VabChart from "@/plugins/echarts";
 import api from "@/api/api.js";
 import tran from "@/utils/tran.js";
+import time from "@/utils/time.js";
 export default {
   name: "Echarts",
   components: {
@@ -781,10 +782,16 @@ export default {
       queryForm: {
         page: 1,
         count: 60,
+        begFinishTime: "",
+        endFinishTime: "",
       },
     };
   },
   mounted() {
+    let date = time.getNowTime();
+    let oldDate = time.getDateNext(date, -30);
+    this.$set(this.queryForm, "endFinishTime", date);
+    this.$set(this.queryForm, "begFinishTime", oldDate);
     this.getStatisticsMonthMap();  //获取用户活跃统计
   },
   methods: {
