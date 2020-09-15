@@ -180,6 +180,8 @@ export default {
   created() {},
   beforeDestroy() {},
   mounted() {
+    if(!util.isEmpty(this.$route.query.state) && this.$route.query.state != undefined)
+      this.$set(this.queryForm, "state", this.$route.query.state);   //设置查询状态为未审核
     this.fetchData();
   },
   methods: {

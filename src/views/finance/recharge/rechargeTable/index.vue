@@ -19,7 +19,7 @@
           </el-form-item>
 
           <el-form-item>
-              <el-select v-model="value" placeholder="审核状态" clearable>
+              <el-select v-model="queryForm.state" placeholder="审核状态" clearable>
                 <el-option-group
                   v-for="group in options"
                   :key="group.label"
@@ -163,7 +163,6 @@ export default {
           label: '审核未通过'
         }]
       }],
-      value: '',      //审核类型
 
       searchTime: '', //筛选的时间范围
       imgShow: true,
@@ -187,10 +186,12 @@ export default {
     };
   },
   created() {
-    console.log(this.$route.query);
+
   },
   beforeDestroy() {},
   mounted() {
+    if(!util.isEmpty(this.$route.query.state) && this.$route.query.state != undefined)
+      this.$set(this.queryForm, "state", this.$route.query.state);   //设置查询状态为未审核
     this.fetchData();
   },
   methods: {

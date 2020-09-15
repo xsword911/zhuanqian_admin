@@ -1,14 +1,33 @@
 <template>
   <div class="echarts-container">
     <el-row :gutter="15">
-      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
+      <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
         <el-card shadow="hover">
-          <div slot="header">用户活跃统计</div>
+          <div slot="header">用户统计</div>
           <div>
             <vab-chart autoresize :options="chart1" />
           </div>
         </el-card>
       </el-col>
+
+      <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-card shadow="hover">
+          <div slot="header">昨日金额统计</div>
+          <div>
+            <vab-chart autoresize :options="chart2" />
+          </div>
+        </el-card>
+      </el-col>
+
+      <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-card shadow="hover">
+          <div slot="header">今日金额统计</div>
+          <div>
+            <vab-chart autoresize :options="chart3" />
+          </div>
+        </el-card>
+      </el-col>
+
 <!--      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
         <el-card shadow="hover">
           <div slot="header">环形图</div>
@@ -91,7 +110,7 @@ export default {
           },
         },
         legend: {
-          data: ["活跃用户数"], //["销售水量", "主营业务"]
+          data: ["活跃用户数", "注册人数", "首充人数", "充值次数", "提现次数", "充值人数"], //["销售水量", "主营业务"]
         },
         xAxis: {
           // data: [
@@ -190,30 +209,137 @@ export default {
             areaStyle: {
               color: "rgba(5,140,255, 0.2)",
             },
-            // data: [4.2, 3.8, 4.8, 3.5, 2.9, 2.8, 3, 5],
             data: [],
           },
-          // {
-          //   name: "活跃用户数",
-          //   type: "bar",
-          //   barWidth: 15,
-          //   itemStyle: {
-          //     normal: {
-          //       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          //         {
-          //           offset: 0,
-          //           color: "#00FFE3",
-          //         },
-          //         {
-          //           offset: 1,
-          //           color: "#4693EC",
-          //         },
-          //       ]),
-          //     },
-          //   },
-          //   data: [4.2, 3.8, 4.8, 3.5, 2.9, 2.8, 3, 5],
-          // },
+          {
+            name: "注册人数",
+            type: "line",
+            smooth: true, //平滑曲线显示
+            itemStyle: {
+              color: "#36CBCB",
+            },
+            areaStyle: {
+              color: "rgba(5,140,255, 0.2)",
+            },
+            data: [],
+            //data: [],
+          },
+          {
+            name: "首充人数",
+            type: "line",
+            smooth: true, //平滑曲线显示
+            itemStyle: {
+              color: "#ff0000",
+            },
+            areaStyle: {
+              color: "rgba(5,140,255, 0.2)",
+            },
+            data: [],
+            //data: [],
+          },
+          {
+            name: "充值次数",
+            type: "line",
+            smooth: true, //平滑曲线显示
+            itemStyle: {
+              color: "#303133",
+            },
+            areaStyle: {
+              color: "rgba(5,140,255, 0.2)",
+            },
+            data: [],
+            //data: [],
+          },
+          {
+            name: "提现次数",
+            type: "line",
+            smooth: true, //平滑曲线显示
+            itemStyle: {
+              color: "#FBD437",
+            },
+            areaStyle: {
+              color: "rgba(5,140,255, 0.2)",
+            },
+            data: [],
+            //data: [],
+          },
+          {
+            name: "充值人数",
+            type: "line",
+            smooth: true, //平滑曲线显示
+            itemStyle: {
+              color: "#DCB093",
+            },
+            areaStyle: {
+              color: "rgba(5,140,255, 0.2)",
+            },
+            data: [],
+            //data: [],
+          },
         ],
+      },
+      chart2:{
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['首充金额', '提现金额', '充值金额']
+        },
+        series: [
+            {
+                name: '金额统计',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: [
+                    {value: null, name: '首充金额'},
+                    {value: null, name: '提现金额'},
+                    {value: null, name: '充值金额'}
+                ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+      },
+
+      chart3:{
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['首充金额', '提现金额', '充值金额']
+        },
+        series: [
+            {
+                name: '金额统计',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: [
+                    {value: null, name: '首充金额'},
+                    {value: null, name: '提现金额'},
+                    {value: null, name: '充值金额'}
+                ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
       },
       // chart2: {
       //   tooltip: {
@@ -651,29 +777,55 @@ export default {
       dataList: [], //数据列表
 
       dataListCount: [],  //图形数据
+
+      queryForm: {
+        page: 1,
+        count: 60,
+      },
     };
   },
   mounted() {
-    this.getUserStatistics();  //获取用户活跃统计
+    this.getStatisticsMonthMap();  //获取用户活跃统计
   },
   methods: {
-    //获取用户活跃统计
-    getUserStatistics(){
-    api.getUserStatistics({page: 1, count: 14}, (res)=>{
-      let code = api.getCode(res);
-      if(code == 0){
-        let data = api.getData(res);
+      //获取用户活跃统计
+      getStatisticsMonthMap(){
+        api.getStatisticsMonthMap(this.queryForm, (res)=>{
+          let code = api.getCode(res);
+          if(code === 0){
+            let data = api.getData(res);
+            if(data.length > 30) data = data.slice(-30);
+            console.log(data);
+            this.chart1.xAxis.data = []; //清空x轴数据
+            this.chart1.series[0].data = []; //清空y轴数据
+            this.chart1.series[1].data = []; //清空y轴数据
+            this.chart1.series[2].data = []; //清空y轴数据
+            this.chart1.series[3].data = []; //清空y轴数据
+            this.chart1.series[4].data = []; //清空y轴数据
+            this.chart1.series[5].data = []; //清空y轴数据
+            data.forEach((item, index) =>{
+              //用户统计数据
+              this.chart1.xAxis.data.push(item.addTime);
+              this.chart1.series[0].data.push(item.liveSum);
+              this.chart1.series[1].data.push(item.registerTodayNum);
+              this.chart1.series[2].data.push(item.firstRechargeMoneyPeople);
+              this.chart1.series[3].data.push(item.rechargeSum);
+              this.chart1.series[4].data.push(item.drawSum);
+              this.chart1.series[5].data.push(item.rechargeMoneyPeople);
+              //昨日金额统计
+              this.chart2.series[0].data[0].value = data[data.length -2].firstRechargeMoney;
+              this.chart2.series[0].data[1].value = data[data.length -2].drawMoney;
+              this.chart2.series[0].data[2].value = data[data.length -2].rechargeMoney;
+              //今日金额统计
+              this.chart3.series[0].data[0].value = data[data.length -1].firstRechargeMoney;
+              this.chart3.series[0].data[1].value = data[data.length -1].drawMoney;
+              this.chart3.series[0].data[2].value = data[data.length -1].rechargeMoney;
+            });
 
-        this.chart1.xAxis.data = []; //清空x轴数据
-        this.chart1.series[0].data = []; //清空y轴数据
-        data.forEach((item, index) =>{
-          // console.log(data);
-          this.chart1.xAxis.data.push(item.addTime);
-          this.chart1.series[0].data.push(item.liveSum);
+          }
         });
-      }
-    });
-    },
+
+      },
   },
 };
 </script>

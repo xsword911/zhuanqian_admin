@@ -131,19 +131,22 @@ export default {
         if(parseInt(this.drawUnknownSum) > 99) this.drawUnknownSum = "99+";
       });
     },
-    //跳转到充值审核
+    //跳转到充值审核并修改查询状态为未审核
     toRecharge(){
       this.$router.push({
-        name: 'rechargeExamine',
-        // query: {
-        //   state: 0
-        // }
+        name: 'RechargeExamine',
+        query: {
+          state: 0
+        }
       });
     },
-    //跳转到提现审核
+    //跳转到提现审核并修改查询状态为未审核
     toExamine(){
       this.$router.push({
         name: 'Welfare',
+        query: {
+          state: 0
+        }
       });
     },
     //定时刷新
