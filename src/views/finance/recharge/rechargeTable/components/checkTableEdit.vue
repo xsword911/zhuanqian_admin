@@ -139,7 +139,7 @@
           />
         </el-form-item>
 
-        <el-form-item label="完成截图">
+        <el-form-item label="充值截图">
           <div style="display: flex;">
             <div
               class="block"
