@@ -142,13 +142,13 @@
           </el-button> -->
           <el-button
             type="text"
-            @click="handleCheckEdit(scope.row)"
+            @click="handleCheckEdit(scope.row, level)"
           >
             查看
           </el-button>
           <el-button
             type="text"
-            @click="handleEdit(scope.row)"
+            @click="handleEdit(scope.row, level)"
           >
             审核
           </el-button>
@@ -225,16 +225,25 @@ export default {
         page: 1,
         count: 10,
       },
+      level: [],  //会员等级信息
     };
   },
   created() {},
   beforeDestroy() {},
   mounted() {
     if(!util.isEmpty(this.$route.query.state) && this.$route.query.state != undefined)
-      Vue.set(this.queryForm, "state", this.$route.query.state);   //设置查询状态为未审核
+      Vue.set(this.queryForm, "state", this.$route.query.state);
+    this.getUserLevel();  //获取会员等级信息//设置查询状态为未审核
     this.fetchData();
   },
   methods: {
+    //获取会员等级信息
+    getUserLevel(){
+      api.getUserLevel({}, (res)=>{
+        let data = api.getData(res);
+        this.level = data;
+      });
+    },
     tableSortChange() {
       const imageList = [];
       this.$refs.tableSort.tableData.forEach((item, index) => {
@@ -245,11 +254,11 @@ export default {
     setSelectRows(val) {
       this.selectRows = val;
     },
-    handleCheckEdit(row) {
-      this.$refs["checkEdit"].showEdit(row);
+    handleCheckEdit(row, level) {
+      this.$refs["checkEdit"].showEdit(row, level);
     },
-    handleEdit(row) {
-      this.$refs["updEdit"].showEdit(row);
+    handleEdit(row, level) {
+      this.$refs["updEdit"].showEdit(row, level);
     },
     handleDelete(row) {
       if (row.id) {

@@ -34,6 +34,16 @@
           />
         </el-form-item>
         <el-form-item
+          label="等级"
+          prop="levelName"
+        >
+          <el-input
+            v-model="userInfo.levelName"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
           label="金额"
           prop="money"
         >
@@ -185,9 +195,6 @@
             :disabled="true"
           />
         </el-form-item>
-      </div>
-
-      <div>
         <el-form-item
           label="手机号"
           prop="bankUserName"
@@ -198,6 +205,9 @@
             :disabled="true"
           />
         </el-form-item>
+      </div>
+
+      <div>
         <el-form-item
           label="昵称"
           prop="bankUserName"
@@ -313,7 +323,10 @@ export default {
       title: "",
       dialogFormVisible: false,
       userBank: {
-        bank: "",
+        bank: '',
+        bankBranch: '',
+        bankCode: '',
+        bankUserName: '',
       }, //用户银行
       userInfo: {
         tel: "",
@@ -321,6 +334,7 @@ export default {
         account: "",
         state: 0
       }, //用户信息
+      level: [],  //会员等级信息
     };
   },
   mounted() {
@@ -333,8 +347,8 @@ export default {
       api.getUserBank({uid: this.form.uid}, (res)=>{
         let code = api.getCode(res);
         if(code == 0){
-          this.userBank = api.getData(res)[0];
-          //console.log(this.userBank);
+          let data = api.getData(res)[0];
+          if(!util.isEmpty(data) && data != undefined) this.userBank = data;
         }else{
           let msg = api.getMsg(res);
           this.$message.error(msg);
@@ -349,6 +363,9 @@ export default {
         let code = api.getCode(res);
         if(code == 0){
           if(res.data == null) return;
+          this.level.forEach((item) =>{
+            if(res.data.level == item.level) res.data.levelName = item.levelName;
+          });
           this.userInfo = res.data;
           console.log(this.userInfo);
         }else{
@@ -358,7 +375,7 @@ export default {
       });
     },
 
-    showEdit(row) {
+    showEdit(row, level) {
       if (!row) {
         this.title = "添加";
       } else {
@@ -366,7 +383,7 @@ export default {
         this.form = Object.assign({}, row);
       }
       this.dialogFormVisible = true;
-      console.log(1);
+      this.level = level;
       this.getUserBank();//取用户银行卡
       this.getUserInfo();  //获取用户信息
     },

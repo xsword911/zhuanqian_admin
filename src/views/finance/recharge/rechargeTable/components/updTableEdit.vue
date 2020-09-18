@@ -34,6 +34,16 @@
           />
         </el-form-item>
         <el-form-item
+          label="等级"
+          prop="levelName"
+        >
+          <el-input
+            v-model="userInfo.levelName"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
           label="金额"
           prop="money"
         >
@@ -363,20 +373,23 @@ export default {
         account: "",
         state: 0,
       }, //用户信息
+      level: [],  //会员等级信息
     };
   },
   mounted() {
 
   },
   methods: {
-    showEdit(row) {
+    showEdit(row, level) {
       if (!row) {
         this.title = "添加";
       } else {
         this.title = "审核";
         this.form = Object.assign({}, row);
       }
+      console.log(this.form);
       this.dialogFormVisible = true;
+      this.level = level;
       this.getUserInfo();  //获取用户信息
     },
     //取用户数据
@@ -386,8 +399,11 @@ export default {
         let code = api.getCode(res);
         if(code == 0){
           if(res.data == null) return;
+          this.level.forEach((item) =>{
+            if(res.data.level == item.level) res.data.levelName = item.levelName;
+          });
           this.userInfo = res.data;
-          console.log(this.userInfo);
+          // console.log(this.userInfo);
         }else{
           let msg = api.getMsg(res);
           this.$message.error(msg);

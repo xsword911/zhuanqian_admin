@@ -137,10 +137,10 @@
 
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
-         <el-button type="text" @click="handleCheckEdit(scope.row)"
+         <el-button type="text" @click="handleCheckEdit(scope.row, level)"
            >查看
          </el-button>
-         <el-button type="text" @click="handleEdit(scope.row)">
+         <el-button type="text" @click="handleEdit(scope.row, level)">
            审核
           </el-button>
 <!--          <el-button type="text" @click="handleDelete(scope.row)"
@@ -284,11 +284,11 @@ export default {
     setSelectRows(val) {
       this.selectRows = val;
     },
-    handleEdit(row) {
-      this.$refs["updEdit"].showEdit(row);
+    handleEdit(row, level) {
+      this.$refs["updEdit"].showEdit(row, level);
     },
-    handleCheckEdit(row) {
-      this.$refs["checkEdit"].showEdit(row);
+    handleCheckEdit(row, level) {
+      this.$refs["checkEdit"].showEdit(row, level);
     },
     handleExamine(row){
       if(util.isEmpty(this.selectRows)){

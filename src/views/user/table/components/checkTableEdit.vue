@@ -98,23 +98,12 @@
           <el-input value="钻石会员" autocomplete="off" :disabled="true" v-show="form.level == 5"></el-input>
           <el-input value="至尊会员" autocomplete="off" :disabled="true" v-show="form.level == 6"></el-input>
         </el-form-item>
-
         <el-form-item
-          label="金币"
-          prop="gold"
+          label="密码错误次数"
+          prop="pwdError"
         >
           <el-input
-            v-model.trim="form.gold"
-            autocomplete="off"
-            :disabled="true"
-          />
-        </el-form-item>
-        <el-form-item
-          label="余额"
-          prop="money"
-        >
-          <el-input
-            v-model.trim="form.money"
+            v-model.trim="form.pwdError"
             autocomplete="off"
             :disabled="true"
           />
@@ -225,17 +214,6 @@
             :disabled="true"
           />
         </el-form-item>
-
-        <el-form-item
-          label="密码错误次数"
-          prop="pwdError"
-        >
-          <el-input
-            v-model.trim="form.pwdError"
-            autocomplete="off"
-            :disabled="true"
-          />
-        </el-form-item>
       </div>
 
       <div>
@@ -332,6 +310,26 @@
         >
           <el-input
             v-model.trim="userBank.addTime"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
+          label="金币"
+          prop="gold"
+        >
+          <el-input
+            v-model.trim="form.gold"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
+        <el-form-item
+          label="余额"
+          prop="money"
+        >
+          <el-input
+            v-model.trim="form.money"
             autocomplete="off"
             :disabled="true"
           />

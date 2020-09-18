@@ -10,15 +10,19 @@
           <el-form-item label="发布者" prop="uid">
             <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
           </el-form-item>
-          <el-form-item label="发布者用户名" prop="uid">
+          <el-form-item label="发布者用户名" prop="userName">
             <el-input v-model.trim="userName" autocomplete="off" :disabled="true"></el-input>
           </el-form-item>
 
           <el-form-item label="完成者" prop="doneUid">
              <el-input v-model.trim="form.doneUid" autocomplete="off" :disabled="true"></el-input>
            </el-form-item>
-           <el-form-item label="完成者用户名" prop="uid">
+           <el-form-item label="完成者用户名" prop="doneUidName">
              <el-input v-model.trim="doneUidName" autocomplete="off" :disabled="true"></el-input>
+           </el-form-item>
+
+           <el-form-item label="完成者用户等级" prop="doneUidLevel">
+             <el-input v-model.trim="doneUidLevel" autocomplete="off" :disabled="true"></el-input>
            </el-form-item>
 
            <el-form-item label="订单号" prop="sn">
@@ -61,25 +65,24 @@
               <el-input value="下载app" autocomplete="off" :disabled="true" v-show="form.type == 3"></el-input>
               <el-input value="点赞" autocomplete="off" :disabled="true" v-show="form.type == 4"></el-input>
             </el-form-item>
-
-          <el-form-item label="任务状态" prop="state">
-              <el-select v-model="form.state" placeholder="任务状态" clearable>
-                <el-option-group
-                  v-for="group in state"
-                  :key="group.label"
-                  :label="group.label">
-                  <el-option
-                    v-for="item in group.state"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-option-group>
-              </el-select>
-          </el-form-item>
       </div>
 
       <div>
+        <el-form-item label="任务状态" prop="state">
+            <el-select v-model="form.state" placeholder="任务状态" clearable>
+              <el-option-group
+                v-for="group in state"
+                :key="group.label"
+                :label="group.label">
+                <el-option
+                  v-for="item in group.state"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-option-group>
+            </el-select>
+        </el-form-item>
         <el-form-item label="刷新周期" prop="cycle">
           <el-input value="只能完成一次" autocomplete="off" :disabled="true" v-show="form.cycle == 0"></el-input>
           <el-input value="每天可完成一次" autocomplete="off" :disabled="true" v-show="form.cycle == 1"></el-input>
@@ -124,19 +127,18 @@
            </div>
         </el-form-item>
 
-            <el-form-item label="打开链接" prop="taskUrl">
-               <el-input v-model.trim="form.taskUrl" autocomplete="off" :disabled="true"></el-input>
-             </el-form-item>
-
-             <el-form-item label="打开app" prop="taskApp">
-                <el-input value="不打开任何app" autocomplete="off" :disabled="true" v-show="form.taskApp == 0"></el-input>
-                <el-input value="微信" autocomplete="off" :disabled="true" v-show="form.taskApp == 1"></el-input>
-                <el-input value="抖音" autocomplete="off" :disabled="true" v-show="form.taskApp == 2"></el-input>
-                <el-input value="快手" autocomplete="off" :disabled="true" v-show="form.taskApp == 3"></el-input>
-              </el-form-item>
+        <el-form-item label="打开链接" prop="taskUrl">
+          <el-input v-model.trim="form.taskUrl" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
       </div>
 
       <div>
+        <el-form-item label="打开app" prop="taskApp">
+           <el-input value="不打开任何app" autocomplete="off" :disabled="true" v-show="form.taskApp == 0"></el-input>
+           <el-input value="微信" autocomplete="off" :disabled="true" v-show="form.taskApp == 1"></el-input>
+           <el-input value="抖音" autocomplete="off" :disabled="true" v-show="form.taskApp == 2"></el-input>
+           <el-input value="快手" autocomplete="off" :disabled="true" v-show="form.taskApp == 3"></el-input>
+         </el-form-item>
         <el-form-item label="奖励" prop="award">
            <el-input v-model.trim="form.award" autocomplete="off" :disabled="true"></el-input>
          </el-form-item>
@@ -225,18 +227,21 @@ export default {
       dialogFormVisible: false,
       userName: "",  //用户名
       doneUidName: "", //完成者用户名
-      
+      doneUidLevel: "",  //完成者用户会员等级
       uid: "",  //uid
+
+      level: [],  //会员等级
     };
   },
   mounted() {},
   methods: {
-    showEdit(row) {
+    showEdit(row, level) {
         this.title = "审核";
         this.form = Object.assign({}, row);
         this.dialogFormVisible = true;
         this.form.doneLong = (this.form.doneLong / 60).toFixed(2);
         this.form.auditLong = (this.form.auditLong / 60).toFixed(2);
+        this.level = level[0].level;
         this.getUserInfo();  //取用户数据
         this.getDoneUserInfo();  //取完成者用户数据
         this.uid = storage.getUid();  //获取uid
@@ -260,6 +265,9 @@ export default {
         let code = api.getCode(res);
         if(code == 0){
           this.doneUidName = res.data.account;
+          this.level.forEach((item) =>{
+            if(res.data.level == item.value) this.doneUidLevel = item.label;
+          });
         }else{
           let msg = api.getMsg(res);
           this.$message.error(msg);
