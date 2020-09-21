@@ -565,6 +565,21 @@ const api = {
   getStatisticsMonthMap: function (path, funSuccess) {
     httpUtil.post("statistics/getStatisticsMonthMap", path, funSuccess);
   },
+
+  //查询操作日志列表
+  getLogOperation: function (path, funSuccess) {
+    httpUtil.post("log/getLogOperation", path, funSuccess);
+  },
+  
+  //添加操作日志
+  addLogOperation: function (path, funSuccess) {
+    httpUtil.post("log/addLogOperation", path, funSuccess);
+  },
+  
+  //批量删除通知设置
+  delLogOperation: function (path, funSuccess) {
+    httpUtil.post("log/delLogOperation", path, funSuccess);
+  },
 };
 
 export default api;

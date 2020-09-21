@@ -524,6 +524,12 @@ export const asyncRoutes = [
         name: "AdminRegister",
         component: () => import("@/views/admin/form/index"),
         meta: { title: "管理员注册" },
+      },
+      {
+        path: "logOperation",
+        name: "LogOperation",
+        component: () => import("@/views/log/operation/index"),
+        meta: { title: "操作日志" },
       }
     ],
   },
