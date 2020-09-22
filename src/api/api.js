@@ -570,15 +570,20 @@ const api = {
   getLogOperation: function (path, funSuccess) {
     httpUtil.post("log/getLogOperation", path, funSuccess);
   },
-  
+
   //添加操作日志
   addLogOperation: function (path, funSuccess) {
     httpUtil.post("log/addLogOperation", path, funSuccess);
   },
-  
+
   //批量删除通知设置
   delLogOperation: function (path, funSuccess) {
     httpUtil.post("log/delLogOperation", path, funSuccess);
+  },
+
+  //查询操作日志类型
+  getOpType: function (path, funSuccess) {
+    httpUtil.post("log/getOpType", path, funSuccess);
   },
 };
 

@@ -22,12 +22,11 @@
         <el-input v-model.trim="form.ipArea" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="操作内容" prop="content">
-        <el-input v-model.trim="form.content" autocomplete="off" :disabled="true"></el-input>
+        <el-input v-model.trim="form.content" autocomplete="off" :disabled="true" type="textarea" rows="10"></el-input>
       </el-form-item>
 
-      <el-form-item label="操作类型" prop="type">
-        <el-input value="操作类型0" autocomplete="off" :disabled="true" v-show="form.type == 0"></el-input>
-        <el-input value="操作类型1" autocomplete="off" :disabled="true" v-show="form.type == 1"></el-input>
+      <el-form-item label="操作类型" prop="typeTest">
+        <el-input v-model.trim="form.typeTest" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
 
       <el-form-item label="备注" prop="desc">

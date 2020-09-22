@@ -2,10 +2,10 @@
   <div class="table-container">
     <vab-query-form style="display: flex;">
 
-      <vab-query-form-left-panel style="max-width:168px;">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
+      <vab-query-form-left-panel style="max-width:84px;">
+<!--        <el-button icon="el-icon-plus" type="primary" @click="handleAdd"
           >添加</el-button
-        >
+        > -->
         <el-button icon="el-icon-delete" type="danger" @click="handleDelete"
           >删除
         </el-button>
@@ -176,14 +176,28 @@ export default {
         page: 1,
         count: 10,
       },
+      type: [],  //操作日志类型
     };
   },
   created() {
-    this.fetchData();
+    this.getOpType();  //获取操作日志类型
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //获取操作日志类型
+    getOpType(){
+      this.type = [];  //清空操作日志类型
+      api.getOpType({}, (res)=>{
+        let data = res.data;
+        data.forEach((item) =>{
+          item.label = item.val;
+          item.value = item.key;
+          this.type.push(item);
+        });
+        this.fetchData();
+      });
+    },
     handleAdd() {
       this.$refs["edit"].showEdit();
     },
@@ -270,16 +284,10 @@ export default {
          if(code == 0){
            let data = api.getData(res);
            data.forEach((item, index) =>{
-              switch (item.type){
-                case 0:
-                  item.typeTest = "操作类型0";
-                  break;
-                case 1:
-                  item.typeTest = "操作类型1";
-                  break;
-                default:
-                  break;
-              };
+              this.type.forEach((item1, index1) =>{
+                  item1.key = parseInt(item1.key);
+                  if(item1.key == item.type) item.typeTest = item1.val;
+              });
            });
            this.total = api.getTotal(res);
            this.list = data;

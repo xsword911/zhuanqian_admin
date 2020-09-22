@@ -17,4 +17,10 @@ export default {
       -webkit-opacity:1;
       opacity: 1;
   }
+
+input:disabled,textarea:disabled{
+    -webkit-text-fill-color:#606266;
+    -webkit-opacity:1;
+    opacity: 1;
+  }
 </style>
