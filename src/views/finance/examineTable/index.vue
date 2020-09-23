@@ -79,6 +79,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      show-summary
+      :summary-method="getSummaries"
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
       <!--      <el-table-column label="序号" width="95">
@@ -237,6 +239,36 @@ export default {
     this.fetchData();
   },
   methods: {
+    //列表合计设置
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计';
+          return;
+        }
+        const values = data.map(item => Number(item[column.property]));
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+
+        } else {
+          sums[index] = '';
+        }
+
+        if(index != 2) sums[index] = '';
+
+      });
+      return sums;
+    },
+
     //获取会员等级信息
     getUserLevel(){
       api.getUserLevel({}, (res)=>{

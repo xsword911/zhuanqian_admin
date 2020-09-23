@@ -91,6 +91,7 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      show-summary
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
       <!-- <el-table-column label="序号" width="95"> -->
@@ -101,27 +102,33 @@
       <el-table-column
         prop="uid"
         label="用户id"
+        width="120"
       />
       <el-table-column
         label="时间"
         prop="addTime"
+        width="100"
       />
-      <el-table-column
+     <el-table-column
         label="前一天余额"
         prop="moneyOld"
+        width="130"
       />
       <el-table-column
         label="盈利"
         prop="money"
+        width="130"
       />
 
       <el-table-column
         label="任务收入"
         prop="moneyTaskAdd"
+        width="130"
       />
       <el-table-column
         label="发布支出"
         prop="moneyTaskLose"
+        width="130"
       />
       <el-table-column
         label="任务次数"
@@ -131,10 +138,12 @@
       <el-table-column
         label="活动收入"
         prop="moneyActiveAdd"
+        width="130"
       />
       <el-table-column
         label="活动支出"
         prop="moneyActiveLose"
+        width="130"
       />
 
       <el-table-column
@@ -144,11 +153,13 @@
       <el-table-column
         label="充值金额"
         prop="rechargeMoney"
+        width="130"
       />
 
       <el-table-column
         label="首充金额"
         prop="firstRechargeMoney"
+        width="130"
       />
 
       <el-table-column
@@ -158,20 +169,24 @@
       <el-table-column
         label="提现金额"
         prop="drawMoney"
+        width="130"
       />
 
       <el-table-column
         label="加款"
         prop="moneyIns"
+        width="130"
       />
       <el-table-column
         label="扣款"
         prop="moneySubtract"
+        width="130"
       />
 
       <el-table-column
         label="代理佣金"
         prop="moneyAgency"
+        width="130"
       />
 
       <el-table-column
@@ -192,10 +207,10 @@
         prop="goldLose"
       /> -->
 
-      <el-table-column
+ <!--     <el-table-column
         label="备注"
         prop="desc"
-      />
+      /> -->
       <el-table-column
         label="操作"
         width="100px"
@@ -208,12 +223,12 @@
           >
             查看
           </el-button>
-          <el-button
+<!--          <el-button
             type="text"
             @click="handleEdit(scope.row)"
           >
             编辑
-          </el-button>
+          </el-button> -->
         </template>
       </el-table-column>
     </el-table>

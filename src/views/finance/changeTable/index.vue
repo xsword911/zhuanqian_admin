@@ -79,6 +79,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      show-summary
+      :summary-method="getSummaries"
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
 <!--      <el-table-column label="序号" width="95">
@@ -117,9 +119,9 @@
           <el-button type="text" @click="handleCheckEdit(scope.row)"
             >查看
           </el-button>
-          <el-button type="text" @click="handleEdit(scope.row)"
+<!--          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
-          </el-button>
+          </el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -211,6 +213,35 @@ export default {
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //列表合计设置
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计';
+          return;
+        }
+        const values = data.map(item => Number(item[column.property]));
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+
+        } else {
+          sums[index] = '';
+        }
+
+        if(index != 2 && index != 3) sums[index] = '';
+
+      });
+      return sums;
+    },
     tableSortChange() {
       const imageList = [];
       this.$refs.tableSort.tableData.forEach((item, index) => {
