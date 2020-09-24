@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-    <el-form ref="form" :model="form" label-width="94px" :rules="rules">
+    <el-form ref="form" :model="form" label-width="100px" :rules="rules">
       <el-form-item label="uid" prop="uid">
         <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true" clearable></el-input>
       </el-form-item>

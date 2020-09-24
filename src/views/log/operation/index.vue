@@ -34,21 +34,21 @@
             <el-input v-model="queryForm.name" placeholder="用户名"  clearable/>
         </el-form-item>
 
-<!--          <el-form-item>
-               <el-select v-model="stateValue" placeholder="状态" clearable>
-                 <el-option-group
-                   v-for="group in state"
-                   :key="group.label"
-                   :label="group.label">
-                   <el-option
-                     v-for="item in group.state"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value">
-                   </el-option>
-                 </el-option-group>
-               </el-select>
-           </el-form-item>
+        <el-form-item>
+          <el-select v-model="typeValue" placeholder="操作类型" clearable>
+            <el-option-group
+              v-for="group in type"
+              :key="group.label"
+              :label="group.label">
+              <el-option
+                v-for="item in group.type"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-option-group>
+          </el-select>
+        </el-form-item>
 
            <el-form-item>
                  <div class="block">
@@ -61,7 +61,7 @@
                      :default-time="['00:00:00', '23:59:59']">
                    </el-date-picker>
                  </div>
-           </el-form-item> -->
+           </el-form-item>
 
           <el-form-item>
             <el-button
@@ -176,7 +176,10 @@ export default {
         page: 1,
         count: 10,
       },
-      type: [],  //操作日志类型
+      type: [{
+        type: []
+      }],  //操作日志类型
+      typeValue: "",
     };
   },
   created() {
@@ -187,13 +190,13 @@ export default {
   methods: {
     //获取操作日志类型
     getOpType(){
-      this.type = [];  //清空操作日志类型
+      this.type[0].type = [];  //清空操作日志类型
       api.getOpType({}, (res)=>{
         let data = res.data;
         data.forEach((item) =>{
           item.label = item.val;
           item.value = item.key;
-          this.type.push(item);
+          this.type[0].type.push(item);
         });
         this.fetchData();
       });
@@ -261,19 +264,19 @@ export default {
       this.queryForm.page = 1;
       //时间筛选不为空时添加时间属性
       if(!util.isEmpty(this.searchTime)){
-        this.queryForm.begTime = this.searchTime[0];
-        this.queryForm.endTime = this.searchTime[1];
+        this.queryForm.begAddTime = this.searchTime[0];
+        this.queryForm.endAddTime = this.searchTime[1];
       }else{   //时间筛选为空时删除时间属性
-        delete this.queryForm.begTime;
-        delete this.queryForm.endTime;
+        delete this.queryForm.begAddTime;
+        delete this.queryForm.endAddTime;
       };
 
 
       //状态类型筛选不为空时添加状态类型属性
-      if(!util.isEmpty(this.stateValue)){
-        this.queryForm.state = this.stateValue;
+      if(!util.isEmpty(this.typeValue)){
+        this.queryForm.type = this.typeValue;
       }else{   //状态类型筛选为空时删除状态类型属性
-        delete this.queryForm.state;
+        delete this.queryForm.type;
       };
       this.fetchData();
     },
@@ -284,7 +287,7 @@ export default {
          if(code == 0){
            let data = api.getData(res);
            data.forEach((item, index) =>{
-              this.type.forEach((item1, index1) =>{
+              this.type[0].type.forEach((item1, index1) =>{
                   item1.key = parseInt(item1.key);
                   if(item1.key == item.type) item.typeTest = item1.val;
               });
