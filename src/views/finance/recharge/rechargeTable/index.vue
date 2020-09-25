@@ -53,8 +53,21 @@
                 v-model="searchTime"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 type="datetimerange"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                start-placeholder="申请开始日期"
+                end-placeholder="申请结束日期"
+                :default-time="['00:00:00', '23:59:59']"
+              />
+            </div>
+          </el-form-item>
+
+          <el-form-item>
+            <div class="block">
+              <el-date-picker
+                v-model="searchUpdTime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                type="datetimerange"
+                start-placeholder="审核开始日期"
+                end-placeholder="审核结束日期"
                 :default-time="['00:00:00', '23:59:59']"
               />
             </div>
@@ -219,6 +232,8 @@ export default {
       }],
 
       searchTime: '', //筛选的时间范围
+      searchUpdTime: '',  //筛选审核时间范围
+
       imgShow: true,
       list: [],
       imageList: [],
@@ -271,13 +286,13 @@ export default {
               return prev;
             }
           }, 0);
-    
+
         } else {
           sums[index] = '';
         }
-    
+
         if(index != 2) sums[index] = '';
-    
+
       });
       return sums;
     },
@@ -345,6 +360,16 @@ export default {
         delete this.queryForm.begAddTime;
         delete this.queryForm.endAddTime;
       };
+
+      //时间筛选不为空时添加时间属性
+      if(!util.isEmpty(this.searchUpdTime)){
+        this.queryForm.begUpdTime = this.searchUpdTime[0];
+        this.queryForm.endUpdTime = this.searchUpdTime[1];
+      }else{   //时间筛选为空时删除时间属性
+        delete this.queryForm.begUpdTime;
+        delete this.queryForm.endUpdTime;
+      };
+
       //奖励类型筛选不为空时添加奖励类型属性
       // if(!util.isEmpty(this.value)){
       //   this.queryForm.state = this.value;
