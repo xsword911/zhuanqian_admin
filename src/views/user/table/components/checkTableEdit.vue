@@ -89,14 +89,58 @@
           </div>
         </el-form-item>
 
-        <el-form-item label="等级" prop="level">
-          <el-input value=" " autocomplete="off" :disabled="true" v-show="form.level == 0"></el-input>
-          <el-input value="新人" autocomplete="off" :disabled="true" v-show="form.level == 1"></el-input>
-          <el-input value="白银会员" autocomplete="off" :disabled="true" v-show="form.level == 2"></el-input>
-          <el-input value="黄金会员" autocomplete="off" :disabled="true" v-show="form.level == 3"></el-input>
-          <el-input value="铂金会员" autocomplete="off" :disabled="true" v-show="form.level == 4"></el-input>
-          <el-input value="钻石会员" autocomplete="off" :disabled="true" v-show="form.level == 5"></el-input>
-          <el-input value="至尊会员" autocomplete="off" :disabled="true" v-show="form.level == 6"></el-input>
+        <el-form-item
+          label="等级"
+          prop="level"
+        >
+          <el-input
+            v-show="form.level == 0"
+            value=" "
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-show="form.account == ''"
+            value="游客"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-show="form.level == 1 && form.account != ''"
+            value="新人"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-show="form.level == 2"
+            value="白银会员"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-show="form.level == 3"
+            value="黄金会员"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-show="form.level == 4"
+            value="铂金会员"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-show="form.level == 5"
+            value="钻石会员"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-show="form.level == 6"
+            value="至尊会员"
+            autocomplete="off"
+            :disabled="true"
+          />
         </el-form-item>
         <el-form-item
           label="密码错误次数"
@@ -335,7 +379,6 @@
           />
         </el-form-item>
       </div>
-
     </el-form>
   </el-dialog>
 </template>
