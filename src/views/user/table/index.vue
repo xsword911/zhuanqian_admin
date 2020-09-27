@@ -221,6 +221,9 @@
                 <el-dropdown-item :command="beforeHandleCommand(3, scope.row)">
                   编辑
                 </el-dropdown-item>
+                <el-dropdown-item :command="beforeHandleCommand(5, scope.row)">
+                  邀请码
+                </el-dropdown-item>
                 <el-dropdown-item :command="beforeHandleCommand(0, scope.row, '解冻', 0)">
                   解冻
                 </el-dropdown-item>
@@ -266,6 +269,10 @@
       ref="updPwd"
       @refreshList="fetchData"
     />
+    <upd-code
+      ref="updCode"
+      @refreshList="fetchData"
+    />
     <upd-state
       ref="updState"
       @refreshList="fetchData"
@@ -289,6 +296,7 @@ import updPwd from "./components/updPwd";
 import updState from "./components/updState";
 import addTableEdit from "./components/addTableEdit";
 import updUpper from "./components/updUpper";
+import updCode from "./components/updCode";
 import api from "@/api/api.js";
 import util from "@/utils/util.js";
 import Vue from 'vue';
@@ -301,7 +309,8 @@ export default {
     updPwd,
     updState,
     addTableEdit,
-    updUpper
+    updUpper,
+    updCode
   },
   filters: {
     statusFilter(status) {
@@ -382,7 +391,7 @@ export default {
       this.fetchData();
     },
 
-    //封装下拉菜单传入参数  type 0解冻封号操作 1修改密码操作 2修改上级操作 3编辑 4批量解冻封号操作
+    //封装下拉菜单传入参数  type 0解冻封号操作 1修改密码操作 2修改上级操作 3编辑 4批量解冻封号操作 5修改邀请码
     beforeHandleCommand(type, row, test, stateCode){
         if(type == 0){
           return {
@@ -395,7 +404,7 @@ export default {
         else if(type == 1) return {'type': 1, 'row': row};
         else if(type == 2) return {'type': 2, 'row': row,};
         else if(type == 3) return {'type': 3, 'row': row,};
-        if(type == 4){
+        else if(type == 4){
           return {
             'test': test,
             'stateCode': stateCode,
@@ -403,8 +412,9 @@ export default {
             'type': 4
           }
         }
+        else if(type == 5) return {'type': 5, 'row': row,};
     },
-    //下拉菜单操作  command.type  0解冻封号操作 1修改密码操作 2修改上级操作 3编辑 4批量解冻封号操作
+    //下拉菜单操作  command.type  0解冻封号操作 1修改密码操作 2修改上级操作 3编辑 4批量解冻封号操作 5修改邀请码
     handleCommand(command){
       if(command.type == 0)
       {
@@ -432,7 +442,7 @@ export default {
       else if(command.type == 1)  this.handleUpdPwd(command.row);     //修改密码
       else if(command.type == 2)  this.handleUpdUpper(command.row);   //修改上级
       else if(command.type == 3)  this.handleEdit(command.row);       //编辑
-
+      else if(command.type == 5)  this.handleUpdCode(command.row);       //修改邀请码
       if(command.type == 4)
       {
         this.$baseConfirm("你确定要" + command.test + "该账号及其代理线下的所有账号？", null, async () => {
@@ -472,6 +482,9 @@ export default {
     },
     handleEdit(row) {
       this.$refs["updEdit"].showEdit(row);
+    },
+    handleUpdCode(row) {
+      this.$refs["updCode"].showEdit(row);
     },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);

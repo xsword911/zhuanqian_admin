@@ -67,7 +67,10 @@ export default {
       stateValue: '',      //选中的任务状态
 
       form: {
-
+        typeId: null,
+        order: null,
+        state: null,
+        typeName: "",
       },
       title: "",
       dialogFormVisible: false,

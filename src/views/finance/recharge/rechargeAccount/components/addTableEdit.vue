@@ -178,7 +178,22 @@ export default {
 
       //添加账号
       account: {
+        order: null,
+        wayId: "",
+        platform: "",
+        account: "",
+        owner: "",
+        bankId: "",
+        bankBranch: "",
         imgUrl: '',
+        isAuto: '',
+        autoName: '',
+        autoRule: '',
+        state: '',
+        moneyMax: '',
+        moneySun: '',
+        lv: '',
+        desc: '',
       },
       title: "",
       dialogFormVisible: false,

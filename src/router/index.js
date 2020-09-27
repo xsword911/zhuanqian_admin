@@ -219,6 +219,12 @@ export const asyncRoutes = [
         name: "WorkTable",
         component: () => import("@/views/work/recordTable/index"),
         meta: { title: "任务审核" },
+      },
+      {
+        path: "blacklistTable",
+        name: "BlacklistTable",
+        component: () => import("@/views/work/blacklistTable/index"),
+        meta: { title: "任务黑名单" },
       }
     ],
   },

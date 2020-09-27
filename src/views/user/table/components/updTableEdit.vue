@@ -12,10 +12,10 @@
       <el-form-item label="用户名" prop="account">
         <el-input v-model.trim="form.account" autocomplete="off" :disabled="true" clearable></el-input>
       </el-form-item>
-      <el-form-item label="邀请码" prop="code">
-        <el-input v-model.trim="form.code" autocomplete="off" clearable></el-input>
-        <div><div style="color:#FF3A00; display:inline-block;">*</div>邀请码为六位数</div>
-      </el-form-item>
+<!--      <el-form-item label="邀请码" prop="code">-->
+<!--        <el-input v-model.trim="form.code" autocomplete="off" clearable></el-input>-->
+<!--        <div><div style="color:#FF3A00; display:inline-block;">*</div>邀请码为六位数</div>-->
+<!--      </el-form-item>-->
       <el-form-item label="手机号" prop="tel">
         <el-input v-model.trim="form.tel" autocomplete="off" clearable></el-input>
       </el-form-item>
@@ -159,7 +159,6 @@ export default {
         uid: this.form.uid,
         nick: this.form.nick,
         tel: this.form.tel,
-        code: this.form.code
       };
       if(this.oldHeadImg != this.form.headUrl) data.headUrl = this.form.headUrl;
       api.setUser(data, (res)=>{

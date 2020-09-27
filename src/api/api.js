@@ -585,6 +585,31 @@ const api = {
   getOpType: function (path, funSuccess) {
     httpUtil.post("log/getOpType", path, funSuccess);
   },
+
+  //修改邀请码
+  setCode: function (path, funSuccess) {
+    httpUtil.post("user/setCode", path, funSuccess);
+  },
+
+  //查询任务黑名单
+  getTaskBlacklist: function (path, funSuccess) {
+    httpUtil.post("activity/task/getTaskBlacklist", path, funSuccess);
+  },
+
+  //添加任务黑名单
+  addTaskBlacklist: function (path, funSuccess) {
+    httpUtil.post("activity/task/addTaskBlacklist", path, funSuccess);
+  },
+
+  //修改任务黑名单
+  updTaskBlacklist: function (path, funSuccess) {
+    httpUtil.post("activity/task/updTaskBlacklist", path, funSuccess);
+  },
+
+  //批量删除任务黑名单
+  delTaskBlacklistArr: function (path, funSuccess) {
+    httpUtil.post("activity/task/delTaskBlacklistArr", path, funSuccess);
+  },
 };
 
 export default api;

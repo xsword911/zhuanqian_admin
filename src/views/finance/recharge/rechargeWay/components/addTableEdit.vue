@@ -84,7 +84,11 @@ export default {
 
       form: {
         type: 2,
-        admin: "admin1"
+        typeId: null,
+        order: null,
+        wayId: null,
+        state: null,
+        wayName: "",
       },
       title: "",
       dialogFormVisible: false,

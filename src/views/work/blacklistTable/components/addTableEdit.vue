@@ -6,17 +6,14 @@
     @close="close"
   >
   <el-form ref="form" :model="form" label-width="80px" :rules="rules">
-      <el-form-item label="银行id" prop="bankId">
-         <el-input v-model.trim="form.bankId" autocomplete="off"></el-input>
-      </el-form-item>
 
-      <el-form-item label="银行名称" prop="bankName">
-         <el-input v-model.trim="form.bankName" autocomplete="off"></el-input>
-      </el-form-item>
+          <el-form-item label="用户id" prop="uid">
+            <el-input v-model="form.uid" clearable></el-input>
+          </el-form-item>
 
-      <el-form-item label="备注" prop="desc">
-         <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
-      </el-form-item>
+          <el-form-item label="备注" prop="desc">
+            <el-input v-model="form.desc" clearable></el-input>
+          </el-form-item>
 
     </el-form>
 
@@ -36,16 +33,17 @@ export default {
   data() {
     return {
       form: {
-        bankId: null,
-        bankName: "",
+        uid: "",
+        desc: "",
       },
       title: "",
       dialogFormVisible: false,
 
       rules: {
-        bankId: [{ required: true, trigger: "blur", message: "银行id" }],
-        bankName: [{ required: true, trigger: "blur", message: "银行名称" }],
-      }
+        uid: [
+          { required: true, message: "请输入用户id", trigger: "blur" },
+        ]
+      },
     };
   },
   created() {},
@@ -68,20 +66,20 @@ export default {
     save() {
       this.$refs["form"].validate(async (valid) => {
         if (valid) {
-          api.addBank(this.form, (res)=>{
-            let code = api.getCode(res);
-            if(code == 0){
-              this.$baseMessage("添加成功", "success");
-              this.$refs["form"].resetFields();
-              this.dialogFormVisible = false;
-              this.$emit("fetchData");
-              this.form = this.$options.data().form;
-              this.$emit('refreshList');
-            }else{
-              let msg = api.getMsg(res);
-              this.$message.error(msg);
-            }
-          });
+            api.addTaskBlacklist(this.form, (res)=>{
+                let code = api.getCode(res);
+                if(code == 0){
+                  this.$baseMessage("添加成功", "success");
+                  this.$refs["form"].resetFields();
+                  this.dialogFormVisible = false;
+                  this.$emit("fetchData");
+                  this.form = this.$options.data().form;
+                  this.$emit('refreshList');
+                }else{
+                  let msg = api.getMsg(res);
+                  this.$message.error(msg);
+                }
+            });
         } else {
           this.$message.error("填写信息不完整");
           return false;
