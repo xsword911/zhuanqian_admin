@@ -5,46 +5,87 @@
     width="500px"
     @close="close"
   >
-  <el-form ref="form" :model="form" label-width="80px" :rules="rules">
+    <el-form
+      ref="form"
+      :model="form"
+      label-width="80px"
+      :rules="rules"
+    >
+      <el-form-item
+        label="用户uid"
+        prop="uid"
+      >
+        <el-input
+          v-model="form.uid"
+          clearable
+        />
+      </el-form-item>
 
-          <el-form-item label="用户uid" prop="uid">
-            <el-input v-model="form.uid" clearable></el-input>
-          </el-form-item>
+      <el-form-item
+        label="用户名"
+        prop="account"
+      >
+        <el-input v-model.trim="form.account" />
+      </el-form-item>
 
-          <el-form-item label="用户名" prop="account">
-            <el-input v-model.trim="form.account" ></el-input>
-          </el-form-item>
+      <el-form-item
+        label="状态"
+        prop="state"
+      >
+        <el-select
+          v-model="form.state"
+          placeholder="状态"
+        >
+          <el-option-group
+            v-for="group in state"
+            :key="group.label"
+            :label="group.label"
+          >
+            <el-option
+              v-for="item in group.state"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-option-group>
+        </el-select>
+      </el-form-item>
 
-    <el-form-item label="状态" prop="state">
-      <el-select v-model="form.state" placeholder="状态">
-        <el-option-group
-          v-for="group in state"
-          :key="group.label"
-          :label="group.label">
-          <el-option
-            v-for="item in group.state"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-option-group>
-      </el-select>
-    </el-form-item>
+      <el-form-item
+        label="备注"
+        prop="desc"
+      >
+        <el-input
+          v-model="form.desc"
+          clearable
+        />
+      </el-form-item>
 
-          <el-form-item label="备注" prop="desc">
-            <el-input v-model="form.desc" clearable></el-input>
-          </el-form-item>
-
-    <el-form-item label="" prop="">
-      <div><div style="color:#FF3A00; display:inline-block;">*</div>用户id和用户名可只填一个</div>
-    </el-form-item>
-
-
+      <el-form-item
+        label=""
+        prop=""
+      >
+        <div>
+          <div style="color:#FF3A00; display:inline-block;">
+            *
+          </div>用户uid和用户名可只填一个
+        </div>
+      </el-form-item>
     </el-form>
 
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="save">确 定</el-button>
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
+      <el-button @click="close">
+        取 消
+      </el-button>
+      <el-button
+        type="primary"
+        @click="save"
+      >
+        确 定
+      </el-button>
     </div>
   </el-dialog>
 </template>
