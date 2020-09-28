@@ -197,8 +197,8 @@ const api = {
   },
 
   //管理员查询玩家提现申请表
-  getMoneyDraw: function (path, funSuccess) {
-    httpUtil.post("money/getMoneyDraw", path, funSuccess);
+  getMoneyDrawByAdmin: function (path, funSuccess) {
+    httpUtil.post("money/getMoneyDrawByAdmin", path, funSuccess);
   },
 
   //审核提现记录
@@ -226,9 +226,9 @@ const api = {
     httpUtil.post("statistics/getUserStatistics", path, funSuccess);
   },
 
-  //查询充值记录
-  getMoneyRecharge: function (path, funSuccess) {
-    httpUtil.post("money/getMoneyRecharge", path, funSuccess);
+  //管理员查询充值记录
+  getMoneyRechargeByAdmin: function (path, funSuccess) {
+    httpUtil.post("money/getMoneyRechargeByAdmin", path, funSuccess);
   },
 
   //查询资讯列表
@@ -610,6 +610,7 @@ const api = {
   delTaskBlacklistArr: function (path, funSuccess) {
     httpUtil.post("activity/task/delTaskBlacklistArr", path, funSuccess);
   },
+
 };
 
 export default api;

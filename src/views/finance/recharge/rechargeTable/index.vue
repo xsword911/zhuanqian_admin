@@ -253,6 +253,7 @@ export default {
         stateTest: "",
       },
       level: [],  //会员等级信息
+      moneySum: "",  //总金额
     };
   },
   created() {
@@ -291,6 +292,7 @@ export default {
           sums[index] = '';
         }
 
+        sums[index] += '/'+ this.moneySum;
         if(index != 2) sums[index] = '';
 
       });
@@ -383,10 +385,12 @@ export default {
     async fetchData() {
 
       this.listLoading = true;
-      api.getMoneyRecharge(this.queryForm, (res)=>{
+      api.getMoneyRechargeByAdmin(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
-           let data = api.getData(res);
+           let data = res.data.list.data;
+           console.log(res);
+           this.moneySum = parseInt(res.data.sum[0].moneySum);
            data.forEach((item, index) =>{
               switch (item.state){
                 case -1:
