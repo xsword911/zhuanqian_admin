@@ -19,7 +19,27 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.uid" placeholder="用户id" clearable />
+            <el-input v-model="queryForm.uid" placeholder="用户uid" clearable />
+          </el-form-item>
+
+          <el-form-item>
+            <el-input v-model="queryForm.account" placeholder="用户名" clearable />
+          </el-form-item>
+
+          <el-form-item>
+            <el-select v-model="stateValue" placeholder="状态" clearable>
+              <el-option-group
+                v-for="group in state"
+                :key="group.label"
+                :label="group.label">
+                <el-option
+                  v-for="item in group.state"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-option-group>
+            </el-select>
           </el-form-item>
 
 <!--          <el-form-item>
@@ -62,10 +82,26 @@
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
     >
-      <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="uid" label="用户id"></el-table-column>
-
+      <el-table-column type="selection" width="55"></el-table-column>stateText
+      <el-table-column prop="uid" label="用户uid"></el-table-column>
+      <el-table-column prop="account" label="用户名"></el-table-column>
       <el-table-column prop="updTime" label="更新时间"></el-table-column>
+
+      <el-table-column label="状态">
+        <template slot-scope="scope">
+          <el-tooltip
+            :content="scope.row.stateText"
+            class="item"
+            effect="dark"
+            placement="top-start"
+          >
+            <el-tag :type="scope.row.state | statusFilter"
+            >{{ scope.row.stateText }}
+            </el-tag>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+
       <el-table-column prop="desc" label="备注"></el-table-column>
 
       <el-table-column label="操作" width="100px" fixed="right">
@@ -113,13 +149,9 @@ export default {
   },
   filters: {
     statusFilter(status) {
-      const statusMap = {
-        normal: "success",
-        frozen: "gray",
-        ban: "danger",
-      };
-      return statusMap[status];
-    },
+      if(status == 1) return "success";
+      if(status == 0) return "danger";
+    }
   },
   data() {
     return {
@@ -137,6 +169,17 @@ export default {
         count: 10,
         uid: "",
       },
+
+      state: [{
+        state: [{
+          value: 0,
+          label: '关闭'
+        },{
+          value: 1,
+          label: '开启'
+        }]
+      }],
+      stateValue: '',      //选中的状态
     };
   },
   created() {
@@ -235,7 +278,12 @@ export default {
     //搜索关键字
     handleQuery() {
       this.queryForm.page = 1;
-
+      //状态类型筛选不为空时添加状态类型属性
+      if(!util.isEmpty(this.stateValue)){
+        this.queryForm.state = this.stateValue;
+      }else{   //状态类型筛选为空时删除状态类型属性
+        delete this.queryForm.state;
+      };
       this.fetchData();
     },
     async fetchData() {
@@ -245,6 +293,10 @@ export default {
          let code = api.getCode(res);
          if(code == 0){
            let data = api.getData(res);
+           data.forEach((item, index) =>{
+             if(item.state === 0) item.stateText = "关闭";
+             if(item.state === 1) item.stateText = "开启";
+           });
 
            this.total = api.getTotal(res);
            this.list = data;

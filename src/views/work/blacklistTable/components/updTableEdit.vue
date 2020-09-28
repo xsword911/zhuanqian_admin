@@ -9,8 +9,26 @@
       <el-form-item label="id" prop="id" v-if="false">
         <el-input v-model="form.id" autocomplete="off" clearable></el-input>
       </el-form-item>
-      <el-form-item label="用户id" prop="uid">
-        <el-input v-model="form.uid" clearable></el-input>
+      <el-form-item label="用户uid" prop="uid">
+        <el-input v-model="form.uid" :disabled="true"></el-input>
+      </el-form-item>
+      <el-form-item label="用户名" prop="account">
+      <el-input v-model.trim="form.account" :disabled="true"></el-input>
+    </el-form-item>
+      <el-form-item label="状态" prop="state">
+        <el-select v-model="form.state" placeholder="状态">
+          <el-option-group
+            v-for="group in state"
+            :key="group.label"
+            :label="group.label">
+            <el-option
+              v-for="item in group.state"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-option-group>
+        </el-select>
       </el-form-item>
       <el-form-item label="备注" prop="desc">
         <el-input v-model.trim="form.desc" autocomplete="off" clearable></el-input>
@@ -31,8 +49,19 @@ export default {
   // name: "TableEdit",
   data() {
     return {
+      state: [{
+        state: [{
+          value: 0,
+          label: '关闭'
+        },{
+          value: 1,
+          label: '开启'
+        }]
+      }],
+      stateValue: '',      //选中的任务状态
+
       rules: {
-        uid: [{ required: true, message: "请输入用户id", trigger: "blur" },],
+        state: [{ required: true, message: "请选择状态", trigger: "blur" },],
       },
       form: {
         id: '',

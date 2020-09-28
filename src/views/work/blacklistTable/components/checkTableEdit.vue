@@ -6,11 +6,23 @@
     @close="close"
   >
    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-     <el-form-item label="用户id" prop="uid">
+     <el-form-item label="用户uid" prop="uid">
         <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
 
-      <el-form-item label="备注" prop="desc">·
+     <el-form-item label="用户名" prop="account">
+       <el-input v-model.trim="form.account" autocomplete="off" :disabled="true"></el-input>
+     </el-form-item>
+
+     <el-form-item label="更新时间" prop="updTime">
+       <el-input v-model.trim="form.updTime" autocomplete="off" :disabled="true"></el-input>
+     </el-form-item>
+
+     <el-form-item label="状态" prop="stateText">
+       <el-input v-model.trim="form.stateText" autocomplete="off" :disabled="true"></el-input>
+     </el-form-item>
+
+      <el-form-item label="备注" prop="desc">
         <el-input v-model.trim="form.desc" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
     </el-form>
