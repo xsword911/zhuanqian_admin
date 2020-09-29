@@ -113,6 +113,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
       <!--      <el-table-column label="序号" width="95">
@@ -123,6 +125,7 @@
       <el-table-column
         prop="uid"
         label="uid"
+        sortable
       >
         <template slot-scope="scope">
           <a
@@ -134,19 +137,23 @@
       <el-table-column
         prop="account"
         label="用户名"
+        sortable
       />
       <!-- <el-table-column prop="deviceId" label="登录设备"></el-table-column> -->
       <el-table-column
         prop="nick"
         label="昵称"
+        sortable
       />
       <el-table-column
         prop="tel"
         label="手机号"
+        sortable
       />
       <el-table-column
         prop="upper"
         label="直属上级"
+        sortable
       >
         <template slot-scope="scope">
           <a
@@ -158,17 +165,20 @@
       <el-table-column
         prop="code"
         label="邀请码"
+        sortable
       />
       <el-table-column
         prop="subSum"
         label="直属下级"
+        sortable
       />
       <el-table-column
         prop="allSubSum"
         label="所有下级"
+        sortable
       />
 
-      <el-table-column label="状态">
+      <el-table-column label="状态" sortable>
         <template slot-scope="scope">
           <el-tooltip
             :content="scope.row.status"
@@ -187,14 +197,17 @@
       <el-table-column
         prop="loginTime"
         label="最后登录时间"
+        sortable
       />
       <el-table-column
         prop="ip"
         label="最后登录ip"
+        sortable
       />
       <el-table-column
         prop="loginNum"
         label="登录次数"
+        sortable
       />
       <el-table-column
         label="操作"

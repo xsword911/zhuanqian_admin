@@ -114,6 +114,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
@@ -121,19 +123,19 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="发布者"></el-table-column>
-      <el-table-column prop="doneUid" label="完成者"></el-table-column>
-      <el-table-column prop="sn" label="订单号"></el-table-column>
-      <el-table-column prop="title" label="任务名称"></el-table-column>
-      <el-table-column prop="awardTypeTest" label="任务类型"></el-table-column>
-      <el-table-column prop="classifyName" label="子类名称"></el-table-column>
-      <el-table-column prop="levelTest" label="任务等级"></el-table-column>
-      <el-table-column prop="award" label="奖励金额"></el-table-column>
-      <el-table-column prop="finishTime" label="完成时间"></el-table-column>
-      <el-table-column prop="stateTest" label="状态"></el-table-column>
+      <el-table-column prop="uid" label="发布者" sortable></el-table-column>
+      <el-table-column prop="doneUid" label="完成者" sortable></el-table-column>
+      <el-table-column prop="sn" label="订单号" sortable></el-table-column>
+      <el-table-column prop="title" label="任务名称" sortable></el-table-column>
+      <el-table-column prop="awardTypeTest" label="任务类型" sortable></el-table-column>
+      <el-table-column prop="classifyName" label="子类名称" sortable></el-table-column>
+      <el-table-column prop="levelTest" label="任务等级" sortable></el-table-column>
+      <el-table-column prop="award" label="奖励金额" sortable></el-table-column>
+      <el-table-column prop="finishTime" label="完成时间" sortable></el-table-column>
+      <el-table-column prop="stateTest" label="状态" sortable></el-table-column>
 <!--      <el-table-column prop="updTime" label="审核时间"></el-table-column>
       <el-table-column prop="auditName" label="审核人"></el-table-column> -->
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
 
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">

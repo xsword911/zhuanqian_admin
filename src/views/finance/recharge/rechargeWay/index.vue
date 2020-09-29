@@ -62,6 +62,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
@@ -69,13 +71,15 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="order" label="序号"></el-table-column>
-      <el-table-column prop="typeName" label="类型名称"></el-table-column>
-      <el-table-column prop="typeId" label="类型id"></el-table-column>
-      <el-table-column prop="wayName" label="渠道名"></el-table-column>
-      <el-table-column prop="wayId" label="渠道id"></el-table-column>
+      <el-table-column prop="order" label="序号" sortable></el-table-column>
+      <el-table-column prop="typeName" label="类型名称" sortable></el-table-column>
+      <el-table-column prop="typeId" label="类型id" sortable></el-table-column>
+      <el-table-column prop="rechargeMax" label="充值最大值" sortable></el-table-column>
+      <el-table-column prop="rechargeMin" label="充值最小值" sortable></el-table-column>
+      <el-table-column prop="wayName" label="渠道名" sortable></el-table-column>
+      <el-table-column prop="wayId" label="渠道id" sortable></el-table-column>
 
-     <el-table-column label="状态">
+     <el-table-column label="状态" sortable>
         <template slot-scope="scope">
           <el-tooltip
             :content="scope.row.status"
@@ -89,7 +93,7 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
 <!--          <el-button type="text" @click="handleDelete(scope.row)"

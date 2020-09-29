@@ -24,7 +24,7 @@
             <el-input v-model="queryForm.uid" placeholder="uid" clearable />
           </el-form-item>
           <el-form-item>
-            <el-input v-model="queryForm.sn" placeholder="账单号" clearable 
+            <el-input v-model="queryForm.sn" placeholder="账单号" clearable
             onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
             maxlength="24"/>
           </el-form-item>
@@ -83,6 +83,8 @@
       @sort-change="tableSortChange"
       show-summary
       :summary-method="getSummaries"
+      border
+      stripe
     >
      <!-- <el-table-column type="selection" width="55"></el-table-column> -->
      <!-- <el-table-column label="序号" width="95"> -->
@@ -90,10 +92,10 @@
           {{ scope.$index + 1 }}
         </template> -->
       <!-- </el-table-column> -->
-      <el-table-column prop="uid" label="uid"></el-table-column>
-      <el-table-column label="交易订单号" prop="sn"></el-table-column>
-      <el-table-column label="关联订单号" prop="snExt"></el-table-column>
-      <el-table-column label="交易金币" prop="gold"></el-table-column>
+      <el-table-column prop="uid" label="uid" sortable></el-table-column>
+      <el-table-column label="交易订单号" prop="sn" sortable></el-table-column>
+      <el-table-column label="关联订单号" prop="snExt" sortable></el-table-column>
+      <el-table-column label="交易金币" prop="gold" sortable></el-table-column>
 <!--      <el-table-column label="头像">
         <template slot-scope="scope">
           <el-image
@@ -103,13 +105,13 @@
           ></el-image>
         </template>
       </el-table-column> -->
-      <el-table-column label="交易类型" prop="type"></el-table-column>
+      <el-table-column label="交易类型" prop="type" sortable></el-table-column>
       <el-table-column
         label="交易时间"
         prop="addTime"
-        width="200"
+        sortable
       ></el-table-column>
-      <el-table-column label="备注" prop="desc"></el-table-column>
+      <el-table-column label="备注" prop="desc" sortable></el-table-column>
     <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
           <el-button type="text" @click="handleCheckEdit(scope.row)"
@@ -197,7 +199,7 @@ export default {
       elementLoadingText: "正在加载...",
       queryForm: {
         page: 1,
-        count: 20,
+        count: 10,
         account: '',
         sn: '',  //账单号
       },
@@ -228,17 +230,17 @@ export default {
               return prev;
             }
           }, 0);
-    
+
         } else {
           sums[index] = '';
         }
-    
+
         if(index != 3) sums[index] = '';
-    
+
       });
       return sums;
     },
-    
+
     tableSortChange() {
       // const imageList = [];
       // this.$refs.tableSort.tableData.forEach((item, index) => {

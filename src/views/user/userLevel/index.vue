@@ -66,6 +66,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
@@ -73,20 +75,20 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="level" label="等级"></el-table-column>
-      <el-table-column prop="levelName" label="等级名称"></el-table-column>
-      <el-table-column prop="money" label="需要充值金额"></el-table-column>
+      <el-table-column prop="level" label="等级" sortable></el-table-column>
+      <el-table-column prop="levelName" label="等级名称" sortable></el-table-column>
+      <el-table-column prop="money" label="需要充值金额" sortable></el-table-column>
 
-      <el-table-column prop="publishTaskSum" label="可发布任务数量"></el-table-column>
-      <el-table-column prop="receiveTaskSum" label="每天可以接任务数量"></el-table-column>
-      <el-table-column prop="drawMin" label="提现最小金额"></el-table-column>
-      <el-table-column prop="drawMax" label="提现最大金额"></el-table-column>
-      <el-table-column prop="drawSum" label="提现次数"></el-table-column>
-      <el-table-column prop="rechargeMin" label="充值最小金额"></el-table-column>
-      <el-table-column prop="rechargeMax" label="充值最大金额"></el-table-column>
-      <el-table-column prop="updTime" label="更新时间"></el-table-column>
-      
-      <el-table-column label="状态">
+      <el-table-column prop="publishTaskSum" label="可发布任务数量" sortable></el-table-column>
+      <el-table-column prop="receiveTaskSum" label="每天可以接任务数量" sortable></el-table-column>
+      <el-table-column prop="drawMin" label="提现最小金额" sortable></el-table-column>
+      <el-table-column prop="drawMax" label="提现最大金额" sortable></el-table-column>
+      <el-table-column prop="drawSum" label="提现次数" sortable></el-table-column>
+      <el-table-column prop="rechargeMin" label="充值最小金额" sortable></el-table-column>
+      <el-table-column prop="rechargeMax" label="充值最大金额" sortable></el-table-column>
+      <el-table-column prop="updTime" label="更新时间" sortable></el-table-column>
+
+      <el-table-column label="状态" sortable>
          <template slot-scope="scope">
            <el-tooltip
              :content="scope.row.stateTest"
@@ -101,7 +103,7 @@
          </template>
        </el-table-column>
 
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
 
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">

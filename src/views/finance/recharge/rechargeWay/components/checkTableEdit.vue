@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-   <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+   <el-form ref="form" :model="form" :rules="rules" label-width="90px">
       <el-form-item label="序号" prop="order">
         <el-input v-model.trim="form.order" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
@@ -21,6 +21,12 @@
       <el-form-item label="渠道名" prop="wayName">
         <el-input v-model.trim="form.wayName" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
+     <el-form-item label="充值最大值" prop="rechargeMax">
+       <el-input v-model.trim="form.rechargeMax" autocomplete="off" :disabled="true"></el-input>
+     </el-form-item>
+     <el-form-item label="充值最小值" prop="rechargeMin">
+       <el-input v-model.trim="form.rechargeMin" autocomplete="off" :disabled="true"></el-input>
+     </el-form-item>
       <el-form-item label="状态" prop="state">
         <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
         <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>

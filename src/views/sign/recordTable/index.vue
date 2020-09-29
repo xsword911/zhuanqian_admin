@@ -75,6 +75,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
@@ -82,12 +84,12 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="uid"></el-table-column>
-      <el-table-column prop="day" label="签到天数"></el-table-column>
-      <el-table-column prop="sn" label="订单号"></el-table-column>
-      <el-table-column prop="finishTime" label="完成时间"></el-table-column>
-      <el-table-column prop="awardTypeTest" label="奖励类型"></el-table-column>
-      <el-table-column prop="award" label="奖励内容"></el-table-column>
+      <el-table-column prop="uid" label="uid" sortable></el-table-column>
+      <el-table-column prop="day" label="签到天数" sortable></el-table-column>
+      <el-table-column prop="sn" label="订单号" sortable></el-table-column>
+      <el-table-column prop="finishTime" label="完成时间" sortable></el-table-column>
+      <el-table-column prop="awardTypeTest" label="奖励类型" sortable></el-table-column>
+      <el-table-column prop="award" label="奖励内容" sortable></el-table-column>
 
       <el-table-column label="操作" width="80px" fixed="right">
         <template slot-scope="scope">

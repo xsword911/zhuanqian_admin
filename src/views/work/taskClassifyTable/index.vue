@@ -65,6 +65,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
      <!-- <el-table-column label="序号" width="95" prop="id"> -->
@@ -72,13 +74,13 @@
           {{ scope.$index + 1 }}
         </template> -->
       <!-- </el-table-column> -->
-      <el-table-column prop="order" label="排序"></el-table-column>
-      <el-table-column prop="bigClassifyId" label="大类id"></el-table-column>
-      <el-table-column prop="bigName" label="大类名称"></el-table-column>
-      <el-table-column prop="classifyId" label="子类id"></el-table-column>
-      <el-table-column prop="name" label="子类名称"></el-table-column>
+      <el-table-column prop="order" label="排序" sortable></el-table-column>
+      <el-table-column prop="bigClassifyId" label="大类id" sortable></el-table-column>
+      <el-table-column prop="bigName" label="大类名称" sortable></el-table-column>
+      <el-table-column prop="classifyId" label="子类id" sortable></el-table-column>
+      <el-table-column prop="name" label="子类名称" sortable></el-table-column>
 
-     <el-table-column label="状态">
+     <el-table-column label="状态" sortable>
         <template slot-scope="scope">
           <el-tooltip
             :content="scope.row.stateTest"

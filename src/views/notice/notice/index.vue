@@ -79,6 +79,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
@@ -86,15 +88,15 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column prop="content" label="内容"></el-table-column>
+      <el-table-column prop="title" label="标题" sortable></el-table-column>
+      <el-table-column prop="content" label="内容" sortable></el-table-column>
       <!-- <el-table-column prop="imgUrl" label="图片url"></el-table-column> -->
-      <el-table-column prop="toUrl" label="跳转url"></el-table-column>
+      <el-table-column prop="toUrl" label="跳转url" sortable></el-table-column>
 
-      <el-table-column prop="begTime" label="开始时间"></el-table-column>
-      <el-table-column prop="endTime" label="结束时间"></el-table-column>
+      <el-table-column prop="begTime" label="开始时间" sortable></el-table-column>
+      <el-table-column prop="endTime" label="结束时间" sortable></el-table-column>
 
-     <el-table-column label="状态">
+     <el-table-column label="状态" sortable>
         <template slot-scope="scope">
           <el-tooltip
             :content="scope.row.stateTest"
@@ -109,10 +111,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="admin" label="操作者"></el-table-column>
-      <el-table-column prop="addTime" label="添加时间"></el-table-column>
-      <el-table-column prop="updTime" label="修改时间"></el-table-column>
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="admin" label="操作者" sortable></el-table-column>
+      <el-table-column prop="addTime" label="添加时间" sortable></el-table-column>
+      <el-table-column prop="updTime" label="修改时间" sortable></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
 
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">

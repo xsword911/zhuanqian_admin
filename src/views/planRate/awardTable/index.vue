@@ -73,15 +73,17 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="order" label="排序"></el-table-column>
-      <el-table-column prop="planName" label="存款计划名称"></el-table-column>
-      <el-table-column prop="planDays" label="存款天数"></el-table-column>
-      <el-table-column prop="planRate" label="存款利率"></el-table-column>
-      <el-table-column prop="updTime" label="服务费"></el-table-column>
+      <el-table-column prop="order" label="排序" sortable></el-table-column>
+      <el-table-column prop="planName" label="存款计划名称" sortable></el-table-column>
+      <el-table-column prop="planDays" label="存款天数" sortable></el-table-column>
+      <el-table-column prop="planRate" label="存款利率" sortable></el-table-column>
+      <el-table-column prop="updTime" label="服务费" sortable></el-table-column>
 
-      <el-table-column label="状态">
+      <el-table-column label="状态" sortable>
          <template slot-scope="scope">
            <el-tooltip
              :content="scope.row.stateTest"
@@ -96,7 +98,7 @@
          </template>
        </el-table-column>
 
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
 
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">

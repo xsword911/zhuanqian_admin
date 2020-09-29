@@ -46,6 +46,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
@@ -53,15 +55,15 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="uid"></el-table-column>
-      <el-table-column prop="bank" label="银行"></el-table-column>
-      <el-table-column prop="bankBranch" label="开户支行"></el-table-column>
-      <el-table-column prop="bankCode" label="银行卡号"></el-table-column>
-      <el-table-column prop="bankUserName" label="开户人姓名"></el-table-column>
-      <el-table-column prop="addTime" label="绑定时间"></el-table-column>
+      <el-table-column prop="uid" label="uid" sortable></el-table-column>
+      <el-table-column prop="bank" label="银行" sortable></el-table-column>
+      <el-table-column prop="bankBranch" label="开户支行" sortable></el-table-column>
+      <el-table-column prop="bankCode" label="银行卡号" sortable></el-table-column>
+      <el-table-column prop="bankUserName" label="开户人姓名" sortable></el-table-column>
+      <el-table-column prop="addTime" label="绑定时间" sortable></el-table-column>
       <!-- <el-table-column prop="pwd" label="提现密码"></el-table-column> -->
-      <el-table-column prop="pwdError" label="密码错误次数"></el-table-column>
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="pwdError" label="密码错误次数" sortable></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
 
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">

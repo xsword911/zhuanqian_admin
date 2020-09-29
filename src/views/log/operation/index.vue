@@ -83,6 +83,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
@@ -90,15 +92,15 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="管理员uid"></el-table-column>
-      <el-table-column prop="name" label="用户名"></el-table-column>
-      <el-table-column prop="addTime" label="操作时间"></el-table-column>
-      <el-table-column prop="ip" label="ip"></el-table-column>
-      <el-table-column prop="ipArea" label="ip所在地"></el-table-column>
-      <el-table-column prop="content" label="操作内容"></el-table-column>
-      <el-table-column prop="typeTest" label="操作类型"></el-table-column>
+      <el-table-column prop="uid" label="管理员uid" sortable></el-table-column>
+      <el-table-column prop="name" label="用户名" sortable></el-table-column>
+      <el-table-column prop="addTime" label="操作时间" sortable></el-table-column>
+      <el-table-column prop="ip" label="ip" sortable></el-table-column>
+      <el-table-column prop="ipArea" label="ip所在地" sortable></el-table-column>
+      <el-table-column prop="content" label="操作内容" sortable></el-table-column>
+      <el-table-column prop="typeTest" label="操作类型" sortable></el-table-column>
 
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
 
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">

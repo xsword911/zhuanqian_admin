@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-    <el-form ref="form" :model="form" label-width="80px" :rules="rules">
+    <el-form ref="form" :model="form" label-width="96px" :rules="rules">
           <!-- <el-input v-model.trim="form.id" autocomplete="off" :disabled="true" v-if="false"></el-input> -->
     <el-form-item label="排序" prop="order">
       <el-input v-model.trim="form.order" autocomplete="off"></el-input>
@@ -32,6 +32,13 @@
       </el-form-item>
       <el-form-item label="渠道id" prop="wayId">
         <el-input v-model.trim="form.wayId" autocomplete="off"></el-input>
+      </el-form-item>
+
+      <el-form-item label="充值最大值" prop="rechargeMax">
+        <el-input v-model.trim="form.rechargeMax"></el-input>
+      </el-form-item>
+      <el-form-item label="充值最小值" prop="rechargeMin">
+        <el-input v-model.trim="form.rechargeMin"></el-input>
       </el-form-item>
 
       <el-form-item label="状态" prop="state">
@@ -99,6 +106,8 @@ export default {
         wayId: [{ required: true, trigger: "blur", message: "请输入渠道id" }],
         state: [{ required: true, trigger: "blur", message: "请选择状态" }],
         wayName: [{ required: true, trigger: "blur", message: "请输入渠道名" }],
+        rechargeMax: [{ required: true, trigger: "blur", message: "请输入充值最大值" }],
+        rechargeMin: [{ required: true, trigger: "blur", message: "请输入充值小值" }],
       }
     };
   },

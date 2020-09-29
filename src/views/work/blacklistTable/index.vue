@@ -81,13 +81,15 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>stateText
-      <el-table-column prop="uid" label="用户uid"></el-table-column>
-      <el-table-column prop="account" label="用户名"></el-table-column>
-      <el-table-column prop="updTime" label="更新时间"></el-table-column>
+      <el-table-column prop="uid" label="用户uid" sortable></el-table-column>
+      <el-table-column prop="account" label="用户名" sortable></el-table-column>
+      <el-table-column prop="updTime" label="更新时间" sortable></el-table-column>
 
-      <el-table-column label="状态">
+      <el-table-column label="状态" sortable>
         <template slot-scope="scope">
           <el-tooltip
             :content="scope.row.stateText"
@@ -102,7 +104,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
 
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">

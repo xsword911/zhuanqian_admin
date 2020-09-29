@@ -81,6 +81,8 @@
       @sort-change="tableSortChange"
       show-summary
       :summary-method="getSummaries"
+      border
+      stripe
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
 <!--      <el-table-column label="序号" width="95">
@@ -88,13 +90,13 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="uid"></el-table-column>
-      <el-table-column prop="sn" label="账单号"></el-table-column>
-      <el-table-column prop="money" label="金额"></el-table-column>
-      <el-table-column prop="gold" label="金币"></el-table-column>
-      <el-table-column prop="addTime" label="转换时间"></el-table-column>
+      <el-table-column prop="uid" label="uid" sortable></el-table-column>
+      <el-table-column prop="sn" label="账单号" sortable></el-table-column>
+      <el-table-column prop="money" label="金额" sortable></el-table-column>
+      <el-table-column prop="gold" label="金币" sortable></el-table-column>
+      <el-table-column prop="addTime" label="转换时间" sortable></el-table-column>
 
-     <el-table-column label="申请状态">
+     <el-table-column label="申请状态" sortable>
         <template slot-scope="scope">
           <el-tooltip
             :content="scope.row.status"
@@ -108,9 +110,9 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="admin" label="审核人"></el-table-column>
-      <el-table-column prop="updTime" label="审核时间"></el-table-column>
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="admin" label="审核人" sortable></el-table-column>
+      <el-table-column prop="updTime" label="审核时间" sortable></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
 <!--          <el-button type="text" @click="handleDelete(scope.row)"

@@ -94,6 +94,8 @@
       @sort-change="tableSortChange"
       show-summary
       :summary-method="getSummaries"
+      border
+      stripe
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
       <!--      <el-table-column label="序号" width="95">
@@ -104,21 +106,25 @@
       <el-table-column
         prop="uid"
         label="uid"
+        sortable
       />
       <el-table-column
         prop="sn"
         label="账单号"
+        sortable
       />
       <el-table-column
         prop="money"
         label="金额"
+        sortable
       />
       <el-table-column
         prop="addTime"
         label="申请时间"
+        sortable
       />
 
-      <el-table-column label="申请状态">
+      <el-table-column label="申请状态" sortable>
         <template slot-scope="scope">
           <el-tooltip
             :content="scope.row.status"
@@ -137,14 +143,17 @@
       <el-table-column
         prop="admin"
         label="审核人"
+        sortable
       />
       <el-table-column
         prop="updTime"
         label="审核时间"
+        sortable
       />
       <el-table-column
         prop="desc"
         label="备注"
+        sortable
       />
       <el-table-column
         label="操作"
@@ -278,10 +287,10 @@ export default {
           sums[index] = '';
         }
 
-        sums[index] += '/'+ this.moneySum;
         if(index != 2) sums[index] = '';
 
       });
+      sums[2] += '/'+ this.moneySum;
       return sums;
     },
 
@@ -395,7 +404,7 @@ export default {
                   break;
               }
            });
-           this.total = api.getTotal(res);
+           this.total = res.data.list.total;
            this.list = data;
          }
       });

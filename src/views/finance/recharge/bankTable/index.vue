@@ -43,6 +43,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
@@ -50,10 +52,10 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="bankName" label="银行名称"></el-table-column>
-      <el-table-column prop="bankId" label="银行id"></el-table-column>
+      <el-table-column prop="bankName" label="银行名称" sortable></el-table-column>
+      <el-table-column prop="bankId" label="银行id" sortable></el-table-column>
 
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
 <!--          <el-button type="text" @click="handleDelete(scope.row)"

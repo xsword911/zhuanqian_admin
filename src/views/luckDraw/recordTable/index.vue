@@ -87,6 +87,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
@@ -94,13 +96,13 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="uid"></el-table-column>
-      <el-table-column prop="sn" label="序列号"></el-table-column>
-      <el-table-column prop="award" label="奖励金额"></el-table-column>
-      <el-table-column prop="awardTypeTest" label="奖励类型"></el-table-column>
-      <el-table-column prop="addTime" label="抽奖时间"></el-table-column>
-      <el-table-column prop="stateTest" label="状态"></el-table-column>
-      <el-table-column prop="finishTime" label="兑换时间"></el-table-column>
+      <el-table-column prop="uid" label="uid" sortable></el-table-column>
+      <el-table-column prop="sn" label="序列号" sortable></el-table-column>
+      <el-table-column prop="award" label="奖励金额" sortable></el-table-column>
+      <el-table-column prop="awardTypeTest" label="奖励类型" sortable></el-table-column>
+      <el-table-column prop="addTime" label="抽奖时间" sortable></el-table-column>
+      <el-table-column prop="stateTest" label="状态" sortable></el-table-column>
+      <el-table-column prop="finishTime" label="兑换时间" sortable></el-table-column>
 
       <el-table-column label="操作" width="80px" fixed="right">
         <template slot-scope="scope">

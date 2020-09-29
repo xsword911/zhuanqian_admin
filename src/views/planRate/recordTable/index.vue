@@ -58,19 +58,21 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="sn" label="订单号"></el-table-column>
-      <el-table-column prop="uid" label="用户id"></el-table-column>
-      <el-table-column prop="planName" label="存款计划名称"></el-table-column>
-      <el-table-column prop="planDays" label="需要存款的天数"></el-table-column>
+      <el-table-column prop="sn" label="订单号" sortable></el-table-column>
+      <el-table-column prop="uid" label="用户id" sortable></el-table-column>
+      <el-table-column prop="planName" label="存款计划名称" sortable></el-table-column>
+      <el-table-column prop="planDays" label="需要存款的天数" sortable></el-table-column>
 
-      <el-table-column prop="planRate" label="存款利率"></el-table-column>
-      <el-table-column prop="planServe" label="服务费利率"></el-table-column>
+      <el-table-column prop="planRate" label="存款利率" sortable></el-table-column>
+      <el-table-column prop="planServe" label="服务费利率" sortable></el-table-column>
 
-      <el-table-column prop="addTime" label="存款时间"></el-table-column>
-      <el-table-column prop="finishTime" label="计划结束时间"></el-table-column>
-      <el-table-column prop="outTime" label="取出时间"></el-table-column>
+      <el-table-column prop="addTime" label="存款时间" sortable></el-table-column>
+      <el-table-column prop="finishTime" label="计划结束时间" sortable></el-table-column>
+      <el-table-column prop="outTime" label="取出时间" sortable></el-table-column>
 
       <el-table-column label="操作" width="80px" fixed="right">
         <template slot-scope="scope">

@@ -67,6 +67,8 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
 <!--      <el-table-column label="序号" width="95">
@@ -74,15 +76,15 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column> -->
-      <el-table-column prop="uid" label="用户id"></el-table-column>
-      <el-table-column prop="to" label="收件人"></el-table-column>
-      <el-table-column prop="from" label="发件人"></el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column prop="content" label="内容"></el-table-column>
+      <el-table-column prop="uid" label="用户id" sortable></el-table-column>
+      <el-table-column prop="to" label="收件人" sortable></el-table-column>
+      <el-table-column prop="from" label="发件人" sortable></el-table-column>
+      <el-table-column prop="title" label="标题" sortable></el-table-column>
+      <el-table-column prop="content" label="内容" sortable></el-table-column>
 
-      <el-table-column prop="addTime" label="发送时间"></el-table-column>
+      <el-table-column prop="addTime" label="发送时间" sortable></el-table-column>
 
-      <el-table-column label="是否已读">
+      <el-table-column label="是否已读" sortable>
          <template slot-scope="scope">
            <el-tooltip
              :content="scope.row.isReadTest"
@@ -97,7 +99,7 @@
          </template>
       </el-table-column>
 
-      <el-table-column label="是否删除">
+      <el-table-column label="是否删除" sortable>
           <template slot-scope="scope">
             <el-tooltip
               :content="scope.row.isDelTest"
@@ -112,7 +114,7 @@
           </template>
       </el-table-column>
 
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
 
       <el-table-column label="操作" width="80px" fixed="right">
         <template slot-scope="scope">

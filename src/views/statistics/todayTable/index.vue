@@ -91,7 +91,10 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
       show-summary
+      :summary-method="getSummaries"
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
       <!-- <el-table-column label="序号" width="95"> -->
@@ -102,96 +105,100 @@
       <el-table-column
         prop="uid"
         label="用户id"
-        width="120"
+        sortable
       />
       <el-table-column
         label="时间"
         prop="addTime"
-        width="100"
+        sortable
       />
      <el-table-column
         label="前一天余额"
         prop="moneyOld"
-        width="130"
+        sortable
       />
       <el-table-column
         label="盈利"
         prop="money"
-        width="130"
+        sortable
       />
 
       <el-table-column
         label="任务收入"
         prop="moneyTaskAdd"
-        width="130"
+        sortable
       />
       <el-table-column
         label="发布支出"
         prop="moneyTaskLose"
-        width="130"
+        sortable
       />
       <el-table-column
         label="任务次数"
         prop="taskSum"
+        sortable
       />
 
       <el-table-column
         label="活动收入"
         prop="moneyActiveAdd"
-        width="130"
+        sortable
       />
       <el-table-column
         label="活动支出"
         prop="moneyActiveLose"
-        width="130"
+        sortable
       />
 
       <el-table-column
         label="充值次数"
         prop="rechargeSum"
+        sortable
       />
       <el-table-column
         label="充值金额"
         prop="rechargeMoney"
-        width="130"
+        sortable
       />
 
       <el-table-column
         label="首充金额"
         prop="firstRechargeMoney"
-        width="130"
+        sortable
       />
 
       <el-table-column
         label="提现次数"
         prop="drawSum"
+        sortable
       />
       <el-table-column
         label="提现金额"
         prop="drawMoney"
-        width="130"
+        sortable
       />
 
       <el-table-column
         label="加款"
         prop="moneyIns"
-        width="130"
+        sortable
       />
       <el-table-column
         label="扣款"
         prop="moneySubtract"
-        width="130"
+        sortable
       />
 
       <el-table-column
         label="代理佣金"
         prop="moneyAgency"
-        width="130"
+        sortable
       />
 
       <el-table-column
         label="当天注册"
         prop="isRegisterTodayTip"
+        sortable
       />
 
       <!-- <el-table-column
@@ -304,6 +311,7 @@ export default {
         page: 1,
         count: 10,
       },
+      sum:[],  //列表总计数据
     };
   },
   created() {
@@ -312,6 +320,48 @@ export default {
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //列表合计设置
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计';
+          return;
+        }
+        const values = data.map(item => Number(item[column.property]));
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+
+        } else {
+          sums[index] = '';
+        }
+      });
+      sums[2] += '/'+ this.sum.moneyOld;       //前一天余额总计
+      sums[3] += '/'+ this.sum.moneySum;       //盈利总计
+      sums[4] += '/'+ this.sum.moneyTaskAdd;   //任务收入总计
+      sums[5] += '/'+ this.sum.moneyTaskLose;  //任务发布支出总计
+      sums[6] += '/'+ this.sum.taskSum;  //任务次数总计
+      sums[7] += '/'+ this.sum.moneyActiveAdd;  //活动收入总计
+      sums[8] += '/'+ this.sum.moneyActiveLose;  //活动支出总计
+      sums[9] += '/'+ this.sum.rechargeSum;  //充值次数总计
+      sums[10] += '/'+ this.sum.rechargeMoney;  //充值金额总计
+      sums[11] += '/'+ this.sum.firstRechargeMoney;  //首充金额总计
+      sums[12] += '/'+ this.sum.drawSum;  //提现次数总计
+      sums[13] += '/'+ this.sum.drawMoney;  //提现金额总计
+      sums[14] += '/'+ this.sum.moneyIns;  //加款总计
+      sums[15] += '/'+ this.sum.moneySubtract;  //扣款总计
+      sums[16] += '/'+ this.sum.moneyAgency;  //代理佣金总计
+      return sums;
+    },
+
     tableSortChange() {
       // const imageList = [];
       // this.$refs.tableSort.tableData.forEach((item, index) => {
@@ -379,10 +429,12 @@ export default {
     },
     async fetchData() {
       this.listLoading = true;
-      api.getStatisticsDay(this.queryForm, (res)=>{
+      api.getStatisticsDayByAdmin(this.queryForm, (res)=>{
          let code = api.getCode(res);
          if(code == 0){
-           let data = api.getData(res);
+           let data = res.data.list.data;
+           this.sum = res.data.sum[0];   //获取总计信息
+           this.sum.moneySum = 0;        //设置盈利总计默认值
            data.forEach((item, index) =>{
               //保留二位小数处理
               item.moneyOld = parseFloat(item.moneyOld).toFixed(2);  //前一天余额
@@ -403,11 +455,12 @@ export default {
                + parseFloat(item.moneyTaskLose) + parseFloat(item.moneyActiveLose)
                + parseFloat(item.moneySubtract);
               item.money = item.money.toFixed(2);
+              this.sum.moneySum += parseFloat(item.money);
 
               if(item.isRegisterToday == 0) item.isRegisterTodayTip = "否";
               if(item.isRegisterToday == 1) item.isRegisterTodayTip = "是";
            });
-           this.total = api.getTotal(res);
+           this.total = res.data.list.total;
            this.list = data;
          }
       });

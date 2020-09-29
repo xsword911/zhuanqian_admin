@@ -77,17 +77,19 @@
       :element-loading-text="elementLoadingText"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
+      border
+      stripe
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="key" label="配置名"></el-table-column>
-      <el-table-column prop="value" label="配置值"></el-table-column>
-      <el-table-column prop="typeTest" label="类型"></el-table-column>
-      <el-table-column prop="addTime" label="添加时间"></el-table-column>
+      <el-table-column prop="key" label="配置名" sortable></el-table-column>
+      <el-table-column prop="value" label="配置值" sortable></el-table-column>
+      <el-table-column prop="typeTest" label="类型" sortable></el-table-column>
+      <el-table-column prop="addTime" label="添加时间" sortable></el-table-column>
 
 
 
-      <el-table-column prop="updTime" label="修改时间"></el-table-column>
-      <el-table-column prop="desc" label="备注"></el-table-column>
+      <el-table-column prop="updTime" label="修改时间" sortable></el-table-column>
+      <el-table-column prop="desc" label="备注" sortable></el-table-column>
 
       <el-table-column label="操作" width="100px" fixed="right">
         <template slot-scope="scope">
