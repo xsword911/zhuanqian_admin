@@ -107,7 +107,6 @@ export default {
       this.$emit("fetchData");
     },
     submitUpd(){
-      this.form.admin = "admin2";
       this.close();
       // api.updMoneyDraw(this.form, (res)=>{
       //   let code = api.getCode(res);

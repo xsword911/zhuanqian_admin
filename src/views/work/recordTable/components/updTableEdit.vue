@@ -290,7 +290,7 @@ export default {
       if(!util.isEmpty(this.form.desc)) data.desc = this.form.desc;
       api.auditTaskDetails(data, (res)=>{
         let code = api.getCode(res);
-        if(code == 0){
+        if(code === 0){
           this.$baseMessage("审核成功", "success");
           this.$refs["form"].resetFields();
           this.dialogFormVisible = false;

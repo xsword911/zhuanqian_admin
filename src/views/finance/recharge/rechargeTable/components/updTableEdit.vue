@@ -417,7 +417,6 @@ export default {
       this.$emit("fetchData");
     },
     submitUpd(){
-      this.form2.admin = "admin1";
       this.form2.id = this.form.id;
       this.form2.state  = this.form.state;
       if(!util.isEmpty(this.form.desc)) this.form2.desc = this.form.desc;

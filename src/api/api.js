@@ -611,6 +611,11 @@ const api = {
     httpUtil.post("activity/task/delTaskBlacklistArr", path, funSuccess);
   },
 
+  //清理数据
+  dataClear: function (path, funSuccess) {
+    httpUtil.post("system/dataClear", path, funSuccess);
+  },
+
 };
 
 export default api;

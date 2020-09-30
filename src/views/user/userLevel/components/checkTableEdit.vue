@@ -48,18 +48,18 @@
         <el-form-item label="更新时间" prop="updTime">
           <el-input v-model.trim="form.updTime" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
-        
+
         <el-form-item label="状态" prop="state">
           <el-input value="关闭" autocomplete="off" :disabled="true" v-show="form.state == 0"></el-input>
           <el-input value="开启" autocomplete="off" :disabled="true" v-show="form.state == 1"></el-input>
           <el-input value="开发中" autocomplete="off" :disabled="true" v-show="form.state == 2"></el-input>
         </el-form-item>
-        
+
         <el-form-item label="备注" prop="desc">
           <el-input v-model.trim="form.desc" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
 
-        <div style="color: #ff0000;">*等级充值提现设置和系统资金配置比较，值大者生效</div>
+        <div style="color: #ff0000;">*等级充值提现设置、系统资金配置、充值渠道比较，值大者生效</div>
       </div>
     </el-form>
   </el-dialog>

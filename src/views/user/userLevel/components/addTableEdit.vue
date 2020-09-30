@@ -67,7 +67,7 @@
            <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
         </el-form-item>
 
-        <div style="color: #ff0000;">*等级充值提现设置和系统资金配置比较，值大者生效</div>
+        <div style="color: #ff0000;">*等级充值提现设置、系统资金配置、充值渠道比较，值大者生效</div>
       </div>
 
     </el-form>

@@ -47,7 +47,7 @@
         <el-form-item label="充值最大金额" prop="rechargeMax">
           <el-input v-model.trim="form.rechargeMax" autocomplete="off"></el-input>
         </el-form-item>
-        
+
         <el-form-item label="状态" prop="state">
           <el-select v-model="form.state" placeholder="状态">
             <el-option-group
@@ -68,7 +68,7 @@
            <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
         </el-form-item>
 
-        <div style="color: #ff0000;">*等级充值提现设置和系统资金配置比较，值大者生效</div>
+        <div style="color: #ff0000;">*等级充值提现设置、系统资金配置、充值渠道比较，值大者生效</div>
       </div>
     </el-form>
 
@@ -100,7 +100,7 @@ export default {
         }]
       }],
       stateValue: '',      //选中的任务状态
-      
+
       form: {
         id: null,
       },

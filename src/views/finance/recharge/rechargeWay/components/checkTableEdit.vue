@@ -34,6 +34,10 @@
       <el-form-item label="备注" prop="desc">
         <el-input v-model.trim="form.desc" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
+
+     <el-form-item label="" prop="">
+       <div style="color: #ff0000;">*等级充值提现设置、系统资金配置、充值渠道比较，值大者生效</div>
+     </el-form-item>
     </el-form>
   </el-dialog>
 </template>

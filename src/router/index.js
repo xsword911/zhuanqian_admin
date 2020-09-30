@@ -536,6 +536,12 @@ export const asyncRoutes = [
         name: "AdminRegister",
         component: () => import("@/views/admin/form/index"),
         meta: { title: "管理员注册" },
+      },
+      {
+        path: "clearData",
+        name: "ClearData",
+        component: () => import("@/views/admin/clearDataForm/index"),
+        meta: { title: "数据清理" },
       }
     ],
   },

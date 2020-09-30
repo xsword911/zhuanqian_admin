@@ -51,6 +51,23 @@
                  </el-option-group>
                </el-select>
            </el-form-item>
+
+          <el-form-item>
+            <el-select v-model="isFirstRechargeMoney" placeholder="是否首充" clearable>
+              <el-option-group
+                v-for="group in firstRechargeMoney"
+                :key="group.label"
+                :label="group.label">
+                <el-option
+                  v-for="item in group.firstRechargeMoney"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-option-group>
+            </el-select>
+          </el-form-item>
+
           <!--          <el-form-item>
             <el-input v-model="queryForm.code" placeholder="邀请码" />
           </el-form-item>
@@ -291,6 +308,16 @@ export default {
       }],
       branchValue: null,
 
+      firstRechargeMoney:[{
+        firstRechargeMoney:[{
+          label: "否",
+          value: 0
+        },{
+          label: "是",
+          value: 1
+        }]
+      }],
+      isFirstRechargeMoney: "",
 
       options: [{
         label: '收入',
@@ -437,6 +464,10 @@ export default {
       if(this.branchValue == 1) this.queryForm.isSubAll = false;
       if(this.branchValue == 2) this.queryForm.isSubAll = true;
 
+      //是否首充
+      if(util.isEmpty(this.isFirstRechargeMoney)) delete this.queryForm.isFirstRechargeMoney;
+      if(this.isFirstRechargeMoney === 0) this.queryForm.isFirstRechargeMoney = false;
+      if(this.isFirstRechargeMoney === 1) this.queryForm.isFirstRechargeMoney = true;
 
       //时间筛选不为空时添加时间属性
       if(!util.isEmpty(this.searchTime)){
