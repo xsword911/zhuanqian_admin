@@ -37,7 +37,7 @@
           </el-form-item>
 
           <el-form-item>
-               <el-select v-model="branchValue" placeholder="下级" clearable>
+               <el-select v-model="queryForm.subType" placeholder="下级" clearable>
                  <el-option-group
                    v-for="group in branch"
                    :key="group.label"
@@ -121,6 +121,12 @@
       <el-table-column
         prop="uid"
         label="用户id"
+        sortable
+      />
+
+      <el-table-column
+        prop="upper"
+        label="直属上级"
         sortable
       />
 
@@ -304,7 +310,10 @@ export default {
         },{
           label: "所有下属",
           value: 2
-        },]
+        },{
+          label: "代理链",
+          value: 3
+        }]
       }],
       branchValue: null,
 
@@ -459,10 +468,8 @@ export default {
     },
     handleQuery() {
       this.queryForm.page = 1;
-      //查询下级
-      if(this.branchValue == 0) this.queryForm.isSubAll = null;
-      if(this.branchValue == 1) this.queryForm.isSubAll = false;
-      if(this.branchValue == 2) this.queryForm.isSubAll = true;
+
+      if(util.isEmpty(this.queryForm.subType)) delete this.queryForm.subType;
 
       //是否首充
       if(util.isEmpty(this.isFirstRechargeMoney)) delete this.queryForm.isFirstRechargeMoney;

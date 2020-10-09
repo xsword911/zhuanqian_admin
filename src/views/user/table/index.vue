@@ -47,7 +47,28 @@
 
           <el-form-item>
             <el-select
-              v-model="queryForm.selType"
+              v-model="queryForm.level"
+              placeholder="等级"
+              clearable
+            >
+              <el-option-group
+                v-for="group in level"
+                :key="group.label"
+                :label="group.label"
+              >
+                <el-option
+                  v-for="item in group.level"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-option-group>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item>
+            <el-select
+              v-model="queryForm.subType"
               placeholder="下级"
               clearable
             >
@@ -361,7 +382,10 @@ export default {
         },{
           label: "所有下属",
           value: 2
-        },]
+        },{
+          label: "代理链",
+          value: 3
+        }]
       }],
       branchValue: null,
 
@@ -378,21 +402,37 @@ export default {
         page: 1,
         count: 10,
         type: 0,
+        level: null
       },
+      level:[{
+        level:[]
+      }]
     };
   },
   created() {
-    this.fetchData();  //查询用户列表
+    this.getLevel();   //获取等级列表
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //获取等级列表
+    getLevel(){
+      api.getLevelDesc({}, (res)=>{
+        let data = res.data;
+        data.forEach((item) =>{
+          item.value = parseInt(item.key);
+          item.label = item.val;
+        });
+        this.level[0].level = data;
+        this.fetchData();  //查询用户列表
+      });
+    },
     //查看下级用户
     querySub(data){
       if(data.allSubSum <= 0) return;
       this.queryForm.page = 1;
       Vue.set(this.queryForm, "uid", data.uid);//修改复杂对象必须使用set方法
-      Vue.set(this.queryForm, "selType", this.branch[0].branch[1].value);//修改复杂对象必须使用set方法
+      Vue.set(this.queryForm, "subType", this.branch[0].branch[1].value);//修改复杂对象必须使用set方法
       this.fetchData();
     },
 
@@ -400,7 +440,7 @@ export default {
     queryUpper(data){
       this.queryForm.page = 1;
       Vue.set(this.queryForm, "uid", data.upper);//修改复杂对象必须使用set方法
-      Vue.set(this.queryForm, "selType", this.branch[0].branch[0].value);//修改复杂对象必须使用set方法
+      Vue.set(this.queryForm, "subType", this.branch[0].branch[0].value);//修改复杂对象必须使用set方法
       this.fetchData();
     },
 
@@ -550,6 +590,10 @@ export default {
       }else{   //账号类型筛选为空时删除账号类型属性
         delete this.queryForm.state;
       };
+
+      //等级类型筛选为空时删除等级属性
+      if(util.isEmpty(this.queryForm.level)) delete this.queryForm.level;
+
       this.fetchData();
     },
     //查询用户列表
@@ -576,9 +620,17 @@ export default {
                 default:
                   break;
               }
+
+             //获取等级名称
+             this.level[0].level.forEach((item1) =>{
+               item1.key = parseInt(item1.key);
+               if(item1.key === item.level) item.levelText = item1.val;
+             });
+
            });
            this.total = api.getTotal(res);
            this.list = data;
+           console.log(this.list);
          }
       });
       setTimeout(() => {

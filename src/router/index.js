@@ -154,6 +154,12 @@ export const asyncRoutes = [
             name: "LuckDrawTable",
             component: () => import("@/views/luckDraw/recordTable/index"),
             meta: { title: "抽奖记录" },
+          },
+          {
+            path: "luckRedTable",
+            name: "LuckRedTable",
+            component: () => import("@/views/luckDraw/luckRedTable/index"),
+            meta: { title: "幸运红包设置" },
           }
         ],
       },
@@ -314,6 +320,18 @@ export const asyncRoutes = [
         name: "MoneyAddOrReduce",
         component: () => import("@/views/finance/form/index"),
         meta: { title: "加款扣款" },
+      },
+      {
+        path: "examineBlacklistTable",
+        name: "ExamineBlacklistTable",
+        component: () => import("@/views/finance/examineBlacklistTable/index"),
+        meta: { title: "提现黑名单" },
+      },
+      {
+        path: "rechargeBlacklistTable",
+        name: "RechargeBlacklistTable",
+        component: () => import("@/views/finance/rechargeBlacklistTable/index"),
+        meta: { title: "充值黑名单" },
       }
     ],
   },

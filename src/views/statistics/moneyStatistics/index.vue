@@ -26,7 +26,7 @@
 
           <el-form-item>
             <el-select
-              v-model="branchValue"
+              v-model="queryForm.subType"
               placeholder="下级"
               clearable
             >
@@ -119,7 +119,10 @@
           },{
             label: "所有下属",
             value: 2
-          },]
+          },{
+            label: "代理链",
+            value: 3
+          }]
         }],
         branchValue: null,
 
@@ -301,10 +304,7 @@
       handleQuery() {
         this.queryForm.page = 1;
 
-        //查询下级
-        if(this.branchValue == 0) this.queryForm.isSubAll = null;
-        if(this.branchValue == 1) this.queryForm.isSubAll = false;
-        if(this.branchValue == 2) this.queryForm.isSubAll = true;
+        if(util.isEmpty(this.queryForm.subType)) delete this.queryForm.subType;
 
         //时间筛选不为空时添加时间属性
         if(!util.isEmpty(this.searchTime)){

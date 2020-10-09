@@ -616,6 +616,66 @@ const api = {
     httpUtil.post("system/dataClear", path, funSuccess);
   },
 
+  //查询提现黑名单
+  getMoneyDrawBlacklist: function (path, funSuccess) {
+    httpUtil.post("money/getMoneyDrawBlacklist", path, funSuccess);
+  },
+
+  //添加提现黑名单
+  addMoneyDrawBlacklist: function (path, funSuccess) {
+    httpUtil.post("money/addMoneyDrawBlacklist", path, funSuccess);
+  },
+
+  //修改提现黑名单
+  updMoneyDrawBlacklist: function (path, funSuccess) {
+    httpUtil.post("money/updMoneyDrawBlacklist", path, funSuccess);
+  },
+
+  //批量删除提现黑名单
+  delMoneyDrawBlacklistArr: function (path, funSuccess) {
+    httpUtil.post("money/delMoneyDrawBlacklistArr", path, funSuccess);
+  },
+
+  //查询充值黑名单
+  getMoneyRechargeBlacklist: function (path, funSuccess) {
+    httpUtil.post("money/getMoneyRechargeBlacklist", path, funSuccess);
+  },
+
+  //添加充值黑名单
+  addMoneyRechargeBlacklist: function (path, funSuccess) {
+    httpUtil.post("money/addMoneyRechargeBlacklist", path, funSuccess);
+  },
+
+  //修改充值黑名单
+  updMoneyRechargeBlacklist: function (path, funSuccess) {
+    httpUtil.post("money/updMoneyRechargeBlacklist", path, funSuccess);
+  },
+
+  //批量删除充值黑名单
+  delMoneyRechargeBlacklistArr: function (path, funSuccess) {
+    httpUtil.post("money/delMoneyRechargeBlacklistArr", path, funSuccess);
+  },
+
+  //查询红包奖励设置
+  getLuckRed: function (path, funSuccess) {
+    httpUtil.post("activity/luckRed/getLuckRed", path, funSuccess);
+  },
+
+  //添加红包奖励设置
+  addLuckRed: function (path, funSuccess) {
+    httpUtil.post("activity/luckRed/addLuckRed", path, funSuccess);
+  },
+
+  //修改红包奖励设置
+  updLuckRed: function (path, funSuccess) {
+    httpUtil.post("activity/luckRed/updLuckRed", path, funSuccess);
+  },
+
+  //批量红包奖励设置
+  delLuckRedArr: function (path, funSuccess) {
+    httpUtil.post("activity/luckRed/delLuckRedArr", path, funSuccess);
+  },
+
 };
 
 export default api;

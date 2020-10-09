@@ -94,50 +94,14 @@
           prop="level"
         >
           <el-input
-            v-show="form.level == 0"
+            v-if="form.level != 0"
+            v-model.trim="form.levelText"
+            autocomplete="off"
+            :disabled="true"
+          />
+          <el-input
+            v-if="form.level === 0"
             value=" "
-            autocomplete="off"
-            :disabled="true"
-          />
-          <el-input
-            v-show="form.account == ''"
-            value="游客"
-            autocomplete="off"
-            :disabled="true"
-          />
-          <el-input
-            v-show="form.level == 1 && form.account != ''"
-            value="新人"
-            autocomplete="off"
-            :disabled="true"
-          />
-          <el-input
-            v-show="form.level == 2"
-            value="白银会员"
-            autocomplete="off"
-            :disabled="true"
-          />
-          <el-input
-            v-show="form.level == 3"
-            value="黄金会员"
-            autocomplete="off"
-            :disabled="true"
-          />
-          <el-input
-            v-show="form.level == 4"
-            value="铂金会员"
-            autocomplete="off"
-            :disabled="true"
-          />
-          <el-input
-            v-show="form.level == 5"
-            value="钻石会员"
-            autocomplete="off"
-            :disabled="true"
-          />
-          <el-input
-            v-show="form.level == 6"
-            value="至尊会员"
             autocomplete="off"
             :disabled="true"
           />
