@@ -202,7 +202,7 @@
             autocomplete="off"
             :disabled="true"
             type="textarea"
-            rows="4"
+            rows="5"
           />
         </el-form-item>
         <el-form-item
