@@ -116,6 +116,16 @@
             :disabled="true"
           />
         </el-form-item>
+        <el-form-item
+          label="注册时间"
+          prop="regTime"
+        >
+          <el-input
+            v-model.trim="form.regTime"
+            autocomplete="off"
+            :disabled="true"
+          />
+        </el-form-item>
       </div>
 
       <div>
@@ -158,16 +168,8 @@
             v-model.trim="form.allUpper"
             autocomplete="off"
             :disabled="true"
-          />
-        </el-form-item>
-        <el-form-item
-          label="注册时间"
-          prop="regTime"
-        >
-          <el-input
-            v-model.trim="form.regTime"
-            autocomplete="off"
-            :disabled="true"
+            type="textarea"
+            rows="3"
           />
         </el-form-item>
         <el-form-item
@@ -192,6 +194,18 @@
           />
         </el-form-item>
         <el-form-item
+          label="代理链"
+          prop="lineUpper"
+        >
+          <el-input
+            v-model.trim="form.lineUpper"
+            autocomplete="off"
+            :disabled="true"
+            type="textarea"
+            rows="4"
+          />
+        </el-form-item>
+        <el-form-item
           label="最后登录时间"
           prop="loginTime"
         >
@@ -211,7 +225,9 @@
             :disabled="true"
           />
         </el-form-item>
+      </div>
 
+      <div>
         <el-form-item
           label="登录次数"
           prop="loginNum"
@@ -222,9 +238,6 @@
             :disabled="true"
           />
         </el-form-item>
-      </div>
-
-      <div>
         <el-form-item
           label="冻结时间"
           prop="freezeTime"
