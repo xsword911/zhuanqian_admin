@@ -98,7 +98,10 @@ export default {
           }else{
             this.submitForm.account = this.form.account;
             this.submitForm.pwd = this.form.pwd;
+
             if(!util.isEmpty(this.form.upperCode)) this.submitForm.upperCode = this.form.upperCode;
+            else delete this.form.upperCode;
+
             let data = Object.assign({}, this.submitForm);  //克隆数据
             data.pwd = md5(data.pwd);
             api.registerByAdmin(data, (res)=>{

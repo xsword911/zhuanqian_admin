@@ -676,6 +676,26 @@ const api = {
     httpUtil.post("activity/luckRed/delLuckRedArr", path, funSuccess);
   },
 
+  //查询玩家领取红包记录
+  getLuckyRedDetails: function (path, funSuccess) {
+    httpUtil.post("activity/luckRed/getLuckyRedDetails", path, funSuccess);
+  },
+
+  //批量删除玩家领取红包记录
+  delLuckyRedDetailsArr: function (path, funSuccess) {
+    httpUtil.post("activity/luckRed/delLuckyRedDetailsArr", path, funSuccess);
+  },
+
+  //查询转盘次数
+  getLuckNum: function (path, funSuccess) {
+    httpUtil.post("activity/luckRed/getLuckNum", path, funSuccess);
+  },
+
+  //批量删除转盘次数
+  delLuckNumArr: function (path, funSuccess) {
+    httpUtil.post("activity/luckRed/delLuckNumArr", path, funSuccess);
+  },
+
 };
 
 export default api;

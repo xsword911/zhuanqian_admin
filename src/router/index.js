@@ -160,6 +160,18 @@ export const asyncRoutes = [
             name: "LuckRedTable",
             component: () => import("@/views/luckDraw/luckRedTable/index"),
             meta: { title: "幸运红包设置" },
+          },
+          {
+            path: "luckyRedRecordTable",
+            name: "LuckyRedRecordTable",
+            component: () => import("@/views/luckDraw/LuckyRedRecordTable/index"),
+            meta: { title: "幸运红包领取记录" },
+          },
+          {
+            path: "luckyNumTable",
+            name: "LuckyNumTable",
+            component: () => import("@/views/luckDraw/LuckyNumTable/index"),
+            meta: { title: "用户转盘次数" },
           }
         ],
       },

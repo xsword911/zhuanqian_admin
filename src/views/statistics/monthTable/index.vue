@@ -401,21 +401,22 @@ export default {
           sums[index] = '';
         }
       });
-      sums[1] += '/'+ this.sum.moneySum;       //盈利总计
-      sums[2] += '/'+ this.sum.moneyTaskAdd;   //任务收入总计
-      sums[3] += '/'+ this.sum.moneyTaskLose;  //任务发布支出总计
-      sums[4] += '/'+ this.sum.taskSum;  //任务次数总计
-      sums[5] += '/'+ this.sum.moneyActiveAdd;  //活动收入总计
-      sums[6] += '/'+ this.sum.moneyActiveLose;  //活动支出总计
-      sums[7] += '/'+ this.sum.rechargeSum;  //充值次数总计
-      sums[8] += '/'+ this.sum.rechargeMoney;  //充值金额总计
-      sums[9] += '/'+ this.sum.firstRechargeMoney;  //首充金额总计
-      sums[10] += '/'+ this.sum.firstRechargeMoneyNum;  //首充人数
-      sums[11] += '/'+ this.sum.drawSum;  //提现次数总计
-      sums[12] += '/'+ this.sum.drawMoney;  //提现金额总计
-      sums[13] += '/'+ this.sum.moneyIns;  //加款总计
-      sums[14] += '/'+ this.sum.moneySubtract;  //扣款总计
-      sums[15] += '/'+ this.sum.moneyAgency;  //代理佣金总计
+      sums[1] = '';
+      sums[2] += '/'+ this.sum.moneySum;       //盈利总计
+      sums[3] += '/'+ this.sum.moneyTaskAdd;   //任务收入总计
+      sums[4] += '/'+ this.sum.moneyTaskLose;  //任务发布支出总计
+      sums[5] += '/'+ this.sum.taskSum;  //任务次数总计
+      sums[6] += '/'+ this.sum.moneyActiveAdd;  //活动收入总计
+      sums[7] += '/'+ this.sum.moneyActiveLose;  //活动支出总计
+      sums[8] += '/'+ this.sum.rechargeSum;  //充值次数总计
+      sums[9] += '/'+ this.sum.rechargeMoney;  //充值金额总计
+      sums[10] += '/'+ this.sum.firstRechargeMoney;  //首充金额总计
+      sums[11] += '/'+ this.sum.firstRechargeMoneyNum;  //首充人数
+      sums[12] += '/'+ this.sum.drawSum;  //提现次数总计
+      sums[13] += '/'+ this.sum.drawMoney;  //提现金额总计
+      sums[14] += '/'+ this.sum.moneyIns;  //加款总计
+      sums[15] += '/'+ this.sum.moneySubtract;  //扣款总计
+      sums[16] += '/'+ this.sum.moneyAgency;  //代理佣金总计
       return sums;
     },
     tableSortChange() {
