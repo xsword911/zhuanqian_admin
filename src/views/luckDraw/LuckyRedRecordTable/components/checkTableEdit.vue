@@ -5,7 +5,7 @@
     width="500px"
     @close="close"
   >
-   <el-form ref="form" :model="form" label-width="80px">
+   <el-form ref="form" :model="form" label-width="96px">
      <el-form-item label="uid" prop="uid">
         <el-input v-model.trim="form.uid" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
@@ -15,6 +15,9 @@
       <el-form-item label="标题" prop="title">
          <el-input v-model.trim="form.title" autocomplete="off" :disabled="true"></el-input>
        </el-form-item>
+     <el-form-item label="需要抽奖次数" prop="num">
+       <el-input v-model.trim="form.num" autocomplete="off" :disabled="true"></el-input>
+     </el-form-item>
      <el-form-item label="奖励金额" prop="award">
        <el-input v-model.trim="form.award" autocomplete="off" :disabled="true"></el-input>
      </el-form-item>

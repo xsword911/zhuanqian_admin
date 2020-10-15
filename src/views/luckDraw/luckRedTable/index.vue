@@ -28,9 +28,9 @@
                   :label="group.label">
                   <el-option
                     v-for="item in group.type"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                    :key="item.key"
+                    :label="item.val"
+                    :value="item.key">
                   </el-option>
                 </el-option-group>
               </el-select>
@@ -120,6 +120,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <div style="color: #ff0000; text-align:center;">
+      红包最多只能同时开启5个!
+    </div>
     <el-pagination
       :background="background"
       :current-page="queryForm.page"
@@ -158,13 +161,7 @@ export default {
   data() {
     return {
       type: [{
-        type: [{
-          value: 0,
-          label: '随机'
-        },{
-          value: 1,
-          label: '固定'
-        }]
+        type: []
       }],
       typeValue: '',      //选中的奖励类型
 
@@ -195,11 +192,18 @@ export default {
     };
   },
   created() {
-    this.fetchData();
+    this.getLuckRedType();  //获取幸运红包奖励规则类型
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //获取幸运红包奖励规则类型
+    getLuckRedType(){
+      api.getLuckRedType({}, (res)=>{
+        this.type[0].type = res.data;
+        this.fetchData();  //获取数据
+      });
+    },
     handleAdd() {
       this.$refs["edit"].showEdit();
     },

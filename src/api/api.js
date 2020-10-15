@@ -691,9 +691,19 @@ const api = {
     httpUtil.post("activity/luckRed/getLuckNum", path, funSuccess);
   },
 
+  //修改转盘次数
+  updLuckNum: function (path, funSuccess) {
+    httpUtil.post("activity/luckRed/updLuckNum", path, funSuccess);
+  },
+
   //批量删除转盘次数
   delLuckNumArr: function (path, funSuccess) {
     httpUtil.post("activity/luckRed/delLuckNumArr", path, funSuccess);
+  },
+
+  //查询幸运红包奖励规则类型
+  getLuckRedType: function (path, funSuccess) {
+    httpUtil.post("activity/luckRed/getLuckRedType", path, funSuccess);
   },
 
 };

@@ -62,6 +62,12 @@
          <el-input v-model.trim="form.desc" autocomplete="off"></el-input>
        </el-form-item>
 
+    <el-form-item>
+      <div style="color: #ff0000;">
+        红包最多只能同时开启5个!
+      </div>
+    </el-form-item>
+
     </el-form>
 
 

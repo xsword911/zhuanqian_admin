@@ -82,6 +82,7 @@
       <el-table-column prop="uid" label="uid" sortable></el-table-column>
       <el-table-column prop="sn" label="序列号" sortable></el-table-column>
       <el-table-column prop="title" label="标题" sortable></el-table-column>
+      <el-table-column prop="num" label="需要抽奖次数" sortable></el-table-column>
       <el-table-column prop="award" label="奖励金额" sortable></el-table-column>
       <el-table-column prop="typeTest" label="奖励类型" sortable></el-table-column>
       <el-table-column prop="addTime" label="领取时间" sortable></el-table-column>

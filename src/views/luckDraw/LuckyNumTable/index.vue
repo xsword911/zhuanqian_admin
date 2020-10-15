@@ -63,11 +63,11 @@
       <el-table-column prop="num" label="抽奖次数" sortable></el-table-column>
       <el-table-column prop="updTime" label="更新时间" sortable></el-table-column>
 
-      <el-table-column label="操作" width="80px" fixed="right">
+      <el-table-column label="操作" width="160px" fixed="right">
         <template slot-scope="scope">
-<!--          <el-button type="text" @click="handleEdit(scope.row)"
+          <el-button type="text" @click="handleEdit(scope.row)"
             >编辑
-          </el-button> -->
+          </el-button>
 <!--          <el-button type="text" @click="handleDelete(scope.row)"
             >删除
           </el-button> -->
