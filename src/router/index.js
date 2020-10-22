@@ -97,6 +97,40 @@ export const asyncRoutes = [
   },
 
   {
+    path: "/game",
+    component: Layout,
+    // redirect: "noRedirect",
+    name: "GameManagement",
+    meta: { title: "游戏管理", icon: "gamepad", permissions: ["admin"] },
+    children: [
+      {
+        path: "gameLevel",
+        name: "GameLevel",
+        component: () => import("@/views/game/gameLevelTable/index"),
+        meta: { title: "游戏进度" },
+      },
+      {
+        path: "gameProp",
+        name: "GameProp",
+        component: () => import("@/views/game/gamePropTable/index"),
+        meta: { title: "游戏道具" },
+      },
+      {
+        path: "gamePropType",
+        name: "GamePropType",
+        component: () => import("@/views/game/gamePropTypeTable/index"),
+        meta: { title: "游戏道具类型" },
+      },
+      {
+        path: "gameLuckyNum",
+        name: "GameLuckyNum",
+        component: () => import("@/views/game/gameLuckyNumTable/index"),
+        meta: { title: "游戏红包数量" },
+      }
+    ],
+  },
+
+  {
     path: "/activity",
     component: Layout,
     // redirect: "noRedirect",

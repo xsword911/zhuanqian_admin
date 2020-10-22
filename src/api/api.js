@@ -706,6 +706,76 @@ const api = {
     httpUtil.post("activity/luckRed/getLuckRedType", path, funSuccess);
   },
 
+  //查询游戏等级
+  getGameLevel: function (path, funSuccess) {
+    httpUtil.post("game/getGameLevel", path, funSuccess);
+  },
+
+  //修改游戏等级
+  updGameLevel: function (path, funSuccess) {
+    httpUtil.post("game/updGameLevel", path, funSuccess);
+  },
+
+  //批量删除游戏等级
+  delGameLevelArr: function (path, funSuccess) {
+    httpUtil.post("game/delGameLevelArr", path, funSuccess);
+  },
+
+  //查询游戏道具
+  getGameProp: function (path, funSuccess) {
+    httpUtil.post("game/getGameProp", path, funSuccess);
+  },
+
+  //添加游戏道具
+  addGameProp: function (path, funSuccess) {
+    httpUtil.post("game/addGameProp", path, funSuccess);
+  },
+
+  //修改游戏道具
+  updGameProp: function (path, funSuccess) {
+    httpUtil.post("game/updGameProp", path, funSuccess);
+  },
+
+  //批量删除游戏道具
+  delGamePropArr: function (path, funSuccess) {
+    httpUtil.post("game/delGamePropArr", path, funSuccess);
+  },
+
+  //查询游戏道具类型
+  getGamePropType: function (path, funSuccess) {
+    httpUtil.post("game/getGamePropType", path, funSuccess);
+  },
+
+  //添加游戏道具类型
+  addGamePropType: function (path, funSuccess) {
+    httpUtil.post("game/addGamePropType", path, funSuccess);
+  },
+
+  //修改游戏道具类型
+  updGamePropType: function (path, funSuccess) {
+    httpUtil.post("game/updGamePropType", path, funSuccess);
+  },
+
+  //批量删除游戏道具类型
+  delGamePropTypeArr: function (path, funSuccess) {
+    httpUtil.post("game/delGamePropTypeArr", path, funSuccess);
+  },
+
+  //查询用户游戏红包数
+  getGameLuckyNum: function (path, funSuccess) {
+    httpUtil.post("game/getGameLuckyNum", path, funSuccess);
+  },
+
+  //修改用户游戏红包数
+  updGameLuckyNum: function (path, funSuccess) {
+    httpUtil.post("game/updGameLuckyNum", path, funSuccess);
+  },
+
+  //批量删除用户游戏红包数
+  delGameLuckyNumArr: function (path, funSuccess) {
+    httpUtil.post("game/delGameLuckyNumArr", path, funSuccess);
+  },
+
 };
 
 export default api;
