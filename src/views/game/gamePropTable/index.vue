@@ -155,7 +155,6 @@ export default {
   },
   created() {
     this.getGamePropType();  //获取道具类型列表
-    this.fetchData();
   },
   beforeDestroy() {},
   mounted() {},
@@ -165,6 +164,7 @@ export default {
       api.getGamePropType({page: 1, count: 10}, (res)=>{
         this.propType[0].propType = api.getData(res);
         console.log(this.propType[0].propType);
+        this.fetchData();
       });
 
     },

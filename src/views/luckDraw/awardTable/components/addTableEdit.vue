@@ -47,6 +47,22 @@
         </el-select>
       </el-form-item>
 
+    <el-form-item label="道具类型" prop="propType" v-if="form.type == 2">
+      <el-select v-model="form.propType" placeholder="道具类型">
+        <el-option-group
+          v-for="group in propType"
+          :key="group.label"
+          :label="group.label">
+          <el-option
+            v-for="item in group.propType"
+            :key="item.propType"
+            :label="item.propName"
+            :value="item.propType">
+          </el-option>
+        </el-option-group>
+      </el-select>
+    </el-form-item>
+
       <el-form-item label="剩余奖品数量" prop="limitSum">
         <el-select v-model="form.limitSum" placeholder="剩余奖品数量" clearable filterable allow-create>
           <el-option-group
@@ -115,11 +131,18 @@ export default {
           value: 1,
           label: '现金'
         },{
+          value: 2,
+          label: '道具'
+        },{
           value: 10,
           label: '其他'
         }]
       }],
       awardTypeValue: '',      //选中的任务类型
+
+      propType: [{
+        propType: []
+      }],
 
       limitSum: [{
           limitSum: [{
@@ -141,15 +164,7 @@ export default {
       stateValue: '',      //选中的任务状态
 
       form: {
-        order: "",
-        title: "",
-        imgUrl: '',
-        type: null,
-        award: '',
-        limitSum: null,
-        weight: null,
-        state: null,
-        desc: "",
+
       },
       title: "",
       dialogFormVisible: false,
@@ -163,6 +178,7 @@ export default {
         limitSum: [{ required: true, trigger: "blur", message: "请输入剩余奖品数量" }],
         weight: [{ required: true, trigger: "blur", message: "请输入抽中权重" }],
         state: [{ required: true, trigger: "blur", message: "请输入状态" }],
+        propType: [{ required: true, trigger: "blur", message: "请选择道具类型" }],
       }
     };
   },
@@ -199,6 +215,7 @@ export default {
         this.title = "编辑";
         this.form = Object.assign({}, row);
       }
+      this.propType = row;
       this.dialogFormVisible = true;
     },
     close() {

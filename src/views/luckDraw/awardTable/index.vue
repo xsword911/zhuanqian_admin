@@ -125,7 +125,7 @@
           <el-button type="text" @click="handleCheckEdit(scope.row)"
             >查看
           </el-button>
-          <el-button type="text" @click="handleEdit(scope.row)"
+          <el-button type="text" @click="handleEdit(scope.row, propType)"
             >编辑
           </el-button>
 <!--          <el-button type="text" @click="handleDelete(scope.row)"
@@ -223,16 +223,28 @@ export default {
         stateTest: '',
         limitSumTest: '',
       },
+
+      propType: [{
+        propType: []
+      }],
     };
   },
   created() {
-    this.fetchData();
+    this.getGamePropType();  //获取道具类型列表
   },
   beforeDestroy() {},
   mounted() {},
   methods: {
+    //获取道具类型列表
+    getGamePropType(){
+      api.getGamePropType({page: 1, count: 10}, (res)=>{
+        this.propType[0].propType = api.getData(res);
+        this.fetchData();
+      });
+
+    },
     handleAdd() {
-      this.$refs["edit"].showEdit();
+      this.$refs["edit"].showEdit(this.propType);
     },
     tableSortChange() {
       const imageList = [];
@@ -244,8 +256,8 @@ export default {
     setSelectRows(val) {
       this.selectRows = val;
     },
-    handleEdit(row) {
-      this.$refs["updEdit"].showEdit(row);
+    handleEdit(row, propType) {
+      this.$refs["updEdit"].showEdit(row, propType);
     },
     handleCheckEdit(row) {
       this.$refs["checkEdit"].showEdit(row);
@@ -321,6 +333,7 @@ export default {
            let data = api.getData(res);
            data.forEach((item, index) =>{
               if(item.limitSum == -1) item.limitSumTest = "不限制";
+              else item.limitSumTest = item.limitSum;
               switch (item.state){
                 case 0:
                   item.stateTest = "关闭";
@@ -337,6 +350,9 @@ export default {
                   break;
                 case 1:
                   item.awardTypeTest = "现金";
+                  break;
+                case 2:
+                  item.awardTypeTest = "道具";
                   break;
                 case 10:
                   item.awardTypeTest = "其他";

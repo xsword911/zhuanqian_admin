@@ -26,16 +26,17 @@
         </el-form-item>
 
       <el-form-item label="奖励类型" prop="type">
-        <el-input value="金币" autocomplete="off" :disabled="true" v-show="form.type == 0"></el-input>
-        <el-input value="现金" autocomplete="off" :disabled="true" v-show="form.type == 1"></el-input>
-        <el-input value="其他" autocomplete="off" :disabled="true" v-show="form.type == 10"></el-input>
+        <el-input v-model.trim="form.awardTypeTest" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
 
-      <el-form-item label="奖励类型" prop="limitSum">
-        <el-input value="无限制" autocomplete="off" :disabled="true" v-show="form.limitSum == -1"></el-input>
-        <el-input v-model.trim="form.limitSum" autocomplete="off" :disabled="true" v-show="form.limitSum != -1"></el-input>
+     <el-form-item label="道具类型" prop="award" v-if="form.type == 2">
+       <el-input v-model.trim="form.propType" autocomplete="off" :disabled="true"></el-input>
+     </el-form-item>
+
+      <el-form-item label="剩余数量" prop="limitSum">
+        <el-input v-model.trim="form.limitSumTest" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      
+
       <el-form-item label="抽中权重" prop="weight">
         <el-input v-model.trim="form.weight" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
