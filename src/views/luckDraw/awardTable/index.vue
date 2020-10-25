@@ -103,6 +103,7 @@
       <el-table-column prop="order" label="排序" sortable></el-table-column>
       <el-table-column prop="title" label="奖励标题" sortable></el-table-column>
       <el-table-column prop="awardTypeTest" label="奖励类型" sortable></el-table-column>
+      <el-table-column prop="propName" label="道具" sortable></el-table-column>
       <el-table-column prop="award" label="奖励内容" sortable></el-table-column>
       <el-table-column prop="limitSumTest" label="剩余奖励数量" sortable></el-table-column>
 

@@ -172,15 +172,6 @@ export default {
 
       form: {
         id: null,
-        order: "",
-        title: "",
-        imgUrl: '',
-        type: null,
-        award: '',
-        limitSum: null,
-        weight: null,
-        state: null,
-        desc: "",
       },
       title: "",
       dialogFormVisible: false,
@@ -235,6 +226,7 @@ export default {
     save() {
       this.$refs["form"].validate(async (valid) => {
         if (valid) {
+          if(this.form.type !== 2) this.form.propType = 0;
           api.updLucky(this.form, (res)=>{
             let code = api.getCode(res);
             if(code == 0){
