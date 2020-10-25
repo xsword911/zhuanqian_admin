@@ -160,6 +160,9 @@ export default {
           value: 1,
           label: '现金'
         },{
+          value: 2,
+          label: '道具'
+        },{
           value: 10,
           label: '其他'
         }]
@@ -315,6 +318,9 @@ export default {
                   break;
                 case 1:
                   item.awardTypeTest = "现金";
+                  break;
+                case 2:
+                  item.awardTypeTest = "道具";
                   break;
                 case 10:
                   item.awardTypeTest = "其他";

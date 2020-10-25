@@ -14,10 +14,6 @@
          <el-input v-model="form.title" placeholder="奖励标题"/>
       </el-form-item>
 
-      <el-form-item label="奖励金额" prop="award">
-         <el-input v-model.trim="form.award" autocomplete="off" type="number"></el-input>
-       </el-form-item>
-
     <el-form-item label="图片url" prop="imgUrl">
       <div style="display: flex;">
         <div class="block" style="width: 80px; height: 80px;">
@@ -68,6 +64,10 @@
           </el-option>
         </el-option-group>
       </el-select>
+    </el-form-item>
+
+    <el-form-item label="奖励数量" prop="award">
+      <el-input v-model.trim="form.award" autocomplete="off" type="number"></el-input>
     </el-form-item>
 
       <el-form-item label="剩余奖品数量" prop="limitSum">
@@ -184,7 +184,7 @@ export default {
         ],
         imgUrl: [{ required: true, trigger: "blur", message: "请输入奖励图片" }],
         type: [{ required: true, trigger: "blur", message: "请输入奖励类型" }],
-        award: [{ required: true, trigger: "blur", message: "请输入奖励金额" }],
+        award: [{ required: true, trigger: "blur", message: "请输入奖励数量" }],
         limitSum: [{ required: true, trigger: "blur", message: "请输入剩余奖品数量" }],
         weight: [{ required: true, trigger: "blur", message: "请输入抽中权重" }],
         state: [{ required: true, trigger: "blur", message: "请输入状态" }],

@@ -12,9 +12,6 @@
      <el-form-item label="奖励标题" prop="title">
         <el-input v-model.trim="form.title" autocomplete="off" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="奖励金额" prop="award">
-         <el-input v-model.trim="form.award" autocomplete="off" :disabled="true"></el-input>
-       </el-form-item>
 
        <el-form-item label="图片url" prop="imgUrl">
           <div class="block" style="width: 80px; height: 80px;">
@@ -30,7 +27,11 @@
       </el-form-item>
 
      <el-form-item label="道具类型" prop="award" v-if="form.type == 2">
-       <el-input v-model.trim="form.propType" autocomplete="off" :disabled="true"></el-input>
+       <el-input v-model.trim="form.propName" autocomplete="off" :disabled="true"></el-input>
+     </el-form-item>
+
+     <el-form-item label="奖励数量" prop="award">
+       <el-input v-model.trim="form.award" autocomplete="off" :disabled="true"></el-input>
      </el-form-item>
 
       <el-form-item label="剩余数量" prop="limitSum">
